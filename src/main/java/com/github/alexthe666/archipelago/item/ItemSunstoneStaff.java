@@ -1,0 +1,51 @@
+package com.github.alexthe666.archipelago.item;
+
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.core.ModItems;
+import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
+
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityEgg;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
+public class ItemSunstoneStaff extends Item {
+
+	private boolean isBroken;
+
+	public ItemSunstoneStaff(boolean isBroken){
+		this.isBroken = isBroken;
+		this.setUnlocalizedName(isBroken ? "archipelago.sunstone_staff_broken" : "archipelago.sunstone_staff");
+		Archipelago.proxy.addItemRender(this, isBroken ? "sunstone_staff_broken" : "sunstone_staff");
+		this.setCreativeTab(Archipelago.tab);
+		this.maxStackSize = 1;
+		GameRegistry.registerItem(this, isBroken ? "sunstone_staff_broken" : "sunstone_staff");
+	}
+
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+	{
+		if(isBroken){
+			return new ActionResult(EnumActionResult.PASS, itemStackIn);
+
+		}else{
+			itemStackIn.setItem(ModItems.sunstone_staff_broken);
+			ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(playerIn, ArchipelagoEntityProperties.class);
+			properties.teleportTime = 1;
+			playerIn.addPotionEffect(new PotionEffect(MobEffects.levitation, 160, 0, true, false));
+			worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.block_portal_travel, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+			return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+		}
+	}
+
+}

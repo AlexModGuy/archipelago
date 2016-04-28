@@ -1,0 +1,16 @@
+[
+{
+  "modid": "archipelago",
+  "name": "Archipelago",
+  "description": "Archipelago - travel to an exotic world, which, at first sight, appears to be a paradise, but all is not as it seems...",
+  "version": "alpha",
+  "mcversion": "1.8.9",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Alexthe666"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
