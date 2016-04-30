@@ -15,4 +15,6 @@ public class CommonProxy {
 	
 	public void spawnParticle(EnumParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ){};
 
+	public void renderFluids(){}
+
 }

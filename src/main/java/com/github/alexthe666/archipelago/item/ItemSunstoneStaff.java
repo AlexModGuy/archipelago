@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -36,16 +37,20 @@ public class ItemSunstoneStaff extends Item {
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
 	{
 		if(isBroken){
-			return new ActionResult(EnumActionResult.PASS, itemStackIn);
+			return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 
 		}else{
 			itemStackIn.setItem(ModItems.sunstone_staff_broken);
 			ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(playerIn, ArchipelagoEntityProperties.class);
 			properties.teleportTime = 1;
 			playerIn.addPotionEffect(new PotionEffect(MobEffects.levitation, 160, 0, true, false));
-			worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.block_portal_travel, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+			worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.block_portal_travel, SoundCategory.NEUTRAL, 1F, 1F);
 			return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 		}
 	}
 
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.BOW;
+    }
 }

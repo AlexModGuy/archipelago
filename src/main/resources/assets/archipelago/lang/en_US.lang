@@ -1,5 +1,7 @@
 itemGroup.archipelago=Archipelago
 
+tile.archipelago.tropical_water.name=Water
+
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
 item.archipelago.sunstone_staff_broken.name=Broken Sunstone Staff
