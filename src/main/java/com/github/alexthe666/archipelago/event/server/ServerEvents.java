@@ -44,28 +44,22 @@ public class ServerEvents {
 				event.getEntity().worldObj.spawnParticle(EnumParticleTypes.END_ROD, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0, new int[0]);
 			}
 			if(properties.teleportTime == 300){
-				properties.teleportTime = 0;
 				if(!event.getEntityLiving().worldObj.isRemote){
 					EntityPlayerMP player = (EntityPlayerMP)event.getEntityLiving();
-
-					if (player.timeUntilPortal > 0)
+					if (player.dimension != ModConfig.archipelagoDimensionId)
 					{
-						player.timeUntilPortal = 10;
-					}
-					else if (player.dimension != ModConfig.archipelagoDimensionId)
-					{
-						player.timeUntilPortal = 10;
 						player.mcServer.getPlayerList().transferPlayerToDimension(player, ModConfig.archipelagoDimensionId, new TeleporterArchipelago(player.mcServer.worldServerForDimension(ModConfig.archipelagoDimensionId)));
 					}
 					else if (player.dimension == ModConfig.archipelagoDimensionId)
 					{
-						player.timeUntilPortal = 10;
 						player.mcServer.getPlayerList().transferPlayerToDimension(player, 0, new TeleporterArchipelago(player.mcServer.worldServerForDimension(0)));
 					}
 				}
+				properties.teleportTime = 0;
 			}
 		}
 	}
+
 
 	@SubscribeEvent
 	public void onBucketFill(FillBucketEvent event) {
@@ -80,8 +74,8 @@ public class ServerEvents {
 
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent.RightClickBlock e){
-	//	if(e.getEntityPlayer().worldObj.provider.getDimension() == ModConfig.archipelagoDimensionId)
-			//tryPlaceContainedLiquid(e.getEntityPlayer(), e.getEntityLiving().worldObj, new BlockPos(e.getHitVec()), e.getItemStack());
+		//	if(e.getEntityPlayer().worldObj.provider.getDimension() == ModConfig.archipelagoDimensionId)
+		//tryPlaceContainedLiquid(e.getEntityPlayer(), e.getEntityLiving().worldObj, new BlockPos(e.getHitVec()), e.getItemStack());
 	}
 
 	public boolean tryPlaceContainedLiquid(EntityPlayer worldIn, World pos, BlockPos blockPos, ItemStack stack)

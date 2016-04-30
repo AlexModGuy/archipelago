@@ -30,7 +30,6 @@ public class ArchipelagoClassTransformer implements IClassTransformer{
 					if(setupCameraTransformName.equals(methodNode.name) && setupCameraTransformDesc.equals(methodNode.desc)){
 						InsnList insnList = methodNode.instructions;
 						InsnList inject = new InsnList();
-						LineNumberNode previousLine = null;
 						List<AbstractInsnNode> nodesInLine = new ArrayList<>();
 						for (AbstractInsnNode node : methodNode.instructions.toArray()) {
 						    if (node instanceof LineNumberNode) {
@@ -45,7 +44,6 @@ public class ArchipelagoClassTransformer implements IClassTransformer{
 						                inject.remove(lineNode);
 						            } 
 						        }
-						        previousLine = (LineNumberNode) node;
 						        nodesInLine.clear();
 						    }
 						    inject.add(node);
