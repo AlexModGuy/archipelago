@@ -1,5 +1,8 @@
 package com.github.alexthe666.archipelago.classtransformer;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,34 +35,52 @@ public class ArchipelagoClassTransformer implements IClassTransformer{
 						InsnList inject = new InsnList();
 						List<AbstractInsnNode> nodesInLine = new ArrayList<>();
 						for (AbstractInsnNode node : methodNode.instructions.toArray()) {
-						    if (node instanceof LineNumberNode) {
-						        boolean target = false;
-						        for (AbstractInsnNode lineNode : nodesInLine) {
-						            if (lineNode.LINE == 1977) {
-						                target = true;
-						            }
-						        }
-						        if (target) {
-						            for (AbstractInsnNode lineNode : nodesInLine) {
-						                inject.remove(lineNode);
-						            } 
-						        }
-						        nodesInLine.clear();
-						    }
-						    inject.add(node);
-						    nodesInLine.add(node);
+							if (node instanceof LineNumberNode) {
+								boolean target = false;
+								for (AbstractInsnNode lineNode : nodesInLine) {
+									if(lineNode instanceof MethodInsnNode){
+										MethodInsnNode method_0 = (MethodInsnNode)lineNode;
+										System.out.println(method_0.name);
+										if((method_0.name.equals("getRespirationModifier") && method_0.owner.equals("net/minecraft/enchantment/EnchantmentHelper"))|| (method_0.name.equals("a") && method_0.owner.equals("ack"))){
+											System.out.println(method_0.name);
+											target = true;
+										}
+									}
+								}
+								if (target) {
+									for (AbstractInsnNode lineNode : nodesInLine) {
+										inject.remove(lineNode);
+									} 
+								}
+								nodesInLine.clear();
+							}
+							inject.add(node);
+							nodesInLine.add(node);
 						}
 						methodNode.instructions.clear();
 						inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/github/alexthe666/archipelago/classtransformer/ArchipelagoHooks", "renderUnderwaterFog", "()V", false));
 						methodNode.instructions.add(inject);
-						}
-						break;
+					}
+					break;
 				}
 				ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 				classNode.accept(classWriter);
+				saveBytecode(name, classWriter);
 				return classWriter.toByteArray();
 			}
 		}
 		return classBytes;
+	}
+
+	private void saveBytecode(String name, ClassWriter cw) {
+		try {
+			File debugDir = new File("archipelago/debug/");
+			debugDir.mkdirs();
+			FileOutputStream out = new FileOutputStream(new File(debugDir, name + ".class"));
+			out.write(cw.toByteArray());
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
