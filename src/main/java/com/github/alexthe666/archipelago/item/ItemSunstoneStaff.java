@@ -6,14 +6,12 @@ import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
 
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -28,7 +26,7 @@ public class ItemSunstoneStaff extends Item {
 	public ItemSunstoneStaff(boolean isBroken){
 		this.isBroken = isBroken;
 		this.setUnlocalizedName(isBroken ? "archipelago.sunstone_staff_broken" : "archipelago.sunstone_staff");
-		Archipelago.proxy.addItemRender(this, isBroken ? "sunstone_staff_broken" : "sunstone_staff");
+		Archipelago.PROXY.addItemRender(this, isBroken ? "sunstone_staff_broken" : "sunstone_staff");
 		this.setCreativeTab(Archipelago.tab);
 		this.maxStackSize = 1;
 		GameRegistry.registerItem(this, isBroken ? "sunstone_staff_broken" : "sunstone_staff");

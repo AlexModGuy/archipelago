@@ -20,6 +20,6 @@ public class ModFluids {
 		FluidRegistry.registerFluid(fluid_tropical_water);
 		tropical_water = new BlockTropicalWater(fluid_tropical_water, Material.water).setUnlocalizedName("archipelago.tropical_water");
 		GameRegistry.registerBlock(tropical_water, "tropical_water");
-		Archipelago.proxy.renderFluids();
+		Archipelago.PROXY.renderFluids();
 	}
 }

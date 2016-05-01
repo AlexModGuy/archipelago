@@ -4,8 +4,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkGenerator;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.common.DimensionManager;
 
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.core.ModConfig;
@@ -34,7 +32,7 @@ public class WorldProviderArchipelago extends WorldProvider{
 
 	public int getRespawnDimension(EntityPlayerMP player)
 	{
-		return ModConfig.archipelagoDimensionId;
+		return ModConfig.ARCHIPELAGO_DIMENSION_ID;
 	}
 	
 	public double getMovementFactor()
