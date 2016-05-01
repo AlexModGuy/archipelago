@@ -212,61 +212,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	{
 		this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
 		ChunkPrimer chunkprimer = new ChunkPrimer();
-		this.setBlocksInChunk(x, z, chunkprimer);
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
-		int jj = 0;
-		int i = x << 4;
-		int j = z << 4;
-		for (int k = i; k < i + 16; k++)
-		{
-			for (int m = j; m < j + 16; m++)
-			{
-				float i2 = 75;
-				i2 -= (Math.sqrt((0D-k)*(0D-k) + (0D-m)*(0D-m)) / 6) + (noise.turbulence2(k / 60F, m / 60F, 4F) * 5F);
-				if(i2 < 50f) { i2 = 50f; }
-
-				for (int i3 = 0; i3 < 256; i3++)
-				{
-					Block i4 = Blocks.air;
-					if(i2 > 67)
-					{
-						if(i3 < i2 - 3)
-						{
-							i4 = Blocks.stone;
-						}
-						else if(i3 < i2 - 1)
-						{
-							i4 = Blocks.dirt;
-						}
-						else if(i3 < i2)
-						{
-							i4 = Blocks.grass;
-						}
-					}
-					else
-					{
-						if(i3 < i2 - 6 + rand.nextInt(3))
-						{
-							i4 = Blocks.stone;
-						}
-						else if(i3 < i2 - 3)
-						{
-							i4 = Blocks.sandstone;
-						}
-						else if(i3 < i2)
-						{
-							i4 = Blocks.sand;
-						}
-						else if(i3 <= 63)
-						{
-							i4 = ModFluids.tropical_water;
-						}
-					}
-					getData(chunkprimer)[jj++] = (char) Block.BLOCK_STATE_IDS.get(i4.getDefaultState());
-				}
-			}
-		}
-
+		this.setBlocksInChunk(x, z, chunkprimer);
 		this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
 		Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 		byte[] abyte = chunk.getBiomeArray();
@@ -417,12 +364,14 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		BlockPos blockpos = new BlockPos(i, 0, j);
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
 		this.rand.setSeed(this.worldObj.getSeed());
-
 		long k = this.rand.nextLong() / 2L * 2L + 1L;
 		long l = this.rand.nextLong() / 2L * 2L + 1L;
 		this.rand.setSeed((long)x * k + (long)z * l ^ this.worldObj.getSeed());
 		boolean flag = false;
 		ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(x, z);
+		if(this.rand.nextInt(20) == 0){
+			new WorldGeneratorArchipelagoIsland(70, 70, worldObj.getSeed()).generate(worldObj, rand, blockpos);
+		}
 		net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
 		if (biomegenbase != Biomes.desert && biomegenbase != Biomes.desertHills && this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
 			if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE))
