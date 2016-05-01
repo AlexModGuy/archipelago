@@ -1,11 +1,10 @@
 package com.github.alexthe666.archipelago.core;
 
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModConfig {
 	
-	public static int archipelagoDimensionId;
+	public static int ARCHIPELAGO_DIMENSION_ID;
 	public static int tropicOceanId;
 	public static int tropicShallowsId;
 	public static int tropicReefId;
@@ -19,7 +18,7 @@ public class ModConfig {
 	public static int volcanoId;
 	
 	public static void load(Configuration config){
-		archipelagoDimensionId = config.get("ID's", "Archipelago Dimension ID", 23).getInt(); 
+		ARCHIPELAGO_DIMENSION_ID = config.get("ID's", "Archipelago Dimension ID", 23).getInt();
 		tropicOceanId = config.get("ID's", "Tropic Ocean Biome ID", 168).getInt(); 
 		tropicShallowsId = config.get("ID's", "Tropic Shallows Biome ID", 169).getInt(); 
 		tropicReefId = config.get("ID's", "Tropic Reef Biome ID", 170).getInt(); 

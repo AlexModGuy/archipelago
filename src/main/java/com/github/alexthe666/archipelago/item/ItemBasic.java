@@ -9,7 +9,7 @@ public class ItemBasic extends Item {
 	
 	public ItemBasic(String name){
 		this.setUnlocalizedName("archipelago." + name);
-		Archipelago.proxy.addItemRender(this, name);
+		Archipelago.PROXY.addItemRender(this, name);
 		this.setCreativeTab(Archipelago.tab);
 		GameRegistry.registerItem(this, name);
 	}
