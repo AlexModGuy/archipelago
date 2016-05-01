@@ -43,7 +43,7 @@ public class ServerEvents {
 				Archipelago.proxy.spawnParticle(EnumParticle.TELEPORT, event.getEntity().worldObj, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0);
 				event.getEntity().worldObj.spawnParticle(EnumParticleTypes.END_ROD, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0, new int[0]);
 			}
-			if(properties.teleportTime == 300 && !event.getEntity().worldObj.isRemote){
+			if(properties.teleportTime >= 300 && !event.getEntity().worldObj.isRemote){
 				if(!event.getEntityLiving().worldObj.isRemote){
 					EntityPlayerMP player = (EntityPlayerMP)event.getEntityLiving();
 

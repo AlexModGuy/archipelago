@@ -9,6 +9,7 @@ import com.github.alexthe666.archipelago.core.ModWorld;
 public class GenLayerBiomesArchipelago extends GenLayer {
 
 	protected BiomeGenBase[] allowedBiomes = {ModWorld.tropicOcean, ModWorld.tropicShallows, ModWorld.tropicReef};
+	protected BiomeGenBase[] allowedLandBiomes = {ModWorld.tropicGrasslands, ModWorld.tropicShrublands, ModWorld.tropicReef};
 
 	public GenLayerBiomesArchipelago(long seed, GenLayer genlayer) {
 		super(seed);
@@ -23,19 +24,17 @@ public class GenLayerBiomesArchipelago extends GenLayer {
 	public int[] getInts(int x, int z, int width, int depth)
 	{
 		int[] dest = IntCache.getIntCache(width * depth);
-
-		for (int dz=0; dz < depth; dz++)
-		{
-			for (int dx=0; dx < width; dx++)
+		if(this.nextInt(15) == 0){
+			for (int dz=0; dz < depth; dz++)
 			{
-				if(this.nextInt(5) == 0){
-					this.initChunkSeed(dx+x, dz+z);
-					dest[(dx + dz * width)] = BiomeGenBase.getIdForBiome(this.allowedBiomes[nextInt(this.allowedBiomes.length)]);
+				for (int dx=0; dx < width; dx++)
+				{
+						this.initChunkSeed(dx+x, dz+z);
+						dest[(dx + dz * width)] = BiomeGenBase.getIdForBiome(this.allowedBiomes[nextInt(this.allowedBiomes.length)]);
 				}
 			}
 		}
 		return dest;
 	}
 }
-
 

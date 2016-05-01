@@ -3,6 +3,7 @@ package com.github.alexthe666.archipelago.world;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Random;
 
@@ -33,6 +34,7 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import com.github.alexthe666.archipelago.core.ModFluids;
 
@@ -60,6 +62,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	double[] field_147428_e;
 	double[] field_147425_f;
 	double[] field_147426_g;
+	private PerlinNoise noise;
 
 	public ChunkGeneratorArchipelago(World worldIn, long seed)
 	{
@@ -82,7 +85,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
 		this.field_147434_q = new double[825];
 		this.parabolicField = new float[25];
-
+		this.noise = new PerlinNoise();
 		for (int j = -2; j <= 2; ++j)
 		{
 			for (int k = -2; k <= 2; ++k)
@@ -195,17 +198,75 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		}
 	}
 
-	/**
-	 * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
-	 * specified chunk from the map seed and chunk seed
-	 */
+	public char[] getData(ChunkPrimer primer){
+		Field field = ReflectionHelper.findField(ChunkPrimer.class, new String[]{"data", "field_177860_a"});
+		try {
+			return (char[])field.get(primer);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public Chunk provideChunk(int x, int z)
 	{
 		this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
 		ChunkPrimer chunkprimer = new ChunkPrimer();
 		this.setBlocksInChunk(x, z, chunkprimer);
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
-		Block[] blocks = new Block[65536];
+		int jj = 0;
+		int i = x << 4;
+		int j = z << 4;
+		for (int k = i; k < i + 16; k++)
+		{
+			for (int m = j; m < j + 16; m++)
+			{
+				float i2 = 75;
+				i2 -= (Math.sqrt((0D-k)*(0D-k) + (0D-m)*(0D-m)) / 6) + (noise.turbulence2(k / 60F, m / 60F, 4F) * 5F);
+				if(i2 < 50f) { i2 = 50f; }
+
+				for (int i3 = 0; i3 < 256; i3++)
+				{
+					Block i4 = Blocks.air;
+					if(i2 > 67)
+					{
+						if(i3 < i2 - 3)
+						{
+							i4 = Blocks.stone;
+						}
+						else if(i3 < i2 - 1)
+						{
+							i4 = Blocks.dirt;
+						}
+						else if(i3 < i2)
+						{
+							i4 = Blocks.grass;
+						}
+					}
+					else
+					{
+						if(i3 < i2 - 6 + rand.nextInt(3))
+						{
+							i4 = Blocks.stone;
+						}
+						else if(i3 < i2 - 3)
+						{
+							i4 = Blocks.sandstone;
+						}
+						else if(i3 < i2)
+						{
+							i4 = Blocks.sand;
+						}
+						else if(i3 <= 63)
+						{
+							i4 = ModFluids.tropical_water;
+						}
+					}
+					getData(chunkprimer)[jj++] = (char) Block.BLOCK_STATE_IDS.get(i4.getDefaultState());
+				}
+			}
+		}
+
 		this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
 		Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 		byte[] abyte = chunk.getBiomeArray();
@@ -418,7 +479,6 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 			}
 		}
 	}	
-
 	public BlockPos getStrongholdGen(World worldIn, String string, BlockPos pos)
 	{
 		return null;
