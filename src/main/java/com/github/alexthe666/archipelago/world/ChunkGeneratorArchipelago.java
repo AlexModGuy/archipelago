@@ -60,12 +60,10 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	double[] field_147428_e;
 	double[] field_147425_f;
 	double[] field_147426_g;
-	private final MapGenBase iceCaveGenerator;
 
 	public ChunkGeneratorArchipelago(World worldIn, long seed)
 	{
 		this.settings = ChunkProviderSettings.Factory.jsonToFactory("").func_177864_b();
-		this.iceCaveGenerator = net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(new MapGenCaves(), net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.NETHER_CAVE);
 		this.field_177476_s = ModFluids.tropical_water;
 		this.stoneNoise = new double[256];
 		this.caveGenerator = new MapGenCaves();
@@ -108,9 +106,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		fact.depthNoiseScaleZ = 150;
 		fact.mainNoiseScaleX = 1400;
 		fact.mainNoiseScaleZ = 1400;
-		fact.seaLevel = 64;
-		fact.biomeSize = 5;
-		fact.riverSize = 0;
+		fact.seaLevel = 63;
 		this.settings = fact.func_177864_b();
 	}
 
@@ -209,10 +205,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		ChunkPrimer chunkprimer = new ChunkPrimer();
 		this.setBlocksInChunk(x, z, chunkprimer);
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
+		Block[] blocks = new Block[65536];
 		this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
-		this.iceCaveGenerator.generate(this.worldObj, x, z, chunkprimer);
-		this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
-
 		Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 		byte[] abyte = chunk.getBiomeArray();
 
@@ -220,7 +214,6 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		{
 			abyte[k] = (byte)BiomeGenBase.getIdForBiome(this.biomesForGeneration[k]);
 		}
-
 		chunk.generateSkylightMap();
 		return chunk;
 	}
@@ -357,53 +350,56 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	 */
 	public void populate(int x, int z)
 	{
-        BlockFalling.fallInstantly = true;
-        int i = x * 16;
-        int j = z * 16;
-        BlockPos blockpos = new BlockPos(i, 0, j);
-        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
-        this.rand.setSeed(this.worldObj.getSeed());
-        long k = this.rand.nextLong() / 2L * 2L + 1L;
-        long l = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed((long)x * k + (long)z * l ^ this.worldObj.getSeed());
-        boolean flag = false;
-        ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(x, z);
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
-        if (biomegenbase != Biomes.desert && biomegenbase != Biomes.desertHills && this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE))
-        {
-            int i1 = this.rand.nextInt(16) + 8;
-            int j1 = this.rand.nextInt(256);
-            int k1 = this.rand.nextInt(16) + 8;
-            (new WorldGenLakes(Blocks.water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
-        }
-        biomegenbase.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
-        WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biomegenbase, i + 8, j + 8, 16, 16, this.rand);
-        blockpos = blockpos.add(8, 0, 8);
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE))
-        {
-        for (int k2 = 0; k2 < 16; ++k2)
-        {
-            for (int j3 = 0; j3 < 16; ++j3)
-            {
-                BlockPos blockpos1 = this.worldObj.getPrecipitationHeight(blockpos.add(k2, 0, j3));
-                BlockPos blockpos2 = blockpos1.down();
+		BlockFalling.fallInstantly = true;
+		int i = x * 16;
+		int j = z * 16;
+		BlockPos blockpos = new BlockPos(i, 0, j);
+		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
+		this.rand.setSeed(this.worldObj.getSeed());
 
-                if (this.worldObj.canBlockFreezeWater(blockpos2))
-                {
-                    this.worldObj.setBlockState(blockpos2, Blocks.ice.getDefaultState(), 2);
-                }
+		long k = this.rand.nextLong() / 2L * 2L + 1L;
+		long l = this.rand.nextLong() / 2L * 2L + 1L;
+		this.rand.setSeed((long)x * k + (long)z * l ^ this.worldObj.getSeed());
+		boolean flag = false;
+		ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(x, z);
+		net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
+		if (biomegenbase != Biomes.desert && biomegenbase != Biomes.desertHills && this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
+			if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE))
+			{
+				int i1 = this.rand.nextInt(16) + 8;
+				int j1 = this.rand.nextInt(256);
+				int k1 = this.rand.nextInt(16) + 8;
+				(new WorldGenLakes(Blocks.water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
+			}
 
-                if (this.worldObj.canSnowAt(blockpos1, true))
-                {
-                    this.worldObj.setBlockState(blockpos1, Blocks.snow_layer.getDefaultState(), 2);
-                }
-            }
-        }
-        }
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.worldObj, x, z, flag);
-        BlockFalling.fallInstantly = false;
+		biomegenbase.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
+		if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
+			WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biomegenbase, i + 8, j + 8, 16, 16, this.rand);
+		blockpos = blockpos.add(8, 0, 8);
+		if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE))
+		{
+			for (int k2 = 0; k2 < 16; ++k2)
+			{
+				for (int j3 = 0; j3 < 16; ++j3)
+				{
+					BlockPos blockpos1 = this.worldObj.getPrecipitationHeight(blockpos.add(k2, 0, j3));
+					BlockPos blockpos2 = blockpos1.down();
+
+					if (this.worldObj.canBlockFreezeWater(blockpos2))
+					{
+						this.worldObj.setBlockState(blockpos2, Blocks.ice.getDefaultState(), 2);
+					}
+
+					if (this.worldObj.canSnowAt(blockpos1, true))
+					{
+						this.worldObj.setBlockState(blockpos1, Blocks.snow_layer.getDefaultState(), 2);
+					}
+				}
+			}
+		}
+		replaceBlocks(null, x, z);
+		net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.worldObj, x, z, flag);
+		BlockFalling.fallInstantly = false;
 	}
 
 	private void replaceBlocks(IChunkProvider provider, int chunkX, int chunkZ) {
@@ -413,6 +409,9 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 				for (int x = 0; x < 16; ++x) {
 					for (int y = 0; y < 16; ++y) {
 						for (int z = 0; z < 16; ++z) {
+							if(worldObj.getBlockState(new BlockPos(x, y, z)).getBlock() == ModFluids.tropical_water){
+								worldObj.setBlockState(new BlockPos(x, y, z), ModFluids.tropical_water.getDefaultState());
+							}
 						}
 					}
 				}

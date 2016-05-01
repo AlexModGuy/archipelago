@@ -14,22 +14,24 @@ public class GenLayerBiomesArchipelago extends GenLayer {
 		super(seed);
 		this.parent = genlayer;
 	}
-	
+
 	public GenLayerBiomesArchipelago(long seed) {
 		super(seed);
 	}
-	
+
 	@Override
 	public int[] getInts(int x, int z, int width, int depth)
 	{
-		int[] dest = IntCache.getIntCache(width*depth);
+		int[] dest = IntCache.getIntCache(width * depth);
 
-		for (int dz=0; dz<depth; dz++)
+		for (int dz=0; dz < depth; dz++)
 		{
-			for (int dx=0; dx<width; dx++)
+			for (int dx=0; dx < width; dx++)
 			{
-				this.initChunkSeed(dx+x, dz+z);
-				dest[(dx+dz*width)] = BiomeGenBase.getIdForBiome(this.allowedBiomes[nextInt(this.allowedBiomes.length)]);
+				if(this.nextInt(5) == 0){
+					this.initChunkSeed(dx+x, dz+z);
+					dest[(dx + dz * width)] = BiomeGenBase.getIdForBiome(this.allowedBiomes[nextInt(this.allowedBiomes.length)]);
+				}
 			}
 		}
 		return dest;

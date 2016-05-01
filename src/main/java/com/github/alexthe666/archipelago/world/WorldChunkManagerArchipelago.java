@@ -51,7 +51,7 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
 	public WorldChunkManagerArchipelago(long seed, WorldType worldtype)
 	{
 		this();
-		GenLayer[] agenlayer = GenLayerArchipelago.makeTheWorld(seed);
+		GenLayer[] agenlayer = GenLayerArchipelago.initializeAllBiomeGenerators(seed, worldtype, null);
 		this.genBiomes = agenlayer[0];
 		this.biomeIndexLayer = agenlayer[1];
 	}

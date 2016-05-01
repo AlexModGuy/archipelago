@@ -38,7 +38,6 @@ public class ItemSunstoneStaff extends Item {
 	{
 		if(isBroken){
 			return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
-
 		}else{
 			itemStackIn.setItem(ModItems.sunstone_staff_broken);
 			ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(playerIn, ArchipelagoEntityProperties.class);

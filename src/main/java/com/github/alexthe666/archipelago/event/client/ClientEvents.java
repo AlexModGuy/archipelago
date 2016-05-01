@@ -80,9 +80,10 @@ public class ClientEvents {
 	@SubscribeEvent
 	public void onFogColor(EntityViewRenderEvent.FogColors e){
 		if(e.getState().getBlock() == ModFluids.tropical_water){
-			e.setRed(0.152F);
-			e.setBlue(0.8F);
+			e.setRed(0F);
+			e.setBlue(0.7F);
 			e.setGreen(0.8F);
 		}
+		GlStateManager.setFogDensity(0.01F);
 	}
 }

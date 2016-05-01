@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -23,7 +24,6 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.core.ModBlocks;
 import com.github.alexthe666.archipelago.core.ModConfig;
 import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.enums.EnumParticle;
@@ -43,15 +43,22 @@ public class ServerEvents {
 				Archipelago.proxy.spawnParticle(EnumParticle.TELEPORT, event.getEntity().worldObj, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0);
 				event.getEntity().worldObj.spawnParticle(EnumParticleTypes.END_ROD, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0, new int[0]);
 			}
-			if(properties.teleportTime == 300){
+			if(properties.teleportTime == 300 && !event.getEntity().worldObj.isRemote){
 				if(!event.getEntityLiving().worldObj.isRemote){
 					EntityPlayerMP player = (EntityPlayerMP)event.getEntityLiving();
-					if (player.dimension != ModConfig.archipelagoDimensionId)
+
+					if (player.timeUntilPortal > 0)
 					{
+						player.timeUntilPortal = 10;
+					}
+					else if (player.dimension != ModConfig.archipelagoDimensionId)
+					{
+						player.timeUntilPortal = 10;
 						player.mcServer.getPlayerList().transferPlayerToDimension(player, ModConfig.archipelagoDimensionId, new TeleporterArchipelago(player.mcServer.worldServerForDimension(ModConfig.archipelagoDimensionId)));
 					}
 					else if (player.dimension == ModConfig.archipelagoDimensionId)
 					{
+						player.timeUntilPortal = 10;
 						player.mcServer.getPlayerList().transferPlayerToDimension(player, 0, new TeleporterArchipelago(player.mcServer.worldServerForDimension(0)));
 					}
 				}
