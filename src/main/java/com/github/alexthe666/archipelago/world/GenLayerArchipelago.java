@@ -16,36 +16,27 @@ public abstract class GenLayerArchipelago extends GenLayer{
 		super(seed);
 	}
 
-<<<<<<< HEAD
     public static GenLayer[] initializeAllBiomeGenerators(long seed, WorldType world, String s){
 		GenLayer biomes = new GenLayerBiomesArchipelago(1L);
 		biomes = new GenLayerZoom(1000L, biomes);
+		biomes = new GenLayerZoom(1001L, biomes);
+		biomes = new GenLayerZoom(1002L, biomes);
+		biomes = new GenLayerZoom(1003L, biomes);
+		biomes = new GenLayerZoom(1004L, biomes);
+		biomes = new GenLayerZoom(1005L, biomes);
 		GenLayer genlayervoronoizoom = new GenLayerVoronoiZoom(10L, biomes);
 		biomes.initWorldGenSeed(seed);
+		GenLayerAddIsland genlayeraddisland1 = new GenLayerAddIsland(3L, genlayervoronoizoom);
+		genlayeraddisland1 = new GenLayerAddIsland(50L, genlayeraddisland1);
+		genlayeraddisland1 = new GenLayerAddIsland(70L, genlayeraddisland1);
+		genlayeraddisland1 = new GenLayerAddIsland(100L, genlayeraddisland1);
+		genlayeraddisland1 = new GenLayerAddIsland(120L, genlayeraddisland1);
+		genlayeraddisland1 = new GenLayerAddIsland(140L, genlayeraddisland1);
+		genlayeraddisland1 = new GenLayerAddIsland(160L, genlayeraddisland1);
+		genlayeraddisland1 = new GenLayerAddIsland(180L, genlayeraddisland1);
 		genlayervoronoizoom.initWorldGenSeed(seed);
 		return new GenLayer[] {biomes, genlayervoronoizoom};
 	}
-=======
-//    public static GenLayer[] initializeAllBiomeGenerators(long seed, WorldType world, String s){
-//		GenLayer biomes = new GenLayerBiomesArchipelago(1L);
-//		biomes = new GenLayerZoom(1000L, biomes);
-//		biomes = new GenLayerZoom(1001L, biomes);
-//		biomes = new GenLayerZoom(1002L, biomes);
-//		biomes = new GenLayerZoom(1003L, biomes);
-//		biomes = new GenLayerZoom(1004L, biomes);
-//		biomes = new GenLayerZoom(1005L, biomes);
-//		GenLayer genlayervoronoizoom = new GenLayerVoronoiZoom(10L, biomes);
-//		GenLayer biomes1 = new GenLayerBiomesArchipelagoIslands(1L);
-//		biomes1 = new GenLayerZoom(250L, biomes1);
-//		biomes1 = new GenLayerZoom(251L, biomes1);
-//		biomes1 = new GenLayerZoom(252L, biomes1);
-//		biomes1 = new GenLayerZoom(253L, biomes1);
-//		biomes1 = new GenLayerZoom(254L, biomes1);
-//		biomes1 = new GenLayerZoom(255L, biomes1);
-//		GenLayer genlayervoronoizoom1 = new GenLayerVoronoiZoom(10L, biomes1);
-//		return new GenLayer[] {genlayervoronoizoom, genlayervoronoizoom1};
-//	}
->>>>>>> origin/master
 }
 
 

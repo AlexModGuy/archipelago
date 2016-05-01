@@ -30,7 +30,6 @@ import java.util.Random;
 
 public class ServerEvents {
 
-<<<<<<< HEAD
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event)
 	{
@@ -39,59 +38,26 @@ public class ServerEvents {
 			if(properties.teleportTime > 0 && properties.teleportTime <= 300){
 				properties.teleportTime++;
 				Random rand = new Random();
-				Archipelago.proxy.spawnParticle(EnumParticle.TELEPORT, event.getEntity().worldObj, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0);
+				Archipelago.PROXY.spawnParticle(EnumParticle.TELEPORT, event.getEntity().worldObj, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0);
 				event.getEntity().worldObj.spawnParticle(EnumParticleTypes.END_ROD, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0, new int[0]);
 			}
 			if(properties.teleportTime >= 300 && !event.getEntity().worldObj.isRemote){
 				if(!event.getEntityLiving().worldObj.isRemote){
-					EntityPlayerMP player = (EntityPlayerMP)event.getEntityLiving();
-
-					if (player.timeUntilPortal > 0)
-					{
-						player.timeUntilPortal = 10;
-					}
-					else if (player.dimension != ModConfig.archipelagoDimensionId)
-					{
-						player.timeUntilPortal = 10;
-						player.mcServer.getPlayerList().transferPlayerToDimension(player, ModConfig.archipelagoDimensionId, new TeleporterArchipelago(player.mcServer.worldServerForDimension(ModConfig.archipelagoDimensionId)));
-					}
-					else if (player.dimension == ModConfig.archipelagoDimensionId)
-					{
-						player.timeUntilPortal = 10;
-						player.mcServer.getPlayerList().transferPlayerToDimension(player, 0, new TeleporterArchipelago(player.mcServer.worldServerForDimension(0)));
-					}
+					EntityPlayerMP player = (EntityPlayerMP) event.getEntityLiving();
+	                if (player.timeUntilPortal > 0) {
+	                    player.timeUntilPortal = 10;
+	                } else if (player.dimension != ModConfig.ARCHIPELAGO_DIMENSION_ID) {
+	                    player.timeUntilPortal = 10;
+	                    player.mcServer.getPlayerList().transferPlayerToDimension(player, ModConfig.ARCHIPELAGO_DIMENSION_ID, new TeleporterArchipelago(player.mcServer.worldServerForDimension(ModConfig.ARCHIPELAGO_DIMENSION_ID)));
+	                } else if (player.dimension == ModConfig.ARCHIPELAGO_DIMENSION_ID) {
+	                    player.timeUntilPortal = 10;
+	                    player.mcServer.getPlayerList().transferPlayerToDimension(player, 0, new TeleporterArchipelago(player.mcServer.worldServerForDimension(0)));
+	                }
 				}
 				properties.teleportTime = 0;
 			}
 		}
 	}
-=======
-    @SubscribeEvent
-    public void onEntityUpdate(LivingUpdateEvent event) {
-        if (event.getEntity() instanceof EntityPlayer) {
-            ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(((EntityPlayer) event.getEntity()), ArchipelagoEntityProperties.class);
-            if (properties.teleportTime > 0 && properties.teleportTime <= 300) {
-                properties.teleportTime++;
-                Random rand = new Random();
-                Archipelago.PROXY.spawnParticle(EnumParticle.TELEPORT, event.getEntity().worldObj, (float) (event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double) event.getEntity().width), (float) (event.getEntity().posY + rand.nextDouble() * (double) event.getEntity().height), (float) (event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double) event.getEntity().width), 0, 0, 0);
-                event.getEntity().worldObj.spawnParticle(EnumParticleTypes.END_ROD, (float) (event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double) event.getEntity().width), (float) (event.getEntity().posY + rand.nextDouble() * (double) event.getEntity().height), (float) (event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double) event.getEntity().width), 0, 0, 0, new int[0]);
-            }
-            if (properties.teleportTime == 300 && !event.getEntity().worldObj.isRemote) {
-                EntityPlayerMP player = (EntityPlayerMP) event.getEntityLiving();
-                if (player.timeUntilPortal > 0) {
-                    player.timeUntilPortal = 10;
-                } else if (player.dimension != ModConfig.ARCHIPELAGO_DIMENSION_ID) {
-                    player.timeUntilPortal = 10;
-                    player.mcServer.getPlayerList().transferPlayerToDimension(player, ModConfig.ARCHIPELAGO_DIMENSION_ID, new TeleporterArchipelago(player.mcServer.worldServerForDimension(ModConfig.ARCHIPELAGO_DIMENSION_ID)));
-                } else if (player.dimension == ModConfig.ARCHIPELAGO_DIMENSION_ID) {
-                    player.timeUntilPortal = 10;
-                    player.mcServer.getPlayerList().transferPlayerToDimension(player, 0, new TeleporterArchipelago(player.mcServer.worldServerForDimension(0)));
-                }
-                properties.teleportTime = 0;
-            }
-        }
-    }
->>>>>>> origin/master
 
 
     @SubscribeEvent
