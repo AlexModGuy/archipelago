@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=lower": { "model": "archipelago:ceratozamia_mexicana_bottom" },
+        "half=upper":    { "model":"archipelago:ceratozamia_mexicana_top" }
+    }
+}

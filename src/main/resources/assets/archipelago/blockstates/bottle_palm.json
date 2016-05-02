@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=lower": { "model": "archipelago:bottle_palm_bottom" },
+        "half=upper":    { "model":"archipelago:bottle_palm_top" }
+    }
+}

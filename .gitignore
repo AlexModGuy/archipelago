@@ -20,16 +20,3 @@ build
 # other
 eclipse
 run
-config
-crash-reports
-bin
-resourcepacks
-logs
-saves
-options.txt
-screenshots
-llibrary
-archipelago
-usercache.json
-usernamecache.json
-usercache.json

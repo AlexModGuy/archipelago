@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "archipelago:blocks/ceratozamia_mexicana_bottom"
+    }
+}

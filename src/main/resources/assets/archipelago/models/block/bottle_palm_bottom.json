@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "archipelago:blocks/bottle_palm_bottom"
+    }
+}

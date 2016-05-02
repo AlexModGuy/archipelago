@@ -22,6 +22,6 @@ public class ModBlocks {
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum");
 		bottle_palm = new BlockTallPlant("bottle_palm");
 		ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana");
-		jambu = new BlockTallPlant("jambu");
+		jambu = new BlockShortPlant("jambu");
 	}
 }
