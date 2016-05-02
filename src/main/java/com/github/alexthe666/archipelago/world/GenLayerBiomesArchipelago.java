@@ -10,29 +10,30 @@ public class GenLayerBiomesArchipelago extends GenLayer {
 
 	protected BiomeGenBase[] allowedBiomes = {ModWorld.tropicOcean, ModWorld.tropicShallows, ModWorld.tropicReef};
 	protected BiomeGenBase[] allowedLandBiomes = {ModWorld.tropicGrasslands, ModWorld.tropicShrublands, ModWorld.tropicReef};
-
-	public GenLayerBiomesArchipelago(long seed, GenLayer genlayer) {
+	private boolean isIsland;
+	public GenLayerBiomesArchipelago(long seed, GenLayer genlayer, boolean isIsland) {
 		super(seed);
 		this.parent = genlayer;
+		this.isIsland = isIsland;
 	}
 
-	public GenLayerBiomesArchipelago(long seed) {
+	public GenLayerBiomesArchipelago(long seed, boolean isIsland) {
 		super(seed);
+		this.isIsland = isIsland;
 	}
 
 	@Override
 	public int[] getInts(int x, int z, int width, int depth)
 	{
 		int[] dest = IntCache.getIntCache(width * depth);
-		if(this.nextInt(15) == 0){
-			for (int dz=0; dz < depth; dz++)
+		for (int dz=0; dz < depth; dz++)
+		{
+			for (int dx=0; dx < width; dx++)
 			{
-				for (int dx=0; dx < width; dx++)
-				{
-						this.initChunkSeed(dx+x, dz+z);
-						dest[(dx + dz * width)] = BiomeGenBase.getIdForBiome(this.allowedBiomes[nextInt(this.allowedBiomes.length)]);
-				}
+				this.initChunkSeed(dx+x, dz+z);
+				dest[(dx + dz * width)] = BiomeGenBase.getIdForBiome(isIsland ? this.allowedLandBiomes[nextInt(this.allowedLandBiomes.length)] : this.allowedBiomes[nextInt(this.allowedBiomes.length)]);
 			}
+
 		}
 		return dest;
 	}

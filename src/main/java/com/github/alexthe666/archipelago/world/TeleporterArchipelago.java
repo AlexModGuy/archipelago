@@ -24,8 +24,10 @@ public class TeleporterArchipelago extends Teleporter {
 	public void placeInPortal(Entity entity, double x, double y, double z, float yaw)
 	{
 		BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z)));
-		entity.setLocationAndAngles(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, yaw, 0);
+		entity.setLocationAndAngles(0.5F, 90.5F, 0.5F, yaw, 0);
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
 	}
+	
+	  public boolean makePortal(Entity entityIn){return false;}
 
 }

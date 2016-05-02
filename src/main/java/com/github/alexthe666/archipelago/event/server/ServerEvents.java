@@ -59,24 +59,6 @@ public class ServerEvents {
 		}
 	}
 
-
-    @SubscribeEvent
-    public void onBucketFill(FillBucketEvent event) {
-        IBlockState iBlockState = event.getEntityPlayer().worldObj.getBlockState(new BlockPos(event.getTarget().hitVec.xCoord, event.getTarget().hitVec.yCoord, event.getTarget().hitVec.zCoord));
-        if (iBlockState.getBlock() == ModFluids.tropical_water && iBlockState.getValue(((BlockFluidClassic) ModFluids.tropical_water).LEVEL) == 0) {
-            System.out.println("i");
-            event.getEntityPlayer().worldObj.setBlockToAir(new BlockPos(event.getTarget().hitVec.xCoord, event.getTarget().hitVec.yCoord, event.getTarget().hitVec.zCoord));
-            event.setFilledBucket(new ItemStack(Items.water_bucket));
-            event.setResult(Result.ALLOW);
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerInteract(PlayerInteractEvent.RightClickBlock e) {
-        //	if(e.getEntityPlayer().worldObj.provider.getDimension() == ModConfig.ARCHIPELAGO_DIMENSION_ID)
-        //tryPlaceContainedLiquid(e.getEntityPlayer(), e.getEntityLiving().worldObj, new BlockPos(e.getHitVec()), e.getItemStack());
-    }
-
     public boolean tryPlaceContainedLiquid(EntityPlayer worldIn, World pos, BlockPos blockPos, ItemStack stack) {
         IBlockState iblockstate = pos.getBlockState(blockPos);
         Material material = iblockstate.getMaterial();

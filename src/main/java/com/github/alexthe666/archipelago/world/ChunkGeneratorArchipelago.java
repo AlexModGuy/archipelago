@@ -54,7 +54,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	private final float[] parabolicField;
 	private ChunkProviderSettings settings;
 	private Block field_177476_s;
-	private double[] stoneNoise;
+	private double[] stonenoise = new double[256];
 	private MapGenBase caveGenerator;
 	private MapGenScatteredFeature scatteredFeatureGenerator;
 	private BiomeGenBase[] biomesForGeneration;
@@ -68,7 +68,6 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	{
 		this.settings = ChunkProviderSettings.Factory.jsonToFactory("").func_177864_b();
 		this.field_177476_s = ModFluids.tropical_water;
-		this.stoneNoise = new double[256];
 		this.caveGenerator = new MapGenCaves();
 		this.scatteredFeatureGenerator = new MapGenScatteredFeature();
 		caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
@@ -117,7 +116,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	{
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, chunkX * 4 - 2, chunkZ * 4 - 2, 10, 10);
 		this.func_147423_a(chunkX * 4, 0, chunkZ * 4);
-
+		float width = 5;
+		int height = 74;
 		for (int k = 0; k < 4; ++k)
 		{
 			int l = k * 5;
@@ -182,38 +182,13 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		}
 	}
 
-	public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, BiomeGenBase[] biomesIn)
-	{
-		if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks((IChunkGenerator) this, x, z, primer, this.worldObj)) return;
-		double d0 = 0.03125D;
-		this.stoneNoise = this.field_147430_m.func_151599_a(this.stoneNoise, (double)(x * 16), (double)(z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
-
-		for (int i = 0; i < 16; ++i)
-		{
-			for (int j = 0; j < 16; ++j)
-			{
-				BiomeGenBase biomegenbase = biomesIn[j + i * 16];
-				biomegenbase.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + i, z * 16 + j, this.stoneNoise[j + i * 16]);
-			}
-		}
-	}
-
-	public char[] getData(ChunkPrimer primer){
-		Field field = ReflectionHelper.findField(ChunkPrimer.class, new String[]{"data", "field_177860_a"});
-		try {
-			return (char[])field.get(primer);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public Chunk provideChunk(int x, int z)
 	{
 		this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
 		ChunkPrimer chunkprimer = new ChunkPrimer();
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
 		this.setBlocksInChunk(x, z, chunkprimer);
+		this.generateIsland(x, z, chunkprimer);
 		this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
 		Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 		byte[] abyte = chunk.getBiomeArray();
@@ -224,6 +199,22 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		}
 		chunk.generateSkylightMap();
 		return chunk;
+	}
+
+	public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, BiomeGenBase[] biomesIn)
+	{
+		if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj)) return;
+		double d0 = 0.03125D;
+		this.stonenoise = this.field_147430_m.func_151599_a(this.stonenoise, (double)(x * 16), (double)(z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+
+		for (int i = 0; i < 16; ++i)
+		{
+			for (int j = 0; j < 16; ++j)
+			{
+				BiomeGenBase biomegenbase = biomesIn[j + i * 16];
+				biomegenbase.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + i, z * 16 + j, this.stonenoise[j + i * 16]);
+			}
+		}
 	}
 
 	private void func_147423_a(int chunkX, int chunkZ, int var1)
@@ -353,9 +344,61 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		return true;
 	}
 
-	/**
-	 * Populates chunk with ores etc etc
-	 */
+	public void generateIsland(int x, int z, ChunkPrimer primer){
+		int index = 0;
+		int blockX = x << 4;
+		int blockZ = z << 4;
+		for (int shiftedX = blockX; shiftedX < blockX + 16; shiftedX++){
+			for (int shiftedZ = blockZ; shiftedZ < blockZ + 16; shiftedZ++){
+				float maximumY = 75;
+				maximumY -= (Math.sqrt((-shiftedX * -shiftedX) + (-shiftedZ * -shiftedZ)) / 6) + (noise.turbulence2(shiftedX / 60F, shiftedZ / 60F, 4F) * 5F);
+				if(maximumY < 50f){
+					maximumY = 50f;
+				}
+				for (int shiftedY = 0; shiftedY < 256; shiftedY++){
+					Block replacement = Blocks.air;
+					if(maximumY > 67){
+						if(shiftedY < maximumY - 3){
+							replacement = Blocks.stone;
+						}
+						else if(shiftedY < maximumY - 1){
+							replacement = Blocks.dirt;
+						}
+						else if(shiftedY < maximumY){
+							replacement = Blocks.grass;
+						}
+					}
+					else
+					{
+						if(shiftedY < maximumY - 6 + rand.nextInt(3)){
+							replacement = Blocks.stone;
+						}
+						else if(shiftedY < maximumY - 3){
+							replacement = Blocks.sandstone;
+						}
+						else if(shiftedY < maximumY){
+							replacement = Blocks.sand;
+						}
+						else if(shiftedY < 63){
+							replacement = ModFluids.tropical_water;
+						}
+					}
+					getData(primer)[index++] = (char) Block.BLOCK_STATE_IDS.get(replacement.getDefaultState());
+				}
+			}
+		}
+	}
+
+	public char[] getData(ChunkPrimer primer){
+		Field field = ReflectionHelper.findField(ChunkPrimer.class, new String[]{"data", "field_177860_a"});
+		try {
+			return (char[])field.get(primer);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public void populate(int x, int z)
 	{
 		BlockFalling.fallInstantly = true;
@@ -369,9 +412,6 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		this.rand.setSeed((long)x * k + (long)z * l ^ this.worldObj.getSeed());
 		boolean flag = false;
 		ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(x, z);
-		if(this.rand.nextInt(20) == 0){
-			new WorldGeneratorArchipelagoIsland(70, 70, worldObj.getSeed()).generate(worldObj, rand, blockpos);
-		}
 		net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
 		if (biomegenbase != Biomes.desert && biomegenbase != Biomes.desertHills && this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
 			if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE))
@@ -379,7 +419,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 				int i1 = this.rand.nextInt(16) + 8;
 				int j1 = this.rand.nextInt(256);
 				int k1 = this.rand.nextInt(16) + 8;
-				(new WorldGenLakes(Blocks.water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
+				(new WorldGenLakes(ModFluids.tropical_water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
 			}
 
 		biomegenbase.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
