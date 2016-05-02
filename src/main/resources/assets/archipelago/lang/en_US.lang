@@ -2,6 +2,11 @@ itemGroup.archipelago=Archipelago
 
 tile.archipelago.tropical_water.name=Water
 
+tile.archipelago.plant.anthurium_andraeanum.name=Anthurium Andraeanum
+tile.archipelago.plant.bottle_palm.name=Bottle Palm
+tile.archipelago.plant.ceratozamia_mexicana.name=Ceratozamia Mexicana
+tile.archipelago.plant.jambu.name=Jambu
+
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
 item.archipelago.sunstone_staff_broken.name=Broken Sunstone Staff

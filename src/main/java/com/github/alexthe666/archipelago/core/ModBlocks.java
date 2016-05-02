@@ -1,24 +1,27 @@
 package com.github.alexthe666.archipelago.core;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fluids.BlockFluidClassic;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import com.github.alexthe666.archipelago.block.BlockShortPlant;
+import com.github.alexthe666.archipelago.block.BlockTallPlant;
+import com.google.common.collect.Lists;
 
 public class ModBlocks {
 
-	public static void init(){
+	public List<String> list = Lists.newArrayList();
+	public static Block anthurium_andraeanum;
+	public static Block bottle_palm;
+	public static Block ceratozamia_mexicana;
+	public static Block jambu;
 
+	public static void init(){
+		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum");
+		bottle_palm = new BlockTallPlant("bottle_palm");
+		ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana");
+		jambu = new BlockTallPlant("jambu");
 	}
 }
