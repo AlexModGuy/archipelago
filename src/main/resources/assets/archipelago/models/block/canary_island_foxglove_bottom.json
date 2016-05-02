@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "archipelago:blocks/canary_island_foxglove_bottom"
+    }
+}
