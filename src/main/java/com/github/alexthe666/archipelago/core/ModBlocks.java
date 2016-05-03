@@ -18,12 +18,14 @@ public class ModBlocks {
 	public static Block ceratozamia_mexicana;
 	public static Block jambu;
 	public static Block canary_island_foxglove;
-
+	public static Block la_palma_sow_thistle;
+	
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum");
 		bottle_palm = new BlockTallPlant("bottle_palm");
 		ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana");
 		jambu = new BlockShortPlant("jambu");
 		canary_island_foxglove = new BlockTallPlant("canary_island_foxglove");
+		la_palma_sow_thistle =new BlockTallPlant("la_palma_sow_thistle");
 	}
 }

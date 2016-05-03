@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "archipelago:blocks/la_palma_sow_thistle_top"
+    }
+}

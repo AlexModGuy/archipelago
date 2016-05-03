@@ -1,15 +1,16 @@
 package com.github.alexthe666.archipelago.block;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
-
-import com.github.alexthe666.archipelago.core.ModFluids;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -21,8 +22,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class BlockTropicalWater extends BlockFluidClassic{
 
@@ -40,6 +44,38 @@ public class BlockTropicalWater extends BlockFluidClassic{
 			return false;
 		}else{
 			return side == EnumFacing.UP ? true : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+		}
+	}
+
+	@Override
+	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+		if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
+			EntityLivingBase living = (EntityLivingBase)entityIn;
+			try {
+				ReflectionHelper.findMethod(Entity.class, entityIn, new String[]{"setFlag", "func_70052_a"}, int.class, boolean.class).invoke(living, 7, true);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+		if(entityIn instanceof EntityPlayer){
+			EntityPlayer player = (EntityPlayer)entityIn;
+			if(!player.capabilities.isFlying){
+				try {
+					ReflectionHelper.findMethod(Entity.class, entityIn, new String[]{"setFlag", "func_70052_a"}, int.class, boolean.class).invoke(player, 7, true);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				entityIn.motionX *= 1.02;
+				entityIn.motionZ *= 1.02;
+			}
 		}
 	}
 

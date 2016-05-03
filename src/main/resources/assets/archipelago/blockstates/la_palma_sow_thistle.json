@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=lower": { "model": "archipelago:la_palma_sow_thistle_bottom" },
+        "half=upper":    { "model":"archipelago:la_palma_sow_thistle_top" }
+    }
+}
