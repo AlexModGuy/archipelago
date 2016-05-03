@@ -37,6 +37,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.core.ModWorld;
 
 public class ChunkGeneratorArchipelago implements IChunkGenerator{
 
@@ -400,6 +401,18 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		int j = z * 16;
 		BlockPos blockpos = new BlockPos(i, 0, j);
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
+		for(int shiftedX = i; shiftedX < i + 16; shiftedX++){
+			for(int shiftedZ = j; shiftedZ < j + 16; shiftedZ++){
+				BlockPos horizon = this.worldObj.getHeight(new BlockPos(shiftedX, 0, shiftedZ));
+				if(this.worldObj.getBlockState(horizon).getBlock() != ModFluids.tropical_water){
+					if(this.worldObj.getBlockState(horizon).getBlock() == Blocks.sand){
+						Chunk chunk = this.worldObj.getChunkFromBlockCoords(horizon);
+						chunk.getBiomeArray()[ shiftedX << 4 | shiftedZ ] = (byte) BiomeGenBase.getIdForBiome(ModWorld.tropicBeach);
+						chunk.setModified(true);
+					}
+				}
+			}	
+		}
 		this.rand.setSeed(this.worldObj.getSeed());
 		long k = this.rand.nextLong() / 2L * 2L + 1L;
 		long l = this.rand.nextLong() / 2L * 2L + 1L;
