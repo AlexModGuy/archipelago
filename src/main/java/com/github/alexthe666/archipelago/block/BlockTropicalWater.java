@@ -49,23 +49,11 @@ public class BlockTropicalWater extends BlockFluidClassic{
 
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
-		if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
-			EntityLivingBase living = (EntityLivingBase)entityIn;
-			try {
-				ReflectionHelper.findMethod(Entity.class, entityIn, new String[]{"setFlag", "func_70052_a"}, int.class, boolean.class).invoke(living, 7, true);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-		}
-		if(entityIn instanceof EntityPlayer){
-			EntityPlayer player = (EntityPlayer)entityIn;
-			if(!player.capabilities.isFlying){
+		if(!entityIn.onGround){
+			if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
+				EntityLivingBase living = (EntityLivingBase)entityIn;
 				try {
-					ReflectionHelper.findMethod(Entity.class, entityIn, new String[]{"setFlag", "func_70052_a"}, int.class, boolean.class).invoke(player, 7, true);
+					ReflectionHelper.findMethod(Entity.class, entityIn, new String[]{"setFlag", "func_70052_a"}, int.class, boolean.class).invoke(living, 7, true);
 				} catch (IllegalAccessException e) {
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
@@ -73,8 +61,22 @@ public class BlockTropicalWater extends BlockFluidClassic{
 				} catch (InvocationTargetException e) {
 					e.printStackTrace();
 				}
-				entityIn.motionX *= 1.02;
-				entityIn.motionZ *= 1.02;
+			}
+			if(entityIn instanceof EntityPlayer){
+				EntityPlayer player = (EntityPlayer)entityIn;
+				if(!player.capabilities.isFlying){
+					try {
+						ReflectionHelper.findMethod(Entity.class, entityIn, new String[]{"setFlag", "func_70052_a"}, int.class, boolean.class).invoke(player, 7, true);
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+					}
+					entityIn.motionX *= 1.02;
+					entityIn.motionZ *= 1.02;
+				}
 			}
 		}
 	}
