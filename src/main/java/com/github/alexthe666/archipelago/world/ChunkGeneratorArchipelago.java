@@ -64,9 +64,11 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	double[] field_147425_f;
 	double[] field_147426_g;
 	private PerlinNoise noise;
+	private int genIslandX;
+	private float genIslandY;
+	private int genIslandZ;
 
-	public ChunkGeneratorArchipelago(World worldIn, long seed)
-	{
+	public ChunkGeneratorArchipelago(World worldIn, long seed){
 		this.settings = ChunkProviderSettings.Factory.jsonToFactory("").func_177864_b();
 		this.field_177476_s = ModFluids.tropical_water;
 		this.caveGenerator = new MapGenCaves();
@@ -111,10 +113,10 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		fact.mainNoiseScaleZ = 1400;
 		fact.seaLevel = 63;
 		this.settings = fact.func_177864_b();
+		this.genIslandY = 75;
 	}
 
-	public void setBlocksInChunk(int chunkX, int chunkZ, ChunkPrimer primer)
-	{
+	public void setBlocksInChunk(int chunkX, int chunkZ, ChunkPrimer primer){
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, chunkX * 4 - 2, chunkZ * 4 - 2, 10, 10);
 		this.generateIsland(chunkX, chunkZ, primer);
 		this.func_147423_a(chunkX * 4, 0, chunkZ * 4);
@@ -178,8 +180,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		}
 	}
 
-	public Chunk provideChunk(int x, int z)
-	{
+	public Chunk provideChunk(int x, int z){
 		this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
 		ChunkPrimer chunkprimer = new ChunkPrimer();
 		this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
@@ -196,8 +197,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		return chunk;
 	}
 
-	public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, BiomeGenBase[] biomesIn)
-	{
+	public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, BiomeGenBase[] biomesIn){
 		if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj)) return;
 		double d0 = 0.03125D;
 		this.stonenoise = this.field_147430_m.func_151599_a(this.stonenoise, (double)(x * 16), (double)(z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
@@ -212,8 +212,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		}
 	}
 
-	private void func_147423_a(int chunkX, int chunkZ, int var1)
-	{
+	private void func_147423_a(int chunkX, int chunkZ, int var1){
 		this.field_147426_g = this.noiseGen6.generateNoiseOctaves(this.field_147426_g, chunkX, var1, 5, 5, (double)this.settings.depthNoiseScaleX, (double)this.settings.depthNoiseScaleZ, (double)this.settings.depthNoiseScaleExponent);
 		float f = this.settings.coordinateScale;
 		float f1 = this.settings.heightScale;
@@ -331,11 +330,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		}
 	}
 
-	/**
-	 * Checks to see if a chunk exists at x, z
-	 */
-	public boolean chunkExists(int x, int z)
-	{
+	public boolean chunkExists(int x, int z){
 		return true;
 	}
 
@@ -345,33 +340,39 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		int blockZ = z << 4;
 		for (int shiftedX = blockX; shiftedX < blockX + 16; shiftedX++){
 			for (int shiftedZ = blockZ; shiftedZ < blockZ + 16; shiftedZ++){
-				float maximumY = 75;
-				maximumY -= (Math.sqrt((-shiftedX * -shiftedX) + (-shiftedZ * -shiftedZ)) / 6) + (noise.turbulence2(shiftedX / 60F, shiftedZ / 60F, 7F) * 5F);
-				if(maximumY < 50f){
-					maximumY = 50f;
+				genIslandY -= (Math.sqrt(((genIslandX - shiftedX) * (genIslandX - shiftedX)) + ((genIslandZ - shiftedZ) * (genIslandZ - shiftedZ))) / 6) + (noise.turbulence2(shiftedX / 60F, shiftedZ / 60F, 7F) * 2F);
+				if(genIslandY < 30f){
+					genIslandY = 30f;	
+					if(shiftedX == blockX && shiftedZ == blockZ && this.rand.nextInt(60) == 0){
+						genIslandY = 75;
+						genIslandX = this.getCoordForIsland(x);
+						genIslandZ = this.getCoordForIsland(z);
+						this.generateIsland(x, z, primer);
+						return;
+					}
 				}
 				for (int shiftedY = 0; shiftedY < 256; shiftedY++){
 					Block replacement = Blocks.air;
-					if(maximumY > 65){
-						if(shiftedY < maximumY - 3){
+					if(genIslandY > 65){
+						if(shiftedY < genIslandY - 3){
 							replacement = Blocks.stone;
 						}
-						else if(shiftedY < maximumY - 1){
+						else if(shiftedY < genIslandY - 1){
 							replacement = Blocks.dirt;
 						}
-						else if(shiftedY < maximumY){
+						else if(shiftedY < genIslandY){
 							replacement = Blocks.grass;
 						}
 					}
 					else
 					{
-						if(shiftedY < maximumY - 6 + rand.nextInt(3)){
+						if(shiftedY < genIslandY - 6 + rand.nextInt(3)){
 							replacement = Blocks.stone;
 						}
-						else if(shiftedY < maximumY - 3){
+						else if(shiftedY < genIslandY - 3){
 							replacement = Blocks.sandstone;
 						}
-						else if(shiftedY < maximumY){
+						else if(shiftedY < genIslandY){
 							replacement = Blocks.sand;
 						}
 						else if(shiftedY < 63){
@@ -382,6 +383,10 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 				}
 			}
 		}
+	}
+	
+	private int getCoordForIsland(int chunkPos){
+		return (chunkPos * 16) + this.rand.nextInt(16);
 	}
 
 	public char[] getData(ChunkPrimer primer){
@@ -394,11 +399,11 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 		return null;
 	}
 
-	public void populate(int x, int z)
-	{
+	public void populate(int x, int z){
 		BlockFalling.fallInstantly = true;
 		int i = x * 16;
 		int j = z * 16;
+		Chunk chunk = this.worldObj.getChunkFromChunkCoords(x, z);
 		BlockPos blockpos = new BlockPos(i, 0, j);
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
 		for(int shiftedX = i; shiftedX < i + 16; shiftedX++){
@@ -406,7 +411,6 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 				BlockPos horizon = this.worldObj.getHeight(new BlockPos(shiftedX, 0, shiftedZ));
 				if(this.worldObj.getBlockState(horizon).getBlock() != ModFluids.tropical_water){
 					if(this.worldObj.getBlockState(horizon).getBlock() == Blocks.sand){
-						Chunk chunk = this.worldObj.getChunkFromBlockCoords(horizon);
 						chunk.getBiomeArray()[ shiftedX << 4 | shiftedZ ] = (byte) BiomeGenBase.getIdForBiome(ModWorld.tropicBeach);
 						chunk.setModified(true);
 					}
@@ -475,8 +479,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 			}
 		}*/
 	}	
-	public BlockPos getStrongholdGen(World worldIn, String string, BlockPos pos)
-	{
+	
+	public BlockPos getStrongholdGen(World worldIn, String string, BlockPos pos){
 		return null;
 	}
 
@@ -485,7 +489,6 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 	@Override
 	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(pos);
-
 		return biomegenbase.getSpawnableList(creatureType);
 	}
 
