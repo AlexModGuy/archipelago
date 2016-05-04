@@ -336,20 +336,21 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator{
 
 	public void generateIsland(int x, int z, ChunkPrimer primer){
 		int index = 0;
-		int blockX = x << 4;
-		int blockZ = z << 4;
+		int blockX = x * 16;
+		int blockZ = z * 16;
+		int rounds = 0;
 		for (int shiftedX = blockX; shiftedX < blockX + 16; shiftedX++){
 			for (int shiftedZ = blockZ; shiftedZ < blockZ + 16; shiftedZ++){
 				genIslandY -= (Math.sqrt(((genIslandX - shiftedX) * (genIslandX - shiftedX)) + ((genIslandZ - shiftedZ) * (genIslandZ - shiftedZ))) / 6) + (noise.turbulence2(shiftedX / 60F, shiftedZ / 60F, 7F) * 2F);
 				if(genIslandY < 30f){
-					genIslandY = 30f;	
-					if(shiftedX == blockX && shiftedZ == blockZ && this.rand.nextInt(60) == 0){
-						genIslandY = 75;
-						genIslandX = this.getCoordForIsland(x);
-						genIslandZ = this.getCoordForIsland(z);
-						this.generateIsland(x, z, primer);
-						return;
-					}
+					genIslandY = 30f;
+					rounds++;
+				}
+				if(shiftedX == blockX + 16 && shiftedZ == blockZ + 16 && this.rand.nextInt(10) == 0){
+					genIslandY = 75;
+					genIslandX = this.getCoordForIsland(x);
+					genIslandZ = this.getCoordForIsland(z);
+					return;
 				}
 				for (int shiftedY = 0; shiftedY < 256; shiftedY++){
 					Block replacement = Blocks.air;
