@@ -40,16 +40,16 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
 		IBlockState neighbor = blockAccess.getBlockState(pos.offset(side));
-		if (neighbor.getMaterial() == blockState.getMaterial() || !neighbor.isOpaqueCube()){
+		if (neighbor.getMaterial() == blockState.getMaterial() || (!neighbor.isOpaqueCube() && neighbor.getBlock() != Blocks.air)){
 			return false;
 		}else{
-			return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+			return  side == EnumFacing.UP ? true : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 		}
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
-		if(!entityIn.onGround && entityIn.getRidingEntity() != null){
+		if(!entityIn.onGround && entityIn.getRidingEntity() == null){
 			if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
 				EntityLivingBase living = (EntityLivingBase)entityIn;
 				try {
@@ -384,4 +384,15 @@ public class BlockTropicalWater extends BlockFluidClassic{
 		}
 	}
 
+    @SideOnly(Side.CLIENT)
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        int i = source.getCombinedLight(pos, 0);
+        int j = source.getCombinedLight(pos.up(), 0);
+        int k = i & 255;
+        int l = j & 255;
+        int i1 = i >> 16 & 255;
+        int j1 = j >> 16 & 255;
+        return (k > l ? k : l) | (i1 > j1 ? i1 : j1) << 16;
+    }
 }

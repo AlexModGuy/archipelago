@@ -302,7 +302,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator
 				int i1 = this.rand.nextInt(16) + 8;
 				int j1 = this.rand.nextInt(256);
 				int k1 = this.rand.nextInt(16) + 8;
-				(new WorldGenLakes(ModFluids.tropical_water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
+				(new WorldGenArchipelagoLakes(ModFluids.tropical_water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
 			}
 
 		biomegenbase.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
