@@ -40,16 +40,16 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
 		IBlockState neighbor = blockAccess.getBlockState(pos.offset(side));
-		if (neighbor.getMaterial() == blockState.getMaterial() || neighbor.getMaterial() == Material.glass){
+		if (neighbor.getMaterial() == blockState.getMaterial() || !neighbor.isOpaqueCube()){
 			return false;
 		}else{
-			return side == EnumFacing.UP ? true : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+			return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 		}
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
-		if(!entityIn.onGround){
+		if(!entityIn.onGround && entityIn.getRidingEntity() != null){
 			if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
 				EntityLivingBase living = (EntityLivingBase)entityIn;
 				try {

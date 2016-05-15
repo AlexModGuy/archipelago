@@ -21,11 +21,11 @@ public class ModBlocks {
 	public static Block la_palma_sow_thistle;
 	
 	public static void init(){
-		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum");
-		bottle_palm = new BlockTallPlant("bottle_palm");
-		ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana");
-		jambu = new BlockShortPlant("jambu");
-		canary_island_foxglove = new BlockTallPlant("canary_island_foxglove");
-		la_palma_sow_thistle =new BlockTallPlant("la_palma_sow_thistle");
+		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5);
+		bottle_palm = new BlockTallPlant("bottle_palm", 5);
+		ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana", 5);
+		jambu = new BlockShortPlant("jambu", 5);
+		canary_island_foxglove = new BlockTallPlant("canary_island_foxglove", 5);
+		la_palma_sow_thistle =new BlockTallPlant("la_palma_sow_thistle", 5);
 	}
 }

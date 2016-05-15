@@ -34,6 +34,7 @@ public class ItemSunstoneStaff extends Item {
 
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
 	{
+        playerIn.setActiveHand(hand);
 		if(isBroken){
 			return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 		}else{

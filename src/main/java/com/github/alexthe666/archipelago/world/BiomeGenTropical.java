@@ -1,11 +1,15 @@
 package com.github.alexthe666.archipelago.world;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ColorizerGrass;
@@ -15,8 +19,12 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.github.alexthe666.archipelago.block.BlockTallPlant;
+import com.github.alexthe666.archipelago.core.ModBlocks;
+import com.github.alexthe666.archipelago.core.ModWorld;
 import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
 import com.github.alexthe666.archipelago.enums.EnumGrassColor;
+import com.github.alexthe666.archipelago.util.PlantEntry;
 
 public class BiomeGenTropical extends BiomeGenBase
 {
@@ -32,6 +40,14 @@ public class BiomeGenTropical extends BiomeGenBase
 		this.topBlock = biomeSediment.topBlock.getDefaultState();
 		this.fillerBlock = biomeSediment.bottomBlock.getDefaultState();
 		registerBiome(id, name, this);
+		this.theBiomeDecorator.reedsPerChunk = -1;
+		this.theBiomeDecorator.grassPerChunk = 3;
+
+	}
+
+	public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
+	{
+		return BlockFlower.EnumFlowerType.values()[rand.nextInt(2)];
 	}
 
 	public BiomeGenBase.TempCategory getTempCategory()
@@ -73,10 +89,10 @@ public class BiomeGenTropical extends BiomeGenBase
 							iblockstate = AIR;
 							iblockstate1 = STONE;
 						}
-						else if (j1 >= i - 4 && j1 <= i + 1)
+						else if (j1 >= i - 13 && j1 <= i + 1)
 						{
-							iblockstate = this.topBlock;
-							iblockstate1 = this.fillerBlock;
+							iblockstate = Blocks.sand.getDefaultState();
+							iblockstate1 = Blocks.sand.getDefaultState();
 						}
 
 						if (j1 < i && (iblockstate == null || iblockstate.getMaterial() == Material.air))
@@ -92,7 +108,6 @@ public class BiomeGenTropical extends BiomeGenBase
 						}
 
 						j = k;
-
 						if (j1 >= i - 1)
 						{
 							chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
