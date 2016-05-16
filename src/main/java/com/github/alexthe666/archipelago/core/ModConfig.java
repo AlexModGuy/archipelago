@@ -16,9 +16,13 @@ public class ModConfig {
 	public static int dryScrublandId;
 	public static int ashFieldId;
 	public static int volcanoId;
+	public static int tropicSeaGrassBedId;
+	public static int tropicBlueHolesId;
+	public static int tropicTrenchId;
+	public static int tropicKelpForestId;
 	
 	public static void load(Configuration config){
-		ARCHIPELAGO_DIMENSION_ID = config.get("ID's", "Archipelago Dimension ID", 23).getInt();
+		ARCHIPELAGO_DIMENSION_ID = config.get("ID's", "Archipelago Dimension ID", 137).getInt();
 		tropicOceanId = config.get("ID's", "Tropic Ocean Biome ID", 168).getInt(); 
 		tropicShallowsId = config.get("ID's", "Tropic Shallows Biome ID", 169).getInt(); 
 		tropicReefId = config.get("ID's", "Tropic Reef Biome ID", 170).getInt(); 
@@ -30,5 +34,9 @@ public class ModConfig {
 		dryScrublandId = config.get("ID's", "Dry Scrubland Biome ID", 176).getInt(); 
 		ashFieldId = config.get("ID's", "Ash Field Biome ID", 177).getInt(); 
 		volcanoId = config.get("ID's", "Volcano Biome ID", 178).getInt(); 
+		tropicSeaGrassBedId = config.get("ID's", "Tropic Sea Grass Bed Biome ID", 179).getInt(); 
+		tropicBlueHolesId = config.get("ID's", "Tropic Blue Holes Biome ID", 180).getInt(); 
+		tropicTrenchId = config.get("ID's", "Tropic Trench Biome ID", 181).getInt(); 
+		tropicKelpForestId = config.get("ID's", "Tropic Kelp Forest Biome ID", 182).getInt(); 
 	}
 }

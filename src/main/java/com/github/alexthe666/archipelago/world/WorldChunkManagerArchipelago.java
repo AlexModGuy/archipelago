@@ -37,7 +37,6 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
 		this.biomesToSpawnIn.add(ModWorld.tropicOcean);
 		this.biomesToSpawnIn.add(ModWorld.tropicShallows);
 		this.biomesToSpawnIn.add(ModWorld.tropicReef);
-		this.biomesToSpawnIn.add(ModWorld.tropicBeach);
 		this.biomesToSpawnIn.add(ModWorld.tropicGrasslands);
 		this.biomesToSpawnIn.add(ModWorld.tropicShrublands);
 		this.biomesToSpawnIn.add(ModWorld.tropicJungle);
@@ -45,6 +44,11 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
 		this.biomesToSpawnIn.add(ModWorld.dryScrubland);
 		this.biomesToSpawnIn.add(ModWorld.ashField);
 		this.biomesToSpawnIn.add(ModWorld.volcano);
+		this.biomesToSpawnIn.add(ModWorld.tropicSeaGrassBed);
+		this.biomesToSpawnIn.add(ModWorld.tropicBlueHoles);
+		this.biomesToSpawnIn.add(ModWorld.tropicTrench);
+		this.biomesToSpawnIn.add(ModWorld.tropicKelpForest);
+
 
 	}
 

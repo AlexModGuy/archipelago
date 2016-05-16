@@ -47,6 +47,23 @@ public class BlockTropicalWater extends BlockFluidClassic{
 		}
 	}
 
+	public void changeToFoam(World world, BlockPos pos){
+		for (EnumFacing side : EnumFacing.Plane.HORIZONTAL)
+		{
+			IBlockState neighbor = world.getBlockState(pos.offset(side));
+			IBlockState up = world.getBlockState(pos.up());
+
+			if (neighbor.getMaterial() != Material.water && up.getMaterial() != Material.water){
+				if(this.definedFluid.equals(ModFluids.fluid_tropical_water)){
+					world.setBlockState(pos, ModFluids.tropical_water_seafoam.getDefaultState());
+				}
+				if(this.definedFluid.equals(ModFluids.fluid_tropical_water_seafoam)){
+					world.setBlockState(pos, ModFluids.tropical_water.getDefaultState());
+				}
+			}
+		}
+	}
+	//definedFluid
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
 		if(!entityIn.onGround && entityIn.getRidingEntity() == null){
@@ -109,6 +126,7 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
 	{
 		super.updateTick(worldIn, pos, state, rand);
+		changeToFoam(worldIn, pos);
 		int i = ((Integer)state.getValue(LEVEL)).intValue();
 		int j = 1;
 
@@ -347,7 +365,12 @@ public class BlockTropicalWater extends BlockFluidClassic{
 
 	private void placeStaticBlock(World worldIn, BlockPos pos, IBlockState currentState)
 	{
-		worldIn.setBlockState(pos, ModFluids.tropical_water.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
+		if(this.definedFluid.equals(ModFluids.fluid_tropical_water)){
+			worldIn.setBlockState(pos, ModFluids.tropical_water.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
+		}else{
+			worldIn.setBlockState(pos, ModFluids.tropical_water_seafoam.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
+
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -384,15 +407,15 @@ public class BlockTropicalWater extends BlockFluidClassic{
 		}
 	}
 
-    @SideOnly(Side.CLIENT)
-    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        int i = source.getCombinedLight(pos, 0);
-        int j = source.getCombinedLight(pos.up(), 0);
-        int k = i & 255;
-        int l = j & 255;
-        int i1 = i >> 16 & 255;
-        int j1 = j >> 16 & 255;
-        return (k > l ? k : l) | (i1 > j1 ? i1 : j1) << 16;
-    }
+	@SideOnly(Side.CLIENT)
+	public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		int i = source.getCombinedLight(pos, 0);
+		int j = source.getCombinedLight(pos.up(), 0);
+		int k = i & 255;
+		int l = j & 255;
+		int i1 = i >> 16 & 255;
+		int j1 = j >> 16 & 255;
+				return (k > l ? k : l) | (i1 > j1 ? i1 : j1) << 16;
+	}
 }

@@ -1,6 +1,7 @@
 itemGroup.archipelago=Archipelago
 
 tile.archipelago.tropical_water.name=Water
+tile.archipelago.tropical_water_seafoam.name=Water
 
 tile.archipelago.plant.anthurium_andraeanum.name=Anthurium Andraeanum
 tile.archipelago.plant.bottle_palm.name=Bottle Palm
@@ -9,6 +10,7 @@ tile.archipelago.plant.jambu.name=Jambu
 tile.archipelago.plant.canary_island_foxglove.name=Canary Island Foxglove
 tile.archipelago.plant.la_palma_sow_thistle.name=La Palma Sow Thistle
 tile.archipelago.plant.parrot_lily.name=Parrot Lily
+tile.archipelago.plant.dendrophyllia_cribosa.name=Dendrophyllia Cribosa
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

@@ -32,9 +32,8 @@ import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
 public class BlockTallPlant extends BlockBush implements IGrowable
 {
 	public static final PropertyEnum<BlockTallPlant.EnumBlockHalf> HALF = PropertyEnum.<BlockTallPlant.EnumBlockHalf>create("half", BlockTallPlant.EnumBlockHalf.class);
-	public static BiomeGenBase[] islandBiomes = {ModWorld.tropicGrasslands, ModWorld.tropicShrublands, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland};
 
-	public BlockTallPlant(String name, int chance){
+	public BlockTallPlant(String name, int chance, BiomeGenBase[] biomes){
 		super(Material.vine);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, BlockTallPlant.EnumBlockHalf.LOWER));
 		this.setHardness(0.0F);
@@ -44,8 +43,8 @@ public class BlockTallPlant extends BlockBush implements IGrowable
 		GameRegistry.registerBlock(this, name);
 		Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
 		PlantEntry entry = new PlantEntry(this, chance, false);
-		for(BiomeGenBase biome : islandBiomes){
-			entry.addBiome(biome);
+		for(BiomeGenBase biome : biomes){
+			entry.addBiome(BiomeGenBase.getIdForBiome(biome));
 		}
 		WorldGeneratorArchipelago.flowersEntries.add(entry);
 	}
