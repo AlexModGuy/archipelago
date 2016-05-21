@@ -22,7 +22,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.core.ModConfig;
-import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.enums.EnumParticle;
 import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
 import com.github.alexthe666.archipelago.world.TeleporterArchipelago;
@@ -90,7 +89,7 @@ public class ServerEvents {
 
                     SoundEvent soundevent = SoundEvents.item_bucket_empty;
                     pos.playSound(worldIn, blockPos, soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    pos.setBlockState(blockPos, ModFluids.tropical_water.getDefaultState(), 11);
+                  //  pos.setBlockState(blockPos, ModFluids.tropical_water.getDefaultState(), 11);
                 }
 
                 return true;

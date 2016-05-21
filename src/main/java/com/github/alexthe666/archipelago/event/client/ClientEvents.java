@@ -3,7 +3,6 @@ package com.github.alexthe666.archipelago.event.client;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -12,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -47,7 +45,7 @@ public class ClientEvents {
 	@SubscribeEvent
 	public void onBlockOverlay(RenderBlockOverlayEvent e){
 		Block block = e.getPlayer().worldObj.getBlockState(e.getBlockPos()).getBlock();
-		if((block == ModFluids.tropical_water || block == ModFluids.tropical_water_seafoam) && block != Blocks.water && block != Blocks.flowing_water){
+		if(block == ModFluids.tropical_water && block != Blocks.water && block != Blocks.flowing_water){
 			e.setCanceled(true);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("archipelago:textures/underwater.png"));
 			Tessellator tessellator = Tessellator.getInstance();
@@ -80,7 +78,7 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public void onFogColor(EntityViewRenderEvent.FogColors e){
-		if(e.getState().getBlock() == ModFluids.tropical_water || e.getState().getBlock() == ModFluids.tropical_water_seafoam){
+		if(e.getState().getBlock() == ModFluids.tropical_water){
 			e.setRed(0F);
 			e.setBlue(0.7F);
 			e.setGreen(0.8F);

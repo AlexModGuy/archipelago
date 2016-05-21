@@ -16,7 +16,7 @@ public class ModItems {
 		sunstone = new ItemBasic("sunstone");
 		sunstone_staff = new ItemSunstoneStaff(false);
 		sunstone_staff_broken = new ItemSunstoneStaff(true);
-		FluidRegistry.addBucketForFluid(ModFluids.fluid_tropical_water);
+		//FluidRegistry.addBucketForFluid(ModFluids.fluid_tropical_water);
 	}
 	
 }

@@ -41,6 +41,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public void renderFluids(){
+		{
 		final ModelResourceLocation tropical_water_model = new ModelResourceLocation("archipelago:tropical_water", "fluid");
 
 		Item item = Item.getItemFromBlock(ModFluids.tropical_water);
@@ -59,6 +60,7 @@ public class ClientProxy extends CommonProxy {
 				return tropical_water_model;
 			}
 		});
+		}
 	}
 
 }

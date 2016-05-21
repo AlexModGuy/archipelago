@@ -25,7 +25,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class BlockTropicalWater extends BlockFluidClassic{
@@ -34,6 +33,7 @@ public class BlockTropicalWater extends BlockFluidClassic{
 
 	public BlockTropicalWater(Fluid fluid, Material material) {
 		super(fluid, material);
+		this.setLightOpacity(1);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -47,23 +47,6 @@ public class BlockTropicalWater extends BlockFluidClassic{
 		}
 	}
 
-	public void changeToFoam(World world, BlockPos pos){
-		for (EnumFacing side : EnumFacing.Plane.HORIZONTAL)
-		{
-			IBlockState neighbor = world.getBlockState(pos.offset(side));
-			IBlockState up = world.getBlockState(pos.up());
-
-			if (neighbor.getMaterial() != Material.water && up.getMaterial() != Material.water){
-				if(this.definedFluid.equals(ModFluids.fluid_tropical_water)){
-					world.setBlockState(pos, ModFluids.tropical_water_seafoam.getDefaultState());
-				}
-				if(this.definedFluid.equals(ModFluids.fluid_tropical_water_seafoam)){
-					world.setBlockState(pos, ModFluids.tropical_water.getDefaultState());
-				}
-			}
-		}
-	}
-	//definedFluid
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
 		if(!entityIn.onGround && entityIn.getRidingEntity() == null){
@@ -126,7 +109,6 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
 	{
 		super.updateTick(worldIn, pos, state, rand);
-		changeToFoam(worldIn, pos);
 		int i = ((Integer)state.getValue(LEVEL)).intValue();
 		int j = 1;
 
@@ -365,12 +347,7 @@ public class BlockTropicalWater extends BlockFluidClassic{
 
 	private void placeStaticBlock(World worldIn, BlockPos pos, IBlockState currentState)
 	{
-		if(this.definedFluid.equals(ModFluids.fluid_tropical_water)){
-			worldIn.setBlockState(pos, ModFluids.tropical_water.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
-		}else{
-			worldIn.setBlockState(pos, ModFluids.tropical_water_seafoam.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
-
-		}
+		worldIn.setBlockState(pos, ModFluids.tropical_water.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
 	}
 
 	@SideOnly(Side.CLIENT)

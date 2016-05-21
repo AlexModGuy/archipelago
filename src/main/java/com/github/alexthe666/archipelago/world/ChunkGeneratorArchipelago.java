@@ -2,12 +2,9 @@ package com.github.alexthe666.archipelago.world;
 import java.util.List;
 import java.util.Random;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
-
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -20,18 +17,10 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.gen.ChunkProviderSettings;
-import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.MapGenCaves;
-import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenScatteredFeature;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
-import net.minecraft.world.gen.structure.StructureOceanMonument;
+
+import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class ChunkGeneratorArchipelago implements IChunkGenerator
 {
@@ -90,8 +79,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator
 		fact.heightScale = 1;
 		fact.upperLimitScale = 1200;
 		fact.lowerLimitScale = 1200;
-		fact.depthNoiseScaleX = 150;
-		fact.depthNoiseScaleZ = 150;
+		fact.depthNoiseScaleX = 250;
+		fact.depthNoiseScaleZ = 250;
 		fact.depthNoiseScaleExponent = 0.4F;
 		fact.mainNoiseScaleX = 1400;
 		fact.mainNoiseScaleY = 4000;

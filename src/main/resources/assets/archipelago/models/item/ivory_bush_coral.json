@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "archipelago:blocks/ivory_bush_coral"
+    }
+}
