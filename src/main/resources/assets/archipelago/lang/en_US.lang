@@ -22,6 +22,14 @@ tile.archipelago.plant.asian_green_mussels.name=Asian Green Mussels
 tile.archipelago.plant.blue_mussels.name=Blue Mussels
 tile.archipelago.plant.nori.name=Nori Seaweed
 tile.archipelago.plant.cerianthus_lloydi.name=Cerianthus Lloydi Anemone
+tile.archipelago.plant.common_piddock_colony.name=Common Piddock Colony
+tile.archipelago.plant.bladderwrack.name=Bladderwrack Seaweed
+tile.archipelago.plant.caulerpa_prolifera.name=Caulerpa Prolifera Seaweed
+tile.archipelago.plant.cuvie.name=Cuvie Seaweed
+tile.archipelago.plant.green_fleece.name=Green Fleece Seaweed
+tile.archipelago.plant.spiral_wrack.name=Spiral Wrack Seaweed
+tile.archipelago.plant.tooth_wrack.name=Tooth Wrack Seaweed
+tile.archipelago.plant.caulerpa_taxifolia.name=Caulerpa Taxifolia Seaweed
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

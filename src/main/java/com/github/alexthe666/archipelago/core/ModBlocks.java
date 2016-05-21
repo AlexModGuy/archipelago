@@ -28,6 +28,14 @@ public class ModBlocks {
 	public static Block blue_mussels;
 	public static Block nori;
 	public static Block cerianthus_lloydi;
+	public static Block common_piddock_colony;
+	public static Block bladderwrack;
+	public static Block caulerpa_prolifera;
+	public static Block cuvie;
+	public static Block green_fleece;
+	public static Block spiral_wrack;
+	public static Block tooth_wrack;
+	public static Block caulerpa_taxifolia;
 
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new BiomeGenBase[]{ModWorld.tropicJungle, ModWorld.tropicShrublands});
@@ -37,6 +45,7 @@ public class ModBlocks {
 		canary_island_foxglove = new BlockTallPlant("canary_island_foxglove", 5, new BiomeGenBase[]{ModWorld.tropicShrublands});
 		la_palma_sow_thistle =new BlockTallPlant("la_palma_sow_thistle", 5, new BiomeGenBase[]{ModWorld.dryScrubland, ModWorld.tropicShrublands});
 		parrot_lily = new BlockShortPlant("parrot_lily", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands, ModWorld.tropicJungle, ModWorld.tropicShrublands});
+		
 		dendrophyllia_cribosa = new BlockShortCoral("dendrophyllia_cribosa", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest, ModWorld.tropicTrench});
 		ivory_bush_coral = new BlockShortCoral("ivory_bush_coral", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		maasella_edwardsii = new BlockShortCoral("maasella_edwardsii", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest});
@@ -48,6 +57,14 @@ public class ModBlocks {
 		blue_mussels = new BlockShortCoral("blue_mussels", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		nori = new BlockShortCoral("nori", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		cerianthus_lloydi = new BlockShortCoral("cerianthus_lloydi", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		common_piddock_colony = new BlockGlowingCoral("common_piddock_colony", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		bladderwrack = new BlockShortCoral("bladderwrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		caulerpa_prolifera = new BlockShortCoral("caulerpa_prolifera", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		cuvie = new BlockShortCoral("cuvie", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		green_fleece = new BlockShortCoral("green_fleece", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		spiral_wrack = new BlockShortCoral("spiral_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		tooth_wrack = new BlockShortCoral("tooth_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		caulerpa_taxifolia = new BlockShortCoral("caulerpa_taxifolia", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 
 	}
 }
