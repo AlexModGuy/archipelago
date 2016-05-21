@@ -28,11 +28,11 @@ public class BlockShortCoral extends BlockBush{
 		for(BiomeGenBase biome : biomes){
 			entry.addBiome(BiomeGenBase.getIdForBiome(biome));
 		}
-		WorldGeneratorArchipelago.flowersEntries.add(entry);
+		WorldGeneratorArchipelago.coralsEntries.add(entry);
 	}
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos){
-        return checkCanStay(worldIn.getBlockState(pos.down()), worldIn.getBlockState(pos.up()));
+        return checkCanStay(worldIn.getBlockState(pos.down()), worldIn.getBlockState(pos.up())) && worldIn.getBlockState(pos).getMaterial() == Material.water;
     }
     
 	public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state){

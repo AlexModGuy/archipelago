@@ -77,8 +77,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator
 		ChunkProviderSettings.Factory fact = new ChunkProviderSettings.Factory();		
 		fact.coordinateScale = 450;
 		fact.heightScale = 1;
-		fact.upperLimitScale = 1200;
-		fact.lowerLimitScale = 1200;
+		fact.upperLimitScale = 1600;
+		fact.lowerLimitScale = 1600;
 		fact.depthNoiseScaleX = 150;
 		fact.depthNoiseScaleZ = 150;
 		fact.depthNoiseScaleExponent = 0.4F;
