@@ -22,6 +22,8 @@ public class BlockShortCoral extends BlockBush{
 		this.setStepSound(SoundType.PLANT);
 		this.setUnlocalizedName("archipelago.plant." + name);
 		this.setCreativeTab(Archipelago.tab);
+		this.setLightOpacity(0);
+		this.useNeighborBrightness = true;
 		GameRegistry.registerBlock(this, name);
 		Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
 		PlantEntry entry = new PlantEntry(this, chance, false);

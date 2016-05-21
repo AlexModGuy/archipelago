@@ -25,6 +25,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class BlockTropicalWater extends BlockFluidClassic{
@@ -48,8 +49,18 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	}
 
 	@Override
+	public int getQuantaValue(IBlockAccess world, BlockPos pos)
+	{
+		if(world != null){
+			if(world.getBlockState(pos) != null){
+				return super.getQuantaValue(world, pos);
+			}
+		}
+		return 0;
+	}
+	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
-		if(!entityIn.onGround && entityIn.getRidingEntity() == null){
+		if(worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.water && worldIn.getBlockState(pos.down()).getMaterial() == Material.water && entityIn.getRidingEntity() == null){
 			if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
 				EntityLivingBase living = (EntityLivingBase)entityIn;
 				try {

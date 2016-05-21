@@ -10,9 +10,18 @@ tile.archipelago.plant.jambu.name=Jambu
 tile.archipelago.plant.canary_island_foxglove.name=Canary Island Foxglove
 tile.archipelago.plant.la_palma_sow_thistle.name=La Palma Sow Thistle
 tile.archipelago.plant.parrot_lily.name=Parrot Lily
+
 tile.archipelago.plant.dendrophyllia_cribosa.name=Dendrophyllia Cribosa Coral
 tile.archipelago.plant.ivory_bush_coral.name=Ivory Bush Coral
 tile.archipelago.plant.maasella_edwardsii.name=Maasella Edwardsii Coral
+tile.archipelago.plant.yellow_gorgonian.name=Yellow Gorgonian Coral
+tile.archipelago.plant.yellow_tube_sponge.name=Yellow Tube Sponge
+tile.archipelago.plant.isidella.name=Isidella Coral
+tile.archipelago.plant.bipinnate_sea_plume.name=Bipinnate Sea Plume
+tile.archipelago.plant.asian_green_mussels.name=Asian Green Mussels
+tile.archipelago.plant.blue_mussels.name=Blue Mussels
+tile.archipelago.plant.nori.name=Nori Seaweed
+tile.archipelago.plant.cerianthus_lloydi.name=Cerianthus Lloydi Anemone
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
