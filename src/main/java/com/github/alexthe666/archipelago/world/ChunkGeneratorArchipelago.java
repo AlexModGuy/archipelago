@@ -79,8 +79,8 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator
 		fact.heightScale = 1;
 		fact.upperLimitScale = 1200;
 		fact.lowerLimitScale = 1200;
-		fact.depthNoiseScaleX = 250;
-		fact.depthNoiseScaleZ = 250;
+		fact.depthNoiseScaleX = 150;
+		fact.depthNoiseScaleZ = 150;
 		fact.depthNoiseScaleExponent = 0.4F;
 		fact.mainNoiseScaleX = 1400;
 		fact.mainNoiseScaleY = 4000;

@@ -23,7 +23,7 @@ public class WorldGeneratorArchipelago implements IWorldGenerator{
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 
 		if(world.provider.getDimension() == ModConfig.ARCHIPELAGO_DIMENSION_ID){
-			for(int k = 0; k < 3; k++){
+			for(int k = 0; k < 4; k++){
 				int x = (chunkX * 16) + random.nextInt(16);
 				int z = (chunkZ * 16) + random.nextInt(16);
 				new WorldGenArchipelagoPlant(flowersEntries.get(random.nextInt(flowersEntries.size()))).generate(world, random, world.getHeight(new BlockPos(x, 0, z)));

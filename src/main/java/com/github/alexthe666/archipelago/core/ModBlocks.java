@@ -18,6 +18,7 @@ public class ModBlocks {
 	public static Block parrot_lily;
 	public static Block dendrophyllia_cribosa;
 	public static Block ivory_bush_coral;
+	public static Block maasella_edwardsii;
 
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new BiomeGenBase[]{ModWorld.tropicJungle, ModWorld.tropicShrublands});
@@ -29,6 +30,7 @@ public class ModBlocks {
 		parrot_lily = new BlockShortPlant("parrot_lily", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands, ModWorld.tropicJungle, ModWorld.tropicShrublands});
 		dendrophyllia_cribosa = new BlockShortCoral("dendrophyllia_cribosa", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest, ModWorld.tropicTrench});
 		ivory_bush_coral = new BlockShortCoral("ivory_bush_coral", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
+		maasella_edwardsii = new BlockShortCoral("maasella_edwardsii", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest});
 
 	}
 }
