@@ -51,8 +51,8 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	@Override
 	public int getQuantaValue(IBlockAccess world, BlockPos pos)
 	{
-		if(world != null){
-			if(world.getBlockState(pos) != null){
+		if(world != null && world instanceof World){
+			if(((World)world).isBlockLoaded(pos) && world.getBlockState(pos) != null){
 				return super.getQuantaValue(world, pos);
 			}
 		}

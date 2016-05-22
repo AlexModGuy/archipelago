@@ -17,6 +17,7 @@ public class ModBlocks {
 	public static Block canary_island_foxglove;
 	public static Block la_palma_sow_thistle;
 	public static Block parrot_lily;
+	
 	public static Block dendrophyllia_cribosa;
 	public static Block ivory_bush_coral;
 	public static Block maasella_edwardsii;
@@ -36,6 +37,11 @@ public class ModBlocks {
 	public static Block spiral_wrack;
 	public static Block tooth_wrack;
 	public static Block caulerpa_taxifolia;
+	public static Block venus_fan;
+	public static Block cauliflower_soft;
+	public static Block gracilaria;
+	public static Block pachycerianthus_fimbriatus;
+	public static Block stove_pipe_sponge;
 
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new BiomeGenBase[]{ModWorld.tropicJungle, ModWorld.tropicShrublands});
@@ -65,6 +71,10 @@ public class ModBlocks {
 		spiral_wrack = new BlockShortCoral("spiral_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		tooth_wrack = new BlockShortCoral("tooth_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		caulerpa_taxifolia = new BlockShortCoral("caulerpa_taxifolia", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
-
+		venus_fan = new BlockShortCoral("venus_fan", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		cauliflower_soft = new BlockShortCoral("cauliflower_soft", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		gracilaria = new BlockShortCoral("gracilaria", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		pachycerianthus_fimbriatus = new BlockShortCoral("pachycerianthus_fimbriatus", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		stove_pipe_sponge = new BlockShortCoral("stove_pipe_sponge", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
 	}
 }

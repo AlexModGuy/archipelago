@@ -30,6 +30,11 @@ tile.archipelago.plant.green_fleece.name=Green Fleece Seaweed
 tile.archipelago.plant.spiral_wrack.name=Spiral Wrack Seaweed
 tile.archipelago.plant.tooth_wrack.name=Tooth Wrack Seaweed
 tile.archipelago.plant.caulerpa_taxifolia.name=Caulerpa Taxifolia Seaweed
+tile.archipelago.plant.venus_fan.name=Venus Fan Coral
+tile.archipelago.plant.cauliflower_soft.name=Cauliflower Soft Coral
+tile.archipelago.plant.gracilaria.name=Gracilaria Seaweed
+tile.archipelago.plant.pachycerianthus_fimbriatus.name=Pachycerianthus Fimbriatus Anemone
+tile.archipelago.plant.stove_pipe_sponge.name=Stove Pipe Sponge
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
