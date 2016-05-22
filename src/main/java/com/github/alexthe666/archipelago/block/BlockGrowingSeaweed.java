@@ -58,7 +58,11 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 		for(BiomeGenBase biome : biomes){
 			entry.addBiome(BiomeGenBase.getIdForBiome(biome));
 		}
-		//WorldGeneratorArchipelago.coralsEntries.add(entry);
+		WorldGeneratorArchipelago.kelpEntries.add(entry);
+	}
+
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState worldIn, World pos, BlockPos state){
+		return field_185515_b;
 	}
 
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
@@ -78,7 +82,11 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 	}
 
 	public boolean canGrow(World world, BlockPos pos){
-		if(world.getBlockState(pos.up()).getMaterial() != Material.water){
+		if(world.isAirBlock(pos.up())){
+			return false;
+		}
+
+		if(world.getBlockState(pos).getMaterial() != Material.water){
 			return false;
 		}
 		if(world.getBlockState(pos).getBlock() == this){
@@ -93,8 +101,10 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 	{
 		IBlockState blockstate = world.getBlockState(pos);
 		IBlockState blockstate1 = world.getBlockState(pos.down());
-		if(canGrow(world, pos) && world.getBlockState(pos.up()).getBlock() != this){
-			world.setBlockState(pos.up(), blockstate.withProperty(PART, EnumBlockPart.UPPER), 2);
+		if(rand.nextInt(3) == 0){
+			if(canGrow(world, pos) && world.getBlockState(pos.up()).getBlock() != this){
+				world.setBlockState(pos.up(), blockstate.withProperty(PART, EnumBlockPart.UPPER), 2);
+			}
 		}
 		if(world.getBlockState(pos.up()).getBlock() == this){
 			if(world.getBlockState(pos).getValue(PART) == EnumBlockPart.UPPER && world.getBlockState(pos.up()).getValue(PART) == EnumBlockPart.UPPER){

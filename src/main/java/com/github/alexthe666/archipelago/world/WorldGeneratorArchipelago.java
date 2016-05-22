@@ -19,6 +19,7 @@ public class WorldGeneratorArchipelago implements IWorldGenerator{
 
 	public static List<PlantEntry> flowersEntries = new ArrayList<PlantEntry>();
 	public static List<PlantEntry> coralsEntries = new ArrayList<PlantEntry>();
+	public static List<PlantEntry> kelpEntries = new ArrayList<PlantEntry>();
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
@@ -33,6 +34,11 @@ public class WorldGeneratorArchipelago implements IWorldGenerator{
 				int x = (chunkX * 16) + random.nextInt(16);
 				int z = (chunkZ * 16) + random.nextInt(16);
 				new WorldGenArchipelagoCoral(coralsEntries.get(random.nextInt(coralsEntries.size()))).generate(world, random, getCoralHeight(world, new BlockPos(x, 0, z)));
+			}
+			for(int k = 0; k < 4; k++){
+				int x = (chunkX * 16) + random.nextInt(16);
+				int z = (chunkZ * 16) + random.nextInt(16);
+				new WorldGenArchipelagoKelp(kelpEntries.get(random.nextInt(kelpEntries.size()))).generate(world, random, getCoralHeight(world, new BlockPos(x, 0, z)));
 			}
 		}
 	}
