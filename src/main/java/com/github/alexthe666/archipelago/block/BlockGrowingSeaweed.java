@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -34,6 +35,7 @@ import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.block.BlockTallPlant.EnumBlockHalf;
 import com.github.alexthe666.archipelago.util.PlantEntry;
 import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+
 import org.lwjgl.opengl.GL11;
 
 public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBlock {
@@ -67,6 +69,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
 		worldIn.setBlockState(pos, this.getDefaultState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.LOWER), 2);
+		worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.UPPER), 2);
 	}
 
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
@@ -175,7 +178,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 	}
 
 	public IBlockState getStateFromMeta(int meta){
-		return this.getDefaultState().withProperty(PART, EnumBlockPart.UPPER);
+        return this.getDefaultState().withProperty(PART, EnumBlockPart.byMetadata(meta));
 	}
 
 	public int getMetaFromState(IBlockState state){
@@ -227,12 +230,31 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 		UPPER,
 		MIDDLE,
 		LOWER;
+        private static final EnumBlockPart[] METADATA_LOOKUP = new EnumBlockPart[values().length];
 
 		public String toString()
 		{
 			return super.toString().toLowerCase();
 		}
+		
+        static
+        {
+            for (EnumBlockPart type : values())
+            {
+                METADATA_LOOKUP[type.ordinal()] = type;
+            }
+        }
 
+        public static EnumBlockPart byMetadata(int metadata)
+        {
+            if (metadata < 0 || metadata >= METADATA_LOOKUP.length)
+            {
+                metadata = 0;
+            }
+
+            return METADATA_LOOKUP[metadata];
+        }
+        
 		public String getName()
 		{
 			return this.toString().toLowerCase();
