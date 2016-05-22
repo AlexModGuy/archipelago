@@ -2,6 +2,7 @@ package com.github.alexthe666.archipelago.event.client;
 
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -9,15 +10,18 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import org.lwjgl.opengl.GL11;
 
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
 import com.github.alexthe666.archipelago.block.BlockShortCoral;
 import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
@@ -42,11 +46,11 @@ public class ClientEvents {
 			GL11.glPopMatrix();
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void onBlockOverlay(RenderBlockOverlayEvent e){
 		Block block = e.getPlayer().worldObj.getBlockState(e.getBlockPos()).getBlock();
-		if(block == ModFluids.tropical_water && block != Blocks.water && block != Blocks.flowing_water || block instanceof BlockShortCoral){
+		if(block instanceof BlockShortCoral || block instanceof BlockGrowingSeaweed || block == ModFluids.tropical_water){
 			e.setCanceled(true);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("archipelago:textures/underwater.png"));
 			Tessellator tessellator = Tessellator.getInstance();
@@ -79,7 +83,7 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public void onFogColor(EntityViewRenderEvent.FogColors e){
-		if(e.getState().getBlock() == ModFluids.tropical_water || e.getState().getBlock() instanceof BlockShortCoral){
+		if(e.getState().getBlock() == ModFluids.tropical_water || e.getState().getBlock() instanceof BlockShortCoral || e.getState().getBlock() instanceof BlockGrowingSeaweed){
 			e.setRed(0F);
 			e.setBlue(0.7F);
 			e.setGreen(0.8F);

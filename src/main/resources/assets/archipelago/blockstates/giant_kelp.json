@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "part=lower": { "model": "archipelago:giant_kelp_0" },
+        "part=middle":    { "model":"archipelago:giant_kelp_1" }
+, "part=upper":    { "model":"archipelago:giant_kelp_2" }
+    }
+}

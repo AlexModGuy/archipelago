@@ -3,8 +3,11 @@ package com.github.alexthe666.archipelago.event.server;
 import java.util.Random;
 
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -13,7 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -31,6 +37,8 @@ public class ServerEvents {
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event)
 	{
+		handleMaterialAcceleration(event.getEntity().getEntityBoundingBox(), Material.coral, event.getEntity());
+		
 		if(event.getEntity() instanceof EntityPlayer){
 			ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(((EntityPlayer)event.getEntity()), ArchipelagoEntityProperties.class);
 			if(properties.teleportTime > 0 && properties.teleportTime <= 300){
@@ -95,5 +103,72 @@ public class ServerEvents {
                 return true;
             }
         return false;
+    }
+    
+    public boolean handleMaterialAcceleration(AxisAlignedBB bb, Material materialIn, Entity entityIn){
+        int i = MathHelper.floor_double(bb.minX);
+        int j = MathHelper.ceiling_double_int(bb.maxX);
+        int k = MathHelper.floor_double(bb.minY);
+        int l = MathHelper.ceiling_double_int(bb.maxY);
+        int i1 = MathHelper.floor_double(bb.minZ);
+        int j1 = MathHelper.ceiling_double_int(bb.maxZ);
+        
+        if (!entityIn.worldObj.isAreaLoaded(new BlockPos(i, k, i1), new BlockPos(j, 1, j1), true))
+        {
+            return false;
+        }
+        else
+        {
+            boolean flag = false;
+            Vec3d vec3d = Vec3d.ZERO;
+            BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain();
+
+            for (int k1 = i; k1 < j; ++k1)
+            {
+                for (int l1 = k; l1 < l; ++l1)
+                {
+                    for (int i2 = i1; i2 < j1; ++i2)
+                    {
+                        blockpos$pooledmutableblockpos.set(k1, l1, i2);
+                        IBlockState iblockstate = entityIn.worldObj.getBlockState(blockpos$pooledmutableblockpos);
+                        Block block = iblockstate.getBlock();
+
+                        Boolean result = block.isEntityInsideMaterial(entityIn.worldObj, blockpos$pooledmutableblockpos, iblockstate, entityIn, (double)l, materialIn, false);
+                        if (result != null && result == true)
+                        {
+                            // Forge: When requested call blocks modifyAcceleration method, and more importantly cause entityIn method to return true, which results in an entity being "inWater"
+                            flag = true;
+                            vec3d = block.modifyAcceleration(entityIn.worldObj, blockpos$pooledmutableblockpos, entityIn, vec3d);
+                            continue;
+                        }
+                        else if (result != null && result == false) continue;
+
+                        if (iblockstate.getMaterial() == materialIn)
+                        {
+                            double d0 = (double)((float)(l1 + 1) - 8);
+
+                            if ((double)l >= d0)
+                            {
+                                flag = true;
+                                vec3d = block.modifyAcceleration(entityIn.worldObj, blockpos$pooledmutableblockpos, entityIn, vec3d);
+                            }
+                        }
+                    }
+                }
+            }
+
+            blockpos$pooledmutableblockpos.release();
+
+            if (vec3d.lengthVector() > 0.0D && entityIn.isPushedByWater())
+            {
+                vec3d = vec3d.normalize();
+                double d1 = 0.014D;
+                entityIn.motionX += vec3d.xCoord * d1;
+                entityIn.motionY += vec3d.yCoord * d1;
+                entityIn.motionZ += vec3d.zCoord * d1;
+            }
+
+            return flag;
+        }
     }
 }

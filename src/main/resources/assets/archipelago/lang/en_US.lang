@@ -62,6 +62,9 @@ tile.archipelago.plant.xestospongia_testudinaria.name=Xestospongia Testudinaria 
 tile.archipelago.plant.colonial_tube_sponge.name=Colonial Tube Sponge
 tile.archipelago.plant.wakame.name=Wakame Seaweed
 tile.archipelago.plant.snakelocks.name=Snakelocks Anemone
+tile.archipelago.plant.bull_kelp.name=Bull Kelp
+tile.archipelago.plant.giant_kelp.name=Giant Kelp
+tile.archipelago.plant.sea_belt_kelp.name=Sea Belt Seaweed
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

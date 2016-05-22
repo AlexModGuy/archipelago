@@ -320,9 +320,8 @@ public class BlockTropicalWater extends BlockFluidClassic{
 		return !(block instanceof BlockDoor) && block != Blocks.standing_sign && block != Blocks.ladder && block != Blocks.reeds ? (block.getMaterial(state) == Material.portal ? true : block.getMaterial(state).blocksMovement()) : true;
 	}
 
-	protected int getLevel(IBlockAccess worldIn, BlockPos pos)
-	{
-		return worldIn.getBlockState(pos).getMaterial() == this.blockMaterial ? ((Integer)worldIn.getBlockState(pos).getValue(LEVEL)).intValue() : -1;
+	protected int getLevel(IBlockAccess worldIn, BlockPos pos){
+		return worldIn.getBlockState(pos).getBlock() == this ? worldIn.getBlockState(pos).getMaterial() == this.blockMaterial ? ((Integer)worldIn.getBlockState(pos).getValue(LEVEL)).intValue() : -1 : 0;
 	}
 
 	private int func_176374_a(World worldIn, BlockPos pos, int distance, EnumFacing calculateFlowCost)
@@ -334,20 +333,21 @@ public class BlockTropicalWater extends BlockFluidClassic{
 			{
 				BlockPos blockpos = pos.offset(enumfacing);
 				IBlockState iblockstate = worldIn.getBlockState(blockpos);
-
-				if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || ((Integer)iblockstate.getValue(LEVEL)).intValue() > 0))
-				{
-					if (!this.isBlocked(worldIn, blockpos.down(), iblockstate))
+				if(iblockstate.getBlock() == this){
+					if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || ((Integer)iblockstate.getValue(LEVEL)).intValue() > 0))
 					{
-						return distance;
-					}
-					if (distance < 2)
-					{
-						int j = this.func_176374_a(worldIn, blockpos, distance + 1, enumfacing.getOpposite());
-
-						if (j < i)
+						if (!this.isBlocked(worldIn, blockpos.down(), iblockstate))
 						{
-							i = j;
+							return distance;
+						}
+						if (distance < 2)
+						{
+							int j = this.func_176374_a(worldIn, blockpos, distance + 1, enumfacing.getOpposite());
+
+							if (j < i)
+							{
+								i = j;
+							}
 						}
 					}
 				}

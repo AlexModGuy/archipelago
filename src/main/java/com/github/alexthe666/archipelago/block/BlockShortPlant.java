@@ -4,6 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -11,12 +15,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.core.ModWorld;
 import com.github.alexthe666.archipelago.util.PlantEntry;
 import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
 
 public class BlockShortPlant extends BlockBush{
-
+	
 	public BlockShortPlant(String name, int chance, BiomeGenBase[] biomes){
 		super(Material.plants);
 		this.setHardness(0.0F);

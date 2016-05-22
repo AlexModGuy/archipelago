@@ -71,6 +71,8 @@ public class ModBlocks {
 	public static Block wakame;
 	public static Block snakelocks;
 	public static Block bull_kelp;
+	public static Block giant_kelp;
+	public static Block sea_belt_kelp;
 
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new BiomeGenBase[]{ModWorld.tropicJungle, ModWorld.tropicShrublands});
@@ -133,5 +135,7 @@ public class ModBlocks {
 		wakame = new BlockShortCoral("wakame", 5, new BiomeGenBase[]{ModWorld.tropicKelpForest});
 		snakelocks = new BlockShortCoral("snakelocks", 5, new BiomeGenBase[]{ModWorld.tropicKelpForest});
 		bull_kelp = new BlockGrowingSeaweed("bull_kelp", 5, 3, new BiomeGenBase[]{ModWorld.tropicKelpForest});
+		giant_kelp = new BlockGrowingSeaweed("giant_kelp", 5, 3, new BiomeGenBase[]{ModWorld.tropicKelpForest});
+		sea_belt_kelp = new BlockGrowingSeaweed("sea_belt_kelp", 5, 3, new BiomeGenBase[]{ModWorld.tropicKelpForest});
 	}
 }

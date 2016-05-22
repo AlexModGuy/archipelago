@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "part=lower": { "model": "archipelago:sea_belt_kelp_0" },
+        "part=middle":    { "model":"archipelago:sea_belt_kelp_1" }
+, "part=upper":    { "model":"archipelago:sea_belt_kelp_2" }
+    }
+}
