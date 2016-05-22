@@ -1,11 +1,14 @@
 package com.github.alexthe666.archipelago.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.core.ModWorld;
@@ -28,5 +31,10 @@ public class BlockShortPlant extends BlockBush{
 		}
 		WorldGeneratorArchipelago.flowersEntries.add(entry);
 	}
+	
+    @SideOnly(Side.CLIENT)
+    public Block.EnumOffsetType getOffsetType(){
+        return Block.EnumOffsetType.XZ;
+    }
 	
 }

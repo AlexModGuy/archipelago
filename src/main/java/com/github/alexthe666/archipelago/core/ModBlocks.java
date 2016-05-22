@@ -42,6 +42,31 @@ public class ModBlocks {
 	public static Block gracilaria;
 	public static Block pachycerianthus_fimbriatus;
 	public static Block stove_pipe_sponge;
+	public static Block heteractis_magnifica_blue;
+	public static Block heteractis_magnifica_pink;
+	public static Block heteractis_magnifica_red;
+	public static Block heteractis_magnifica_yellow;
+	public static Block bubble_tip;
+	public static Block acropora_nasuta;
+	public static Block alveopora_spongiosa;
+	public static Block acropora_samoensis;
+	public static Block dendronephthya_hemprichi;
+	public static Block dragon_eye_zoanthid_green;
+	public static Block dragon_eye_zoanthid_red;
+	public static Block favites_pentagona;
+	public static Block galaxy_coral;
+	public static Block leptopsammia_pruvoti;
+	public static Block lobophyllia_hemprichii;
+	public static Block nephthyigorgia;
+	public static Block smooth_flower_coral_green;
+	public static Block smooth_flower_coral_orange;
+	public static Block spiral_wire_coral;
+	public static Block whip_fan_orange;
+	public static Block whip_fan_red;
+	public static Block bennetts_feather_star;
+	public static Block passion_flower_feather_star;
+	public static Block xestospongia_testudinaria;
+	public static Block colonial_tube_sponge;
 
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new BiomeGenBase[]{ModWorld.tropicJungle, ModWorld.tropicShrublands});
@@ -58,7 +83,7 @@ public class ModBlocks {
 		yellow_gorgonian = new BlockShortCoral("yellow_gorgonian", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
 		yellow_tube_sponge = new BlockShortCoral("yellow_tube_sponge", 5, new BiomeGenBase[]{ModWorld.tropicReef});
 		isidella = new BlockGlowingCoral("isidella", 5, new BiomeGenBase[]{ModWorld.tropicTrench});
-		bipinnate_sea_plume = new BlockShortCoral("bipinnate_sea_plume", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		bipinnate_sea_plume = new BlockShortCoral("bipinnate_sea_plume", 5, new BiomeGenBase[]{ModWorld.tropicReef, ModWorld.tropicBlueHoles});
 		asian_green_mussels = new BlockShortCoral("asian_green_mussels", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		blue_mussels = new BlockShortCoral("blue_mussels", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		nori = new BlockShortCoral("nori", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
@@ -72,9 +97,35 @@ public class ModBlocks {
 		tooth_wrack = new BlockShortCoral("tooth_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		caulerpa_taxifolia = new BlockShortCoral("caulerpa_taxifolia", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		venus_fan = new BlockShortCoral("venus_fan", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
-		cauliflower_soft = new BlockShortCoral("cauliflower_soft", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		cauliflower_soft = new BlockShortCoral("cauliflower_soft", 5, new BiomeGenBase[]{ModWorld.tropicReef, ModWorld.tropicBlueHoles});
 		gracilaria = new BlockShortCoral("gracilaria", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
 		pachycerianthus_fimbriatus = new BlockShortCoral("pachycerianthus_fimbriatus", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
-		stove_pipe_sponge = new BlockShortCoral("stove_pipe_sponge", 5, new BiomeGenBase[]{ModWorld.tropicBlueHoles});
+		stove_pipe_sponge = new BlockShortCoral("stove_pipe_sponge", 5, new BiomeGenBase[]{ModWorld.tropicReef, ModWorld.tropicBlueHoles});
+		heteractis_magnifica_blue = new BlockShortCoral("heteractis_magnifica_blue", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		heteractis_magnifica_pink = new BlockShortCoral("heteractis_magnifica_pink", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		heteractis_magnifica_red = new BlockShortCoral("heteractis_magnifica_red", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		heteractis_magnifica_yellow = new BlockShortCoral("heteractis_magnifica_yellow", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		bubble_tip = new BlockShortCoral("bubble_tip", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		acropora_nasuta = new BlockShortCoral("acropora_nasuta", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		alveopora_spongiosa = new BlockShortCoral("alveopora_spongiosa", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		acropora_samoensis = new BlockShortCoral("acropora_samoensis", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		dendronephthya_hemprichi = new BlockShortCoral("dendronephthya_hemprichi", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		dragon_eye_zoanthid_green = new BlockShortCoral("dragon_eye_zoanthid_green", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		dragon_eye_zoanthid_red = new BlockShortCoral("dragon_eye_zoanthid_red", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		favites_pentagona = new BlockShortCoral("favites_pentagona", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		galaxy_coral = new BlockShortCoral("galaxy_coral", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		leptopsammia_pruvoti = new BlockShortCoral("leptopsammia_pruvoti", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		lobophyllia_hemprichii = new BlockShortCoral("lobophyllia_hemprichii", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		nephthyigorgia = new BlockShortCoral("nephthyigorgia", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		smooth_flower_coral_green = new BlockShortCoral("smooth_flower_coral_green", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		smooth_flower_coral_orange = new BlockShortCoral("smooth_flower_coral_orange", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		spiral_wire_coral = new BlockShortCoral("spiral_wire_coral", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		whip_fan_orange = new BlockShortCoral("whip_fan_orange", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		whip_fan_red = new BlockShortCoral("whip_fan_red", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		bennetts_feather_star = new BlockShortCoral("bennetts_feather_star", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		passion_flower_feather_star = new BlockShortCoral("passion_flower_feather_star", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		xestospongia_testudinaria = new BlockShortCoral("xestospongia_testudinaria", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+		colonial_tube_sponge = new BlockShortCoral("colonial_tube_sponge", 5, new BiomeGenBase[]{ModWorld.tropicReef});
+
 	}
 }
