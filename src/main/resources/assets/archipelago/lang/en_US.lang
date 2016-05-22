@@ -48,6 +48,7 @@ tile.archipelago.plant.dragon_eye_zoanthid_green.name=Green Dragon-Eye Zoanthid
 tile.archipelago.plant.dragon_eye_zoanthid_red.name=Red Dragon-Eye Zoanthid
 tile.archipelago.plant.favites_pentagona.name=Favites Pentagona Coral
 tile.archipelago.plant.galaxy_coral.name=Galaxy Coral
+tile.archipelago.plant.leptopsammia_pruvoti.name=Leptopsammia Pruvoti Coral
 tile.archipelago.plant.lobophyllia_hemprichii.name=Lobophyllia Hemprichii Coral
 tile.archipelago.plant.nephthyigorgia.name=Nephthyigorgia Coral
 tile.archipelago.plant.smooth_flower_coral_green.name=Green Smooth Flower Coral
@@ -59,6 +60,8 @@ tile.archipelago.plant.bennetts_feather_star.name=Bennett's Feather Star
 tile.archipelago.plant.passion_flower_feather_star.name=Passion Flower Feather Star
 tile.archipelago.plant.xestospongia_testudinaria.name=Xestospongia Testudinaria Sponge
 tile.archipelago.plant.colonial_tube_sponge.name=Colonial Tube Sponge
+tile.archipelago.plant.wakame.name=Wakame Seaweed
+tile.archipelago.plant.snakelocks.name=Snakelocks Anemone
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

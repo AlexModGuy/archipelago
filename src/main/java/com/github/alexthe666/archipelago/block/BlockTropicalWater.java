@@ -60,7 +60,7 @@ public class BlockTropicalWater extends BlockFluidClassic{
 	}
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
-		if(worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.water && worldIn.getBlockState(pos.down()).getMaterial() == Material.water && entityIn.getRidingEntity() == null){
+		if((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.water || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.coral) && worldIn.getBlockState(pos.down()).getMaterial() == Material.water && entityIn.getRidingEntity() == null){
 			if(entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)){
 				EntityLivingBase living = (EntityLivingBase)entityIn;
 				try {
