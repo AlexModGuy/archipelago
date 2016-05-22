@@ -77,6 +77,66 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             classNode.accept(classWriter);
             saveBytecode(name, classWriter);
             return classWriter.toByteArray();
+        } else if ((obf = "bqf".equals(name)) || "net.minecraft.client.renderer.chunk.RenderChunk".equals(name)) {
+            ClassReader classReader = new ClassReader(classBytes);
+            classReader.accept(classNode, 0);
+            String rebuildChunkName = obf ? "b" : "rebuildChunk";
+            String rebuildChunkDesc = "(FFFL" + (obf ? "bpz" : "ChunkCompileTaskGenerator") + ";)V";
+            for (MethodNode methodNode : classNode.methods) {
+                if (methodNode.name.equals(rebuildChunkName) || methodNode.desc.equals(rebuildChunkDesc)) {
+                    InsnList inject = new InsnList();
+                    int i = 0;
+                    for (AbstractInsnNode node : methodNode.instructions.toArray()) {
+                        inject.add(node);
+                        if (node instanceof MethodInsnNode && node.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+                            MethodInsnNode methodInsnNode = (MethodInsnNode) node;
+                            if (methodInsnNode.owner.equals("java/util/concurrent/locks/ReentrantLock") && methodInsnNode.name.equals("lock") && methodInsnNode.desc.equals("()V")) {
+                                if (i > 0) {
+                                    inject.add(new VarInsnNode(Opcodes.ALOAD, 5));
+                                    inject.add(new VarInsnNode(Opcodes.ALOAD, 9));
+                                    inject.add(new VarInsnNode(Opcodes.ALOAD, 7));
+                                    inject.add(new VarInsnNode(Opcodes.ALOAD, 8));
+                                    String blockposName = obf ? "cj" : "net/minecraft/util/math/BlockPos";
+                                    inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/github/alexthe666/archipelago/classtransformer/ArchipelagoHooks", "rebuildChunk", "(L" + (obf ? "bqc" : "net/minecraft/client/renderer/chunk/CompiledChunk") + ";L" + (obf ? "ahx" : "net/minecraft/world/IBlockAccess") + ";L" + blockposName + ";L" + blockposName + ";)V", false));
+                                }
+                                i++;
+                            }
+                        }
+                    }
+                    methodNode.instructions.clear();
+                    methodNode.instructions.add(inject);
+                }
+            }
+            ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            classNode.accept(classWriter);
+            saveBytecode(name, classWriter);
+            return classWriter.toByteArray();
+        } else if ((obf = "bno".equals(name)) || "net.minecraft.client.renderer.RenderGlobal".equals(name)) {
+            ClassReader classReader = new ClassReader(classBytes);
+            classReader.accept(classNode, 0);
+            String renderEntitiesName = obf ? "a" : "renderEntities";
+            String renderEntitiesDesc = "(L" + (obf ? "rr" : "net/minecraft/entity/Entity") + ";L" + (obf ? "bqm" : "net/minecraft/client/renderer/culling/ICamera") + ";F)V";
+            for (MethodNode methodNode : classNode.methods) {
+                if (methodNode.name.equals(renderEntitiesName) || methodNode.desc.equals(renderEntitiesDesc)) {
+                    InsnList inject = new InsnList();
+                    for (AbstractInsnNode node : methodNode.instructions.toArray()) {
+                        inject.add(node);
+                        if (node instanceof MethodInsnNode && node.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+                            MethodInsnNode methodInsnNode = (MethodInsnNode) node;
+                            if (methodInsnNode.owner.equals(obf ? "bpm" : "net/minecraft/client/renderer/tileentity/TileEntityRendererDispatcher") && methodInsnNode.name.equals("drawBatch") && methodInsnNode.desc.equals("(I)V")) {
+                                inject.add(new VarInsnNode(Opcodes.ALOAD, 2));
+                                inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/github/alexthe666/archipelago/classtransformer/ArchipelagoHooks", "drawSpecialRenderers", "(L" + (obf ? "bqm" : "net/minecraft/client/renderer/culling/ICamera") + ";)V", false));
+                            }
+                        }
+                    }
+                    methodNode.instructions.clear();
+                    methodNode.instructions.add(inject);
+                }
+            }
+            ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            classNode.accept(classWriter);
+            saveBytecode(name, classWriter);
+            return classWriter.toByteArray();
         }
         return classBytes;
     }

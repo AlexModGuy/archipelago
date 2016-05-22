@@ -34,8 +34,9 @@ import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.block.BlockTallPlant.EnumBlockHalf;
 import com.github.alexthe666.archipelago.util.PlantEntry;
 import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+import org.lwjgl.opengl.GL11;
 
-public class BlockGrowingSeaweed extends BlockBush{
+public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBlock {
 
 	public static final PropertyEnum<BlockGrowingSeaweed.EnumBlockPart> PART = PropertyEnum.<BlockGrowingSeaweed.EnumBlockPart>create("part", BlockGrowingSeaweed.EnumBlockPart.class);
 	private int height;
@@ -176,7 +177,7 @@ public class BlockGrowingSeaweed extends BlockBush{
 	}
 
 	protected BlockStateContainer createBlockState(){
-		return new BlockStateContainer(this, new IProperty[] {PART});
+		return new BlockStateContainer(this, PART);
 	}
 
 	@Override
@@ -206,7 +207,12 @@ public class BlockGrowingSeaweed extends BlockBush{
 		}
 	}
 
-	public static enum EnumBlockPart implements IStringSerializable
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void render(IBlockAccess world, BlockPos pos) {
+	}
+
+	public enum EnumBlockPart implements IStringSerializable
 	{
 		UPPER,
 		MIDDLE,
