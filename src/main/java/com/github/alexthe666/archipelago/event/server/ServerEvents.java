@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -43,9 +44,15 @@ public class ServerEvents {
 			ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(((EntityPlayer)event.getEntity()), ArchipelagoEntityProperties.class);
 			if(properties.teleportTime > 0 && properties.teleportTime <= 300){
 				properties.teleportTime++;
+				event.getEntity().motionY = (0.05D - event.getEntity().motionY) * 0.4D;
+				event.getEntity().motionX = 0;
+				event.getEntity().motionZ = 0;
 				Random rand = new Random();
 				Archipelago.PROXY.spawnParticle(EnumParticle.TELEPORT, event.getEntity().worldObj, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0);
 				event.getEntity().worldObj.spawnParticle(EnumParticleTypes.END_ROD, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0, 0, 0, new int[0]);
+				float sub = (float)(Math.random() * 0.30000001192092896D);
+				event.getEntity().worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB, (float)(event.getEntity().posX + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), (float)(event.getEntity().posY + rand.nextDouble() * (double)event.getEntity().height), (float)(event.getEntity().posZ + (rand.nextDouble() - 0.5D) * (double)event.getEntity().width), 0.95F - sub, 0.8439F - sub, 0.3135F - sub, new int[0]);
+
 			}
 			if(properties.teleportTime >= 300 && !event.getEntity().worldObj.isRemote){
 				if(!event.getEntityLiving().worldObj.isRemote){

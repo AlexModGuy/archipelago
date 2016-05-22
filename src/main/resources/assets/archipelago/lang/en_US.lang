@@ -65,6 +65,15 @@ tile.archipelago.plant.snakelocks.name=Snakelocks Anemone
 tile.archipelago.plant.bull_kelp.name=Bull Kelp
 tile.archipelago.plant.giant_kelp.name=Giant Kelp
 tile.archipelago.plant.sea_belt_kelp.name=Sea Belt Seaweed
+tile.archipelago.plant.venus_flower.name=Venus Flower Basket Sponge
+tile.archipelago.plant.carribean_seagrass.name=Carribean Seagrass
+tile.archipelago.plant.dwarf_eelgrass.name=Dwarf Eelgrass
+tile.archipelago.plant.enhalus_acoroides.name=Enhalus Acoroides Seagrass
+tile.archipelago.plant.japanese_ealgrass.name=Japanese Eelgrass
+tile.archipelago.plant.sea_nymph.name=Sea Nymph Seagrass
+tile.archipelago.plant.turtlegrass.name=Turtlegrass 
+tile.archipelago.plant.zostera_tasmanica.name=Zostera Tasmanica Seagrass
+tile.archipelago.coralrock.name=Reef Rock
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

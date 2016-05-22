@@ -20,22 +20,19 @@ public class WorldGenArchipelagoKelp extends WorldGenerator
 
 	public boolean generate(World worldIn, Random rand, BlockPos position){
 		boolean flag = false;
-		if(position.getY() < 45) return false;
 		if(worldIn != null && plantType != null && plantType.block != null){
 			for (int i = 0; i < 64; ++i){
 				BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
 				if (worldIn.isBlockLoaded(blockpos) && plantType.canSpawnIn(worldIn.getBiomeGenForCoords(blockpos)) && ((BlockGrowingSeaweed)plantType.block).canPlaceBlockAt(worldIn, blockpos)){
-					int length = Math.abs(54 - position.getY() - rand.nextInt(3));
-					if(worldIn.getBlockState(position.down(1)) != this){
-						worldIn.setBlockState(blockpos, plantType.block.getStateFromMeta(2), 2);
-						for(int y = 1; y < length - 1; y++){
-							worldIn.setBlockState(blockpos.up(y), plantType.block.getStateFromMeta(1), 2);
-						}
-						worldIn.setBlockState(blockpos.up(length - 1), plantType.block.getStateFromMeta(0), 2);
-						flag = true;
-					}else{
-						flag = false;
+					if(worldIn.getBlockState(blockpos.up()).getBlock().equals(plantType.block)) return false;
+					int length = Math.abs(61 - blockpos.getY() - rand.nextInt(3));
+					if(length > 6) return false;
+					worldIn.setBlockState(blockpos, plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.EnumBlockPart.LOWER), 2);
+					for(int y = 1; y < length; y++){
+						worldIn.setBlockState(blockpos.up(y), plantType.block.getDefaultState(), 2);
 					}
+					worldIn.setBlockState(blockpos.up(length), plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.EnumBlockPart.UPPER), 2);
+					flag = true;
 				}
 			}
 		}

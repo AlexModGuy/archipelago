@@ -3,6 +3,7 @@ package com.github.alexthe666.archipelago.core;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import com.github.alexthe666.archipelago.block.BlockCoralRock;
 import com.github.alexthe666.archipelago.block.BlockGlowingCoral;
 import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
 import com.github.alexthe666.archipelago.block.BlockShortCoral;
@@ -73,6 +74,15 @@ public class ModBlocks {
 	public static Block bull_kelp;
 	public static Block giant_kelp;
 	public static Block sea_belt_kelp;
+	public static Block venus_flower;
+	public static Block carribean_seagrass;
+	public static Block dwarf_eelgrass;
+	public static Block enhalus_acoroides;
+	public static Block japanese_ealgrass;
+	public static Block sea_nymph;
+	public static Block turtlegrass;
+	public static Block zostera_tasmanica;
+	public static Block coral_rock;
 
 	public static void init(){
 		anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new BiomeGenBase[]{ModWorld.tropicJungle, ModWorld.tropicShrublands});
@@ -83,6 +93,7 @@ public class ModBlocks {
 		la_palma_sow_thistle =new BlockTallPlant("la_palma_sow_thistle", 5, new BiomeGenBase[]{ModWorld.dryScrubland, ModWorld.tropicShrublands});
 		parrot_lily = new BlockShortPlant("parrot_lily", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands, ModWorld.tropicJungle, ModWorld.tropicShrublands});
 		
+		coral_rock = new BlockCoralRock();
 		dendrophyllia_cribosa = new BlockShortCoral("dendrophyllia_cribosa", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest, ModWorld.tropicTrench});
 		ivory_bush_coral = new BlockShortCoral("ivory_bush_coral", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		maasella_edwardsii = new BlockShortCoral("maasella_edwardsii", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest});
@@ -96,9 +107,9 @@ public class ModBlocks {
 		cerianthus_lloydi = new BlockShortCoral("cerianthus_lloydi", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		common_piddock_colony = new BlockGlowingCoral("common_piddock_colony", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
 		bladderwrack = new BlockShortCoral("bladderwrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
-		caulerpa_prolifera = new BlockShortCoral("caulerpa_prolifera", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
+		caulerpa_prolifera = new BlockShortCoral("caulerpa_prolifera", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest, ModWorld.tropicSeaGrassBed});
 		cuvie = new BlockShortCoral("cuvie", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
-		green_fleece = new BlockShortCoral("green_fleece", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
+		green_fleece = new BlockShortCoral("green_fleece", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest, ModWorld.tropicSeaGrassBed});
 		spiral_wrack = new BlockShortCoral("spiral_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
 		tooth_wrack = new BlockShortCoral("tooth_wrack", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
 		caulerpa_taxifolia = new BlockShortCoral("caulerpa_taxifolia", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicKelpForest});
@@ -133,9 +144,17 @@ public class ModBlocks {
 		xestospongia_testudinaria = new BlockShortCoral("xestospongia_testudinaria", 5, new BiomeGenBase[]{ModWorld.tropicReef});
 		colonial_tube_sponge = new BlockShortCoral("colonial_tube_sponge", 5, new BiomeGenBase[]{ModWorld.tropicReef});
 		wakame = new BlockShortCoral("wakame", 5, new BiomeGenBase[]{ModWorld.tropicKelpForest});
-		snakelocks = new BlockShortCoral("snakelocks", 5, new BiomeGenBase[]{ModWorld.tropicKelpForest});
+		snakelocks = new BlockShortCoral("snakelocks", 5, new BiomeGenBase[]{ModWorld.tropicKelpForest, ModWorld.tropicSeaGrassBed});
 		bull_kelp = new BlockGrowingSeaweed("bull_kelp", 5, 3, new BiomeGenBase[]{ModWorld.tropicKelpForest});
 		giant_kelp = new BlockGrowingSeaweed("giant_kelp", 5, 3, new BiomeGenBase[]{ModWorld.tropicKelpForest});
 		sea_belt_kelp = new BlockGrowingSeaweed("sea_belt_kelp", 5, 3, new BiomeGenBase[]{ModWorld.tropicKelpForest});
+		venus_flower = new BlockShortCoral("venus_flower", 5, new BiomeGenBase[]{ModWorld.tropicTrench});
+		carribean_seagrass = new BlockShortCoral("carribean_seagrass", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
+		dwarf_eelgrass = new BlockShortCoral("dwarf_eelgrass", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
+		enhalus_acoroides = new BlockShortCoral("enhalus_acoroides", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
+		japanese_ealgrass = new BlockShortCoral("japanese_ealgrass", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
+		sea_nymph = new BlockShortCoral("sea_nymph", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
+		turtlegrass = new BlockShortCoral("turtlegrass", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
+		zostera_tasmanica = new BlockShortCoral("zostera_tasmanica", 5, new BiomeGenBase[]{ModWorld.tropicSeaGrassBed});
 	}
 }

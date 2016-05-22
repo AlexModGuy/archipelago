@@ -30,7 +30,7 @@ public class WorldGeneratorArchipelago implements IWorldGenerator{
 				int z = (chunkZ * 16) + random.nextInt(16);
 				new WorldGenArchipelagoPlant(flowersEntries.get(random.nextInt(flowersEntries.size()))).generate(world, random, world.getHeight(new BlockPos(x, 0, z)));
 			}
-			for(int k = 0; k < 4; k++){
+			for(int k = 0; k < 7; k++){
 				int x = (chunkX * 16) + random.nextInt(16);
 				int z = (chunkZ * 16) + random.nextInt(16);
 				new WorldGenArchipelagoCoral(coralsEntries.get(random.nextInt(coralsEntries.size()))).generate(world, random, getCoralHeight(world, new BlockPos(x, 0, z)));

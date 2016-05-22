@@ -1,6 +1,7 @@
 package com.github.alexthe666.archipelago.block;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.model.ModelPig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +49,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 		super(Material.coral);
 		this.setHardness(0.0F);
 		this.setStepSound(SoundType.PLANT);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.LOWER));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.MIDDLE));
 		this.setUnlocalizedName("archipelago.plant." + name);
 		this.setCreativeTab(Archipelago.tab);
 		this.setLightOpacity(0);
@@ -178,11 +180,11 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 	}
 
 	public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(PART, EnumBlockPart.byMetadata(meta));
+		return this.getDefaultState().withProperty(PART, EnumBlockPart.byMetadata(meta));
 	}
 
 	public int getMetaFromState(IBlockState state){
-		return state.getValue(PART) == EnumBlockPart.UPPER ? state.getValue(PART) == EnumBlockPart.MIDDLE ? 1 : 2 : 0;
+		return state.getValue(PART).ordinal();
 	}
 
 	protected boolean checkCanStay(IBlockState state, IBlockState state2){
@@ -192,6 +194,10 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 	protected BlockStateContainer createBlockState(){
 		return new BlockStateContainer(this, PART);
 	}
+	
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
+        return field_185515_b;
+    }
 
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest){
@@ -220,9 +226,17 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 		}
 	}
 
+
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB bb, List<AxisAlignedBB> list, Entity mob)
+    {
+        addCollisionBoxToList(pos, field_185515_b, list, state.getSelectedBoundingBox(worldIn, pos));
+    }
+    
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void render(IBlockAccess world, BlockPos pos) {
+
 	}
 
 	public enum EnumBlockPart implements IStringSerializable
@@ -230,31 +244,31 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 		UPPER,
 		MIDDLE,
 		LOWER;
-        private static final EnumBlockPart[] METADATA_LOOKUP = new EnumBlockPart[values().length];
+		private static final EnumBlockPart[] METADATA_LOOKUP = new EnumBlockPart[values().length];
 
 		public String toString()
 		{
 			return super.toString().toLowerCase();
 		}
-		
-        static
-        {
-            for (EnumBlockPart type : values())
-            {
-                METADATA_LOOKUP[type.ordinal()] = type;
-            }
-        }
 
-        public static EnumBlockPart byMetadata(int metadata)
-        {
-            if (metadata < 0 || metadata >= METADATA_LOOKUP.length)
-            {
-                metadata = 0;
-            }
+		static
+		{
+			for (EnumBlockPart type : values())
+			{
+				METADATA_LOOKUP[type.ordinal()] = type;
+			}
+		}
 
-            return METADATA_LOOKUP[metadata];
-        }
-        
+		public static EnumBlockPart byMetadata(int metadata)
+		{
+			if (metadata < 0 || metadata >= METADATA_LOOKUP.length)
+			{
+				metadata = 0;
+			}
+
+			return METADATA_LOOKUP[metadata];
+		}
+
 		public String getName()
 		{
 			return this.toString().toLowerCase();
