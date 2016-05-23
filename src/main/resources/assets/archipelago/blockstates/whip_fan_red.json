@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:whip_fan_red"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

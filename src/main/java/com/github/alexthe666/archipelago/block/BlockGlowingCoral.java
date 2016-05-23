@@ -6,7 +6,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockGlowingCoral extends BlockShortCoral {
-
     public BlockGlowingCoral(String name, int chance, BiomeGenBase[] biomes) {
         super(name, chance, biomes);
         this.setLightLevel(0.3F);

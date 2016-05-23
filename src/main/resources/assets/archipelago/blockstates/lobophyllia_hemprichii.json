@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:lobophyllia_hemprichii"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

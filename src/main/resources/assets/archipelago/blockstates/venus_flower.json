@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:venus_flower"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

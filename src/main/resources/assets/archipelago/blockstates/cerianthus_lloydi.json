@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:cerianthus_lloydi"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

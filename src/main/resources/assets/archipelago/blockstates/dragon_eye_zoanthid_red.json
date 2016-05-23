@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:dragon_eye_zoanthid_red"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

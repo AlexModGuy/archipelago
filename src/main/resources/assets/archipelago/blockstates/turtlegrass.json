@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:turtlegrass"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

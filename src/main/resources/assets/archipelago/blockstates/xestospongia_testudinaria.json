@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:xestospongia_testudinaria"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

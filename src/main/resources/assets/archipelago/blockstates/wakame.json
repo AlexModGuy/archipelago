@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:wakame"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

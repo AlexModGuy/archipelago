@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:sea_nymph"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:spiral_wrack"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:bennetts_feather_star"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

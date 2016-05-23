@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:dendronephthya_hemprichi"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

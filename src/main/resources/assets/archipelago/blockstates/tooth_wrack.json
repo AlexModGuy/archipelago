@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:tooth_wrack"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

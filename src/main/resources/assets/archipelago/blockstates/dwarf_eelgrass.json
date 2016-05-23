@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:dwarf_eelgrass"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

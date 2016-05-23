@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:bipinnate_sea_plume"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

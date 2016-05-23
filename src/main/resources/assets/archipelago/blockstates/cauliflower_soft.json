@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:cauliflower_soft"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

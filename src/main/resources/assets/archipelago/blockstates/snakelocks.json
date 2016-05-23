@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:snakelocks"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

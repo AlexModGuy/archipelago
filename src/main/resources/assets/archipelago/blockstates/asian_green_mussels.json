@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:asian_green_mussels"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

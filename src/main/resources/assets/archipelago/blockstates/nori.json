@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:nori"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

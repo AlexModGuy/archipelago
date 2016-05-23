@@ -1,1 +1,5 @@
-{"variants": {"normal": { "model": "archipelago:pachycerianthus_fimbriatus"}}}
+{
+    "variants": {
+        "normal": { "model": "archipelago:blank" }
+    }
+}

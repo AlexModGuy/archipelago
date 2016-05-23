@@ -32,7 +32,7 @@ import java.util.Random;
 
 public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBlock {
 
-    public static final PropertyEnum<BlockGrowingSeaweed.EnumBlockPart> PART = PropertyEnum.<BlockGrowingSeaweed.EnumBlockPart>create("part", BlockGrowingSeaweed.EnumBlockPart.class);
+    public static final PropertyEnum<BlockGrowingSeaweed.EnumBlockPart> PART = PropertyEnum.create("part", BlockGrowingSeaweed.EnumBlockPart.class);
     private int height;
 
     public BlockGrowingSeaweed(String name, int chance, int height, BiomeGenBase[] biomes) {
