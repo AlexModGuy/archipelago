@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.block.BlockShortCoral;
 import com.github.alexthe666.archipelago.util.PlantEntry;
 
 public class WorldGenArchipelagoKelp extends WorldGenerator
@@ -27,11 +26,11 @@ public class WorldGenArchipelagoKelp extends WorldGenerator
 					if(worldIn.getBlockState(blockpos.up()).getBlock().equals(plantType.block)) return false;
 					int length = Math.abs(61 - blockpos.getY() - rand.nextInt(3));
 					if(length > 6) return false;
-					worldIn.setBlockState(blockpos, plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.EnumBlockPart.LOWER), 2);
+					worldIn.setBlockState(blockpos, plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.LOWER), 2);
 					for(int y = 1; y < length; y++){
 						worldIn.setBlockState(blockpos.up(y), plantType.block.getDefaultState(), 2);
 					}
-					worldIn.setBlockState(blockpos.up(length), plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.EnumBlockPart.UPPER), 2);
+					worldIn.setBlockState(blockpos.up(length), plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.UPPER), 2);
 					flag = true;
 				}
 			}

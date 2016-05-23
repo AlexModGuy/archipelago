@@ -10,6 +10,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,25 +31,38 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBlock {
+    private String name;
 
-    public static final PropertyEnum<BlockGrowingSeaweed.EnumBlockPart> PART = PropertyEnum.create("part", BlockGrowingSeaweed.EnumBlockPart.class);
+    @SideOnly(Side.CLIENT)
+    private static final Minecraft MC = Minecraft.getMinecraft();
+
+    @SideOnly(Side.CLIENT)
+    private TextureAtlasSprite[] sprite = new TextureAtlasSprite[Part.values().length];
+    @SideOnly(Side.CLIENT)
+    private float[] minU = new float[Part.values().length], maxU = new float[Part.values().length], minV = new float[Part.values().length], maxV = new float[Part.values().length];
+
+    public static final PropertyEnum<Part> PART = PropertyEnum.create("part", Part.class);
     private int height;
 
     public BlockGrowingSeaweed(String name, int chance, int height, BiomeGenBase[] biomes) {
         super(Material.coral);
         this.setHardness(0.0F);
         this.setStepSound(SoundType.PLANT);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.MIDDLE));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(PART, Part.MIDDLE));
         this.setUnlocalizedName("archipelago.plant." + name);
         this.setCreativeTab(Archipelago.tab);
         this.setLightOpacity(0);
         this.useNeighborBrightness = true;
+        this.name = name;
         this.height = height;
         this.setTickRandomly(true);
         GameRegistry.registerBlock(this, name);
@@ -60,8 +79,8 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     }
 
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, this.getDefaultState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.LOWER), 2);
-        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(PART, BlockGrowingSeaweed.EnumBlockPart.UPPER), 2);
+        worldIn.setBlockState(pos, this.getDefaultState().withProperty(PART, Part.LOWER), 2);
+        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(PART, Part.UPPER), 2);
     }
 
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -85,7 +104,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
             return false;
         }
         if (world.getBlockState(pos).getBlock() == this) {
-            if (world.getBlockState(pos).getValue(PART) == BlockGrowingSeaweed.EnumBlockPart.LOWER && world.getBlockState(pos.down()).getMaterial() != Material.sand) {
+            if (world.getBlockState(pos).getValue(PART) == Part.LOWER && world.getBlockState(pos.down()).getMaterial() != Material.sand) {
                 return false;
             }
         }
@@ -97,12 +116,12 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         IBlockState blockstate1 = world.getBlockState(pos.down());
         if (rand.nextInt(3) == 0) {
             if (canGrow(world, pos) && world.getBlockState(pos.up()).getBlock() != this) {
-                world.setBlockState(pos.up(), blockstate.withProperty(PART, EnumBlockPart.UPPER), 2);
+                world.setBlockState(pos.up(), blockstate.withProperty(PART, Part.UPPER), 2);
             }
         }
         if (world.getBlockState(pos.up()).getBlock() == this) {
-            if (world.getBlockState(pos).getValue(PART) == EnumBlockPart.UPPER && world.getBlockState(pos.up()).getValue(PART) == EnumBlockPart.UPPER) {
-                world.setBlockState(pos, blockstate.withProperty(PART, EnumBlockPart.MIDDLE), 2);
+            if (world.getBlockState(pos).getValue(PART) == Part.UPPER && world.getBlockState(pos.up()).getValue(PART) == Part.UPPER) {
+                world.setBlockState(pos, blockstate.withProperty(PART, Part.MIDDLE), 2);
             }
         }
     }
@@ -111,10 +130,10 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         IBlockState state2 = worldIn.getBlockState(pos);
         IBlockState state3 = worldIn.getBlockState(pos.down());
         if (state2.getBlock() == this) {
-            if (state2.getValue(PART) == BlockGrowingSeaweed.EnumBlockPart.LOWER && state3.getMaterial() != Material.sand) {
+            if (state2.getValue(PART) == Part.LOWER && state3.getMaterial() != Material.sand) {
                 this.checkAndDropBlock(worldIn, pos, state);
             }
-            if (state2.getValue(PART) != BlockGrowingSeaweed.EnumBlockPart.LOWER && state3.getBlock() != this) {
+            if (state2.getValue(PART) != Part.LOWER && state3.getBlock() != this) {
                 this.checkAndDropBlock(worldIn, pos, state);
             }
         }
@@ -122,7 +141,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (state.getBlock() == this && !this.canBlockStay(worldIn, pos, state)) {
-            boolean flag = state.getValue(PART) == BlockGrowingSeaweed.EnumBlockPart.LOWER;
+            boolean flag = state.getValue(PART) == Part.LOWER;
             if (flag) this.dropBlockAsItem(worldIn, pos, state, 0);
             for (int y = 0; y < worldIn.getHeight(pos).getY() - pos.getY(); y++) {
                 if (worldIn.getBlockState(pos.up(y)).getBlock() == this) {
@@ -167,7 +186,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     }
 
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(PART, EnumBlockPart.byMetadata(meta));
+        return this.getDefaultState().withProperty(PART, Part.byMetadata(meta));
     }
 
     public int getMetaFromState(IBlockState state) {
@@ -189,14 +208,14 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
         for (int y = 0; y < height; y++) {
-            if (state.getBlock() == this && state.getValue(PART) != EnumBlockPart.LOWER && world.getBlockState(pos.up(y)).getBlock() == this)
+            if (state.getBlock() == this && state.getValue(PART) != Part.LOWER && world.getBlockState(pos.up(y)).getBlock() == this)
                 world.setBlockToAir(pos.up(y));
         }
         return world.setBlockToAir(pos);
     }
 
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        if (state.getBlock() == this && state.getValue(PART) == EnumBlockPart.LOWER) {
+        if (state.getBlock() == this && state.getValue(PART) == Part.LOWER) {
             if (!worldIn.isRemote && !worldIn.restoringBlockSnapshots) {
                 java.util.List<ItemStack> items = getDrops(worldIn, pos, state, fortune);
                 chance = net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, fortune, chance, false, harvesters.get());
@@ -223,26 +242,77 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBlockAccess world, BlockPos pos) {
-
+        IBlockState state = world.getBlockState(pos);
+        if (state.getValue(PART) == Part.LOWER) {
+            GlStateManager.pushMatrix();
+            GlStateManager.disableCull();
+            GlStateManager.enableLighting();
+            MC.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            double x = (pos.getX() + 0.5) - TileEntityRendererDispatcher.staticPlayerX;
+            double y = pos.getY() - TileEntityRendererDispatcher.staticPlayerY;
+            double z = (pos.getZ() + 0.5) - TileEntityRendererDispatcher.staticPlayerZ;
+            GlStateManager.translate(x, y, z);
+            while (state.getBlock() instanceof BlockGrowingSeaweed) {
+                int light = MC.theWorld.getCombinedLight(pos, 0);
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, (float) light / 65536.0F);
+                RenderHelper.disableStandardItemLighting();
+                float sway = (MC.thePlayer.ticksExisted + (pos.hashCode() * 0.2F)) * 0.0125F;
+                float swayX = (float) Math.sin(sway) / 8.0F;
+                float swayZ = (float) Math.cos(sway) / 8.0F;
+                Part part = state.getValue(PART);
+                int ordinal = part.ordinal();
+                if (sprite[ordinal] == null) {
+                    TextureAtlasSprite sprite = MC.getTextureMapBlocks().getTextureExtry(Archipelago.MODID + ":blocks/" + name + "_" + (2 - ordinal));
+                    this.sprite[ordinal] = sprite;
+                    minU[ordinal] = sprite.getMinU();
+                    minV[ordinal] = sprite.getMinV();
+                    maxU[ordinal] = sprite.getMaxU();
+                    maxV[ordinal] = sprite.getMaxV();
+                }
+                float minU = this.minU[ordinal];
+                float minV = this.minV[ordinal];
+                float maxU = this.maxU[ordinal];
+                float maxV = this.maxV[ordinal];
+                Tessellator tessellator = Tessellator.getInstance();
+                VertexBuffer buffer = tessellator.getBuffer();
+                buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+                buffer.pos(-0.5F, 0.0F, -0.5F).tex(minU, maxV).endVertex();
+                buffer.pos(0.5F, 0.0F, 0.5F).tex(maxU, maxV).endVertex();
+                buffer.pos(0.5F + swayX, 1.0F, 0.5F + swayZ).tex(maxU, minV).endVertex();
+                buffer.pos(-0.5F + swayX, 1.0F, -0.5F + swayZ).tex(minU, minV).endVertex();
+                tessellator.draw();
+                buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+                buffer.pos(-0.5F, 0.0F, 0.5F).tex(minU, maxV).endVertex();
+                buffer.pos(0.5F, 0.0F, -0.5F).tex(maxU, maxV).endVertex();
+                buffer.pos(0.5F + swayX, 1.0F, -0.5F + swayZ).tex(maxU, minV).endVertex();
+                buffer.pos(-0.5F + swayX, 1.0F, 0.5F + swayZ).tex(minU, minV).endVertex();
+                tessellator.draw();
+                pos = pos.up();
+                state = world.getBlockState(pos);
+                GlStateManager.translate(swayX, 1.0F, swayZ);
+            }
+            GlStateManager.popMatrix();
+        }
     }
 
-    public enum EnumBlockPart implements IStringSerializable {
+    public enum Part implements IStringSerializable {
         UPPER,
         MIDDLE,
         LOWER;
-        private static final EnumBlockPart[] METADATA_LOOKUP = new EnumBlockPart[values().length];
+        private static final Part[] METADATA_LOOKUP = new Part[values().length];
 
         public String toString() {
             return super.toString().toLowerCase();
         }
 
         static {
-            for (EnumBlockPart type : values()) {
+            for (Part type : values()) {
                 METADATA_LOOKUP[type.ordinal()] = type;
             }
         }
 
-        public static EnumBlockPart byMetadata(int metadata) {
+        public static Part byMetadata(int metadata) {
             if (metadata < 0 || metadata >= METADATA_LOOKUP.length) {
                 metadata = 0;
             }

@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed.EnumBlockPart;
 
 public class BlockCoralRock extends Block {
 	
