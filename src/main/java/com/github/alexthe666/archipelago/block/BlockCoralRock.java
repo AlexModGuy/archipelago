@@ -26,7 +26,7 @@ public class BlockCoralRock extends Block {
 		super(Material.sand);
 		this.setHardness(2.0F);
 		this.setHarvestLevel("pickaxe", 0);
-		this.setStepSound(SoundType.PLANT);
+		this.setStepSound(SoundType.STONE);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Integer.valueOf(0)));
 		this.setUnlocalizedName("archipelago.coralrock");
 		this.setCreativeTab(Archipelago.tab);

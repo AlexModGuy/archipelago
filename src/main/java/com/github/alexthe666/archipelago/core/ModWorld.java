@@ -27,7 +27,7 @@ public class ModWorld {
 	public static void init(){
 		tropicOcean = new BiomeGenTropical("Tropic Ocean", ModConfig.tropicOceanId, -1.3F, 0.1F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
 		tropicShallows = new BiomeGenTropical("Tropic Shallows", ModConfig.tropicShallowsId, -0.5F, -0.015F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
-		tropicReef = new BiomeGenTropical("Tropic Reef", ModConfig.tropicReefId, -0.5F, -0.035F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
+		tropicReef = new BiomeGenTropical("Tropic Reef", ModConfig.tropicReefId, -0.5F, -0.1F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
 		tropicSeaGrassBed = new BiomeGenTropical("Tropic Sea Grass Bed", ModConfig.tropicSeaGrassBedId, -0.5F, -0.025F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
 		tropicBlueHoles = new BiomeGenTropical("Tropic Bule Holes", ModConfig.tropicBlueHolesId, -0.5F, -0.015F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
 		tropicTrench = new BiomeGenTropical("Tropic Trench", ModConfig.tropicTrenchId, -1.9F, -0.05F, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);

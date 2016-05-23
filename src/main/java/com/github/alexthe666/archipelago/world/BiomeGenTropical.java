@@ -91,11 +91,9 @@ public class BiomeGenTropical extends BiomeGenBase
 						}
 						else if (j1 >= i - 13 && j1 <= i + 1)
 						{
+							iblockstate = rand.nextInt(4) == 0 ? Blocks.sand.getDefaultState() : ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9));
 							iblockstate = Blocks.sand.getDefaultState();
 							iblockstate1 = Blocks.sand.getDefaultState();
-							if(this == ModWorld.tropicReef){
-								iblockstate = rand.nextInt(4) == 0 ? Blocks.sand.getDefaultState() : ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9));
-							}
 						}
 
 						if (j1 < i && (iblockstate == null || iblockstate.getMaterial() == Material.air))
@@ -111,7 +109,12 @@ public class BiomeGenTropical extends BiomeGenBase
 						}
 
 						j = k;
-						if (j1 >= i - 1)
+						if (j1 <= i - 1 && this == ModWorld.tropicReef)
+						{
+							iblockstate = rand.nextInt(4) == 0 ? Blocks.sand.getDefaultState() : ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9));
+							chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
+						}
+						else if (j1 >= i - 1)
 						{
 							chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
 						}
@@ -119,12 +122,7 @@ public class BiomeGenTropical extends BiomeGenBase
 						{
 							iblockstate = AIR;
 							iblockstate1 = STONE;
-							if(this == ModWorld.tropicReef){
-								IBlockState state = rand.nextInt(2) == 0 ? ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9)) : Blocks.sand.getDefaultState();
-								chunkPrimerIn.setBlockState(i1, j1, l, state);
-							}else{
-								chunkPrimerIn.setBlockState(i1, j1, l, Blocks.sand.getDefaultState());
-							}
+							chunkPrimerIn.setBlockState(i1, j1, l, Blocks.sand.getDefaultState());
 						}
 						else
 						{

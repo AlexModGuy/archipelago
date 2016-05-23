@@ -21,6 +21,7 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
 import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.core.ModWorld;
 
 public class ChunkGeneratorArchipelago implements IChunkGenerator
 {
