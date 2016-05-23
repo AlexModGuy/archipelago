@@ -29,6 +29,18 @@ public class ModBlocks {
 	public static Block cycas_nayagarhenis;
 	public static Block mexican_clover;
 	public static Block western_sand_cherry;
+	public static Block allamanda_angustifolia;
+	public static Block aztec_marigold_red;
+	public static Block aztec_marigold_orange;
+	public static Block aztec_marigold_yellow;
+	public static Block fever_root;
+	public static Block hibiscus;
+	public static Block kakhiweed;
+	public static Block lafoensia_pacari;
+	public static Block lily_of_the_valley;
+	public static Block monstera_deliciosa;
+	public static Block pau_santo;
+	public static Block west_indian_lilac;
 
 	public static Block dendrophyllia_cribosa;
 	public static Block ivory_bush_coral;
@@ -112,7 +124,20 @@ public class ModBlocks {
 		cycas_nayagarhenis = new BlockTallPlant("cycas_nayagarhenis", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
 		mexican_clover = new BlockShortPlant("mexican_clover", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
 		western_sand_cherry = new BlockShortPlant("western_sand_cherry", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		allamanda_angustifolia = new BlockShortPlant("allamanda_angustifolia", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		aztec_marigold_red = new BlockShortPlant("aztec_marigold_red", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		aztec_marigold_orange = new BlockShortPlant("aztec_marigold_orange", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		aztec_marigold_yellow = new BlockShortPlant("aztec_marigold_yellow", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		fever_root = new BlockShortPlant("fever_root", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		hibiscus = new BlockTallPlant("hibiscus", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		kakhiweed = new BlockShortPlant("kakhiweed", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		lafoensia_pacari = new BlockTallPlant("lafoensia_pacari", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		lily_of_the_valley = new BlockTallPlant("lily_of_the_valley", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		monstera_deliciosa = new BlockTallPlant("monstera_deliciosa", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		pau_santo = new BlockTallPlant("pau_santo", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
+		west_indian_lilac = new BlockTallPlant("west_indian_lilac", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands});
 
+		
 		coral_rock = new BlockCoralRock();
 		dendrophyllia_cribosa = new BlockShortCoral("dendrophyllia_cribosa", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest, ModWorld.tropicTrench});
 		ivory_bush_coral = new BlockShortCoral("ivory_bush_coral", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
