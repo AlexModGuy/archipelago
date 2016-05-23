@@ -19,7 +19,17 @@ public class ModBlocks {
 	public static Block canary_island_foxglove;
 	public static Block la_palma_sow_thistle;
 	public static Block parrot_lily;
-	
+	public static Block socotra_bottle_tree;
+	public static Block socotra_bottle_tree_blooming;
+	public static Block socotrine_aloe;
+	public static Block abal;
+	public static Block australian_desert_raisin;
+	public static Block casper_bush;
+	public static Block common_yucca;
+	public static Block cycas_nayagarhenis;
+	public static Block mexican_clover;
+	public static Block western_sand_cherry;
+
 	public static Block dendrophyllia_cribosa;
 	public static Block ivory_bush_coral;
 	public static Block maasella_edwardsii;
@@ -92,7 +102,17 @@ public class ModBlocks {
 		canary_island_foxglove = new BlockTallPlant("canary_island_foxglove", 5, new BiomeGenBase[]{ModWorld.tropicShrublands});
 		la_palma_sow_thistle =new BlockTallPlant("la_palma_sow_thistle", 5, new BiomeGenBase[]{ModWorld.dryScrubland, ModWorld.tropicShrublands});
 		parrot_lily = new BlockShortPlant("parrot_lily", 5, new BiomeGenBase[]{ModWorld.tropicGrasslands, ModWorld.tropicJungle, ModWorld.tropicShrublands});
-		
+		socotra_bottle_tree = new BlockTallPlant("socotra_bottle_tree", 5, new BiomeGenBase[]{ModWorld.dryPeaks});
+		socotra_bottle_tree_blooming = new BlockTallPlant("socotra_bottle_tree_blooming", 5, new BiomeGenBase[]{ModWorld.dryPeaks});
+		socotrine_aloe = new BlockShortPlant("socotrine_aloe", 5, new BiomeGenBase[]{ModWorld.dryPeaks});
+		abal = new BlockShortPlant("abal", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		australian_desert_raisin = new BlockShortPlant("australian_desert_raisin", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		casper_bush = new BlockShortPlant("casper_bush", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		common_yucca = new BlockTallPlant("common_yucca", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		cycas_nayagarhenis = new BlockTallPlant("cycas_nayagarhenis", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		mexican_clover = new BlockShortPlant("mexican_clover", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+		western_sand_cherry = new BlockShortPlant("western_sand_cherry", 5, new BiomeGenBase[]{ModWorld.dryScrubland});
+
 		coral_rock = new BlockCoralRock();
 		dendrophyllia_cribosa = new BlockShortCoral("dendrophyllia_cribosa", 5, new BiomeGenBase[]{ModWorld.tropicOcean, ModWorld.tropicBlueHoles, ModWorld.tropicKelpForest, ModWorld.tropicTrench});
 		ivory_bush_coral = new BlockShortCoral("ivory_bush_coral", 5, new BiomeGenBase[]{ModWorld.tropicOcean});
