@@ -7,11 +7,11 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions
 import java.util.Map;
 
 @MCVersion("1.9")
-@TransformerExclusions({"com.github.alexthe666.archipelago.classtransformer."})
+@TransformerExclusions({ "com.github.alexthe666.archipelago.classtransformer." })
 public class ArchipelagoClassLoader implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        return new String[]{ArchipelagoClassTransformer.class.getCanonicalName()};
+        return new String[] { ArchipelagoClassTransformer.class.getCanonicalName() };
     }
 
     @Override

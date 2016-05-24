@@ -34,8 +34,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
