@@ -6,9 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
 public class CommonProxy {
-	
-	public void render(){}
-	
+
+	public void init() {}
+
 	public void addItemRender(Item item, String name){}
 
 	public void addItemRenderWithMeta(Item item, String name, int meta){}

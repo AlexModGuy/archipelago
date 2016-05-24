@@ -116,7 +116,6 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
     @SideOnly(Side.CLIENT)
     public void render(IBlockAccess world, BlockPos pos) {
         GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
         GlStateManager.enableLighting();
         int light = MC.theWorld.getCombinedLight(pos, 0);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, (float) light / 65536.0F);

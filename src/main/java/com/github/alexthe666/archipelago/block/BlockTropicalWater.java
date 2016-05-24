@@ -107,7 +107,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         super.updateTick(worldIn, pos, state, rand);
-        int i = ((Integer) state.getValue(LEVEL)).intValue();
+        int i = state.getValue(LEVEL);
         int j = 1;
 
         if (this.blockMaterial == Material.lava && !worldIn.provider.doesWaterVaporize()) {
@@ -145,7 +145,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
                 if (iblockstate1.getMaterial().isSolid()) {
                     i1 = 0;
-                } else if (iblockstate1.getMaterial() == this.blockMaterial && ((Integer) iblockstate1.getValue(LEVEL)).intValue() == 0) {
+                } else if (iblockstate1.getMaterial() == this.blockMaterial && iblockstate1.getValue(LEVEL) == 0) {
                     i1 = 0;
                 }
             }
@@ -158,7 +158,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
                 if (i1 < 0) {
                     worldIn.setBlockToAir(pos);
                 } else {
-                    state = state.withProperty(LEVEL, Integer.valueOf(i1));
+                    state = state.withProperty(LEVEL, i1);
                     worldIn.setBlockState(pos, state, 2);
                     worldIn.scheduleUpdate(pos, this, k);
                     worldIn.notifyNeighborsOfStateChange(pos, this);
@@ -206,7 +206,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
                 state.getBlock().dropBlockAsItem(worldIn, pos, state, 0);
             }
 
-            worldIn.setBlockState(pos, this.getDefaultState().withProperty(LEVEL, Integer.valueOf(level)), 3);
+            worldIn.setBlockState(pos, this.getDefaultState().withProperty(LEVEL, level), 3);
         }
     }
 
@@ -217,7 +217,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
         worldIn.playSound((EntityPlayer) null, pos, SoundEvents.block_lava_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
 
         for (int i = 0; i < 8; ++i) {
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0 + Math.random(), d1 + 1.2D, d2 + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0 + Math.random(), d1 + 1.2D, d2 + Math.random(), 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -234,7 +234,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
             BlockPos blockpos = pos.offset(enumfacing);
             IBlockState iblockstate = worldIn.getBlockState(blockpos);
 
-            if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || ((Integer) iblockstate.getValue(LEVEL)).intValue() > 0)) {
+            if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || iblockstate.getValue(LEVEL) > 0)) {
                 int j;
 
                 if (this.isBlocked(worldIn, blockpos.down(), worldIn.getBlockState(blockpos.down()))) {
@@ -259,11 +259,11 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
     private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state) {
         Block block = worldIn.getBlockState(pos).getBlock();
-        return !(block instanceof BlockDoor) && block != Blocks.standing_sign && block != Blocks.ladder && block != Blocks.reeds ? (block.getMaterial(state) == Material.portal ? true : block.getMaterial(state).blocksMovement()) : true;
+        return !(!(block instanceof BlockDoor) && block != Blocks.standing_sign && block != Blocks.ladder && block != Blocks.reeds) || (block.getMaterial(state) == Material.portal || block.getMaterial(state).blocksMovement());
     }
 
     protected int getLevel(IBlockAccess worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos).getBlock() == this ? worldIn.getBlockState(pos).getMaterial() == this.blockMaterial ? ((Integer) worldIn.getBlockState(pos).getValue(LEVEL)).intValue() : -1 : 0;
+        return worldIn.getBlockState(pos).getBlock() == this ? worldIn.getBlockState(pos).getMaterial() == this.blockMaterial ? worldIn.getBlockState(pos).getValue(LEVEL) : -1 : 0;
     }
 
     private int func_176374_a(World worldIn, BlockPos pos, int distance, EnumFacing calculateFlowCost) {
@@ -273,7 +273,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
                 BlockPos blockpos = pos.offset(enumfacing);
                 IBlockState iblockstate = worldIn.getBlockState(blockpos);
                 if (iblockstate.getBlock() == this) {
-                    if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || ((Integer) iblockstate.getValue(LEVEL)).intValue() > 0)) {
+                    if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || iblockstate.getValue(LEVEL) > 0)) {
                         if (!this.isBlocked(worldIn, blockpos.down(), iblockstate)) {
                             return distance;
                         }
@@ -300,14 +300,14 @@ public class BlockTropicalWater extends BlockFluidClassic {
         double d0 = (double) state.getX();
         double d1 = (double) state.getY();
         double d2 = (double) state.getZ();
-        int i = ((Integer) worldIn.getValue(LEVEL)).intValue();
+        int i = worldIn.getValue(LEVEL);
 
         if (i > 0 && i < 8) {
             if (rand.nextInt(64) == 0) {
                 pos.playSound(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D, SoundEvents.block_water_ambient, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, rand.nextFloat() + 0.5F, false);
             }
         } else if (rand.nextInt(10) == 0) {
-            pos.spawnParticle(EnumParticleTypes.SUSPENDED, d0 + (double) rand.nextFloat(), d1 + (double) rand.nextFloat(), d2 + (double) rand.nextFloat(), 0.0D, 0.0D, 0.0D, new int[0]);
+            pos.spawnParticle(EnumParticleTypes.SUSPENDED, d0 + (double) rand.nextFloat(), d1 + (double) rand.nextFloat(), d2 + (double) rand.nextFloat(), 0.0D, 0.0D, 0.0D);
         }
 
         if (rand.nextInt(10) == 0 && pos.getBlockState(state.down()).isFullyOpaque()) {
@@ -317,7 +317,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
                 double d3 = d0 + (double) rand.nextFloat();
                 double d5 = d1 - 1.05D;
                 double d7 = d2 + (double) rand.nextFloat();
-                pos.spawnParticle(EnumParticleTypes.DRIP_WATER, d3, d5, d7, 0.0D, 0.0D, 0.0D, new int[0]);
+                pos.spawnParticle(EnumParticleTypes.DRIP_WATER, d3, d5, d7, 0.0D, 0.0D, 0.0D);
             }
         }
     }

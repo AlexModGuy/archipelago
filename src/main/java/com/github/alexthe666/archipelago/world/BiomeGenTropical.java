@@ -23,8 +23,8 @@ import java.util.Random;
 public class BiomeGenTropical extends BiomeGenBase {
     private EnumGrassColor grassColor;
 
-    public BiomeGenTropical(String name, int id, float height, float variation, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment) {
-        super((new BiomeGenBase.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(0X46FFFF));
+    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment) {
+        super((new BiomeGenBase.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
         this.spawnableMonsterList.clear();
@@ -34,7 +34,6 @@ public class BiomeGenTropical extends BiomeGenBase {
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
-
     }
 
     public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos) {

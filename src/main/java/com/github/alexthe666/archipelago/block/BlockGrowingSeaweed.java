@@ -245,7 +245,6 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         IBlockState state = world.getBlockState(pos);
         if (state.getValue(PART) == Part.LOWER) {
             GlStateManager.pushMatrix();
-            GlStateManager.disableCull();
             GlStateManager.enableLighting();
             MC.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

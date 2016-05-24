@@ -63,6 +63,6 @@ public class Archipelago {
         ModBlocks.init();
         ModRecipes.init();
         GameRegistry.registerWorldGenerator(new WorldGeneratorArchipelago(), 20);
-        PROXY.render();
+        PROXY.init();
     }
 }

@@ -12,10 +12,12 @@ import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -59,16 +61,18 @@ public class ArchipelagoHooks {
     }
 
     public static void drawSpecialRenderers(ICamera camera) {
-        synchronized (SPECIAL_RENDERER_LOCK) {
-            World world = MC.theWorld;
-            for (Map.Entry<CompiledChunk, List<BlockPos>> entry : SPECIAL_RENDERERS.entrySet()) {
-                for (BlockPos pos : entry.getValue()) {
-                    IBlockState state = world.getBlockState(pos);
-                    if (camera.isBoundingBoxInFrustum(BLOCK_BOUNDS.offset(pos))) {
-                        Block block = state.getBlock();
-                        if (block instanceof ISpecialRenderedBlock) {
-                            ISpecialRenderedBlock specialRenderedBlock = (ISpecialRenderedBlock) block;
-                            specialRenderedBlock.render(world, pos);
+        if (MinecraftForgeClient.getRenderPass() == 0) {
+            synchronized (SPECIAL_RENDERER_LOCK) {
+                World world = MC.theWorld;
+                for (Map.Entry<CompiledChunk, List<BlockPos>> entry : SPECIAL_RENDERERS.entrySet()) {
+                    for (BlockPos pos : entry.getValue()) {
+                        IBlockState state = world.getBlockState(pos);
+                        if (camera.isBoundingBoxInFrustum(BLOCK_BOUNDS.offset(pos))) {
+                            Block block = state.getBlock();
+                            if (block instanceof ISpecialRenderedBlock) {
+                                ISpecialRenderedBlock specialRenderedBlock = (ISpecialRenderedBlock) block;
+                                specialRenderedBlock.render(world, pos);
+                            }
                         }
                     }
                 }
