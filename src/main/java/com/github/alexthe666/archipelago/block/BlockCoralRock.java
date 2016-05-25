@@ -21,10 +21,10 @@ public class BlockCoralRock extends Block {
     public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 9);
 
     public BlockCoralRock() {
-        super(Material.sand);
+        super(Material.SAND);
         this.setHardness(2.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setStepSound(SoundType.STONE);
+        this.setSoundType(SoundType.STONE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Integer.valueOf(0)));
         this.setUnlocalizedName("archipelago.coralrock");
         this.setCreativeTab(Archipelago.tab);

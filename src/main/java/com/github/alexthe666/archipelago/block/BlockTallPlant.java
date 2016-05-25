@@ -1,8 +1,7 @@
 package com.github.alexthe666.archipelago.block;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.util.PlantEntry;
-import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -22,28 +21,30 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.util.PlantEntry;
+import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
 
 public class BlockTallPlant extends BlockBush implements IGrowable {
     public static final PropertyEnum<BlockTallPlant.EnumBlockHalf> HALF = PropertyEnum.<BlockTallPlant.EnumBlockHalf>create("half", BlockTallPlant.EnumBlockHalf.class);
 
-    public BlockTallPlant(String name, int chance, BiomeGenBase[] biomes) {
-        super(Material.vine);
+    public BlockTallPlant(String name, int chance, Biome[] biomes) {
+        super(Material.VINE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, BlockTallPlant.EnumBlockHalf.LOWER));
         this.setHardness(0.0F);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.setUnlocalizedName("archipelago.plant." + name);
         this.setCreativeTab(Archipelago.tab);
         GameRegistry.registerBlock(this, name);
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
         PlantEntry entry = new PlantEntry(this, chance, false);
-        for (BiomeGenBase biome : biomes) {
-            entry.addBiome(BiomeGenBase.getIdForBiome(biome));
+        for (Biome biome : biomes) {
+            entry.addBiome(Biome.getIdForBiome(biome));
         }
         WorldGeneratorArchipelago.flowersEntries.add(entry);
     }
@@ -67,11 +68,11 @@ public class BlockTallPlant extends BlockBush implements IGrowable {
             if (!flag) this.dropBlockAsItem(worldIn, pos, state, 0);
 
             if (block == this) {
-                worldIn.setBlockState(blockpos, Blocks.air.getDefaultState(), 2);
+                worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
             }
 
             if (block1 == this) {
-                worldIn.setBlockState(blockpos1, Blocks.air.getDefaultState(), 3);
+                worldIn.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 3);
             }
         }
     }
@@ -103,7 +104,7 @@ public class BlockTallPlant extends BlockBush implements IGrowable {
                 }
             }
         } else if (worldIn.getBlockState(pos.up()).getBlock() == this) {
-            worldIn.setBlockState(pos.up(), Blocks.air.getDefaultState(), 2);
+            worldIn.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 2);
         }
 
         super.onBlockHarvested(worldIn, pos, state, player);

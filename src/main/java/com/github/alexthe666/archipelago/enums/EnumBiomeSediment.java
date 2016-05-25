@@ -5,8 +5,8 @@ import net.minecraft.init.Blocks;
 
 public enum EnumBiomeSediment {
 
-    SANDY(Blocks.sand, Blocks.sand),
-    GRASSY(Blocks.grass, Blocks.dirt);
+    SANDY(Blocks.SAND, Blocks.SAND),
+    GRASSY(Blocks.GRASS, Blocks.DIRT);
 
     public Block topBlock;
     public Block bottomBlock;

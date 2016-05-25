@@ -1,9 +1,9 @@
 package com.github.alexthe666.archipelago.client.particle;
 
-import net.minecraft.client.particle.EntitySmokeFX;
+import net.minecraft.client.particle.ParticleSmokeNormal;
 import net.minecraft.world.World;
 
-public class TeleportFX extends EntitySmokeFX {
+public class TeleportFX extends ParticleSmokeNormal {
 
     public TeleportFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, 2);

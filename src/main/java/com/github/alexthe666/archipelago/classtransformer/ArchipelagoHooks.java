@@ -36,8 +36,8 @@ public class ArchipelagoHooks {
     private static final AxisAlignedBB BLOCK_BOUNDS = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 
     public static void renderUnderwaterFog(Entity entity, IBlockState state) {
-        if (entity.dimension == ModConfig.ARCHIPELAGO_DIMENSION_ID && state != null && state.getMaterial() == Material.water && entity instanceof EntityLivingBase) {
-            if (!((EntityLivingBase) entity).isPotionActive(MobEffects.waterBreathing)) {
+        if (entity.dimension == ModConfig.ARCHIPELAGO_DIMENSION_ID && state != null && state.getMaterial() == Material.WATER && entity instanceof EntityLivingBase) {
+            if (!((EntityLivingBase) entity).isPotionActive(MobEffects.WATER_BREATHING)) {
                 GlStateManager.setFogDensity(0.01F);
             }
         }

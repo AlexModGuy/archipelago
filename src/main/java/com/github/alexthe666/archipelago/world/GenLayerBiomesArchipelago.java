@@ -1,14 +1,15 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModWorld;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
+import com.github.alexthe666.archipelago.core.ModWorld;
+
 public class GenLayerBiomesArchipelago extends GenLayer {
 
-    public static BiomeGenBase[] islandBiomes = { ModWorld.tropicGrasslands, ModWorld.tropicShrublands, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland };
-    public static BiomeGenBase[] oceanBiomes = { ModWorld.tropicOcean, ModWorld.tropicShallows, ModWorld.tropicReef, ModWorld.tropicSeaGrassBed, ModWorld.tropicBlueHoles, ModWorld.tropicTrench, ModWorld.tropicKelpForest };
+    public static Biome[] islandBiomes = { ModWorld.tropicGrasslands, ModWorld.tropicShrublands, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland };
+    public static Biome[] oceanBiomes = { ModWorld.tropicOcean, ModWorld.tropicShallows, ModWorld.tropicReef, ModWorld.tropicSeaGrassBed, ModWorld.tropicBlueHoles, ModWorld.tropicTrench, ModWorld.tropicKelpForest };
     private boolean isIsland;
 
     public GenLayerBiomesArchipelago(long seed) {
@@ -22,14 +23,14 @@ public class GenLayerBiomesArchipelago extends GenLayer {
         for (int dz = 0; dz < depth; dz++) {
             for (int dx = 0; dx < width; dx++) {
                 this.initChunkSeed(dx + x, dz + z);
-                dest[(dx + dz * width)] = BiomeGenBase.getIdForBiome(getBiome());
+                dest[(dx + dz * width)] = Biome.getIdForBiome(getBiome());
             }
         }
 
         return dest;
     }
 
-    private BiomeGenBase getBiome() {
+    private Biome getBiome() {
         int chanceOfIsland = nextInt(15);
         if (chanceOfIsland == 0) {
             return islandBiomes[nextInt(islandBiomes.length)];

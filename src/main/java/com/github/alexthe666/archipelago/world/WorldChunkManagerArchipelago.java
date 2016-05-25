@@ -1,13 +1,16 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModWorld;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeCache;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
@@ -16,9 +19,7 @@ import net.minecraftforge.event.terraingen.WorldTypeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.github.alexthe666.archipelago.core.ModWorld;
 
 public class WorldChunkManagerArchipelago extends BiomeProvider {
 
@@ -31,7 +32,7 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
     @SuppressWarnings("unchecked")
     public WorldChunkManagerArchipelago() {
         this.biomeCache = new BiomeCache(this);
-        this.biomesToSpawnIn = new ArrayList<BiomeGenBase>();
+        this.biomesToSpawnIn = new ArrayList<Biome>();
         this.biomesToSpawnIn.add(ModWorld.tropicOcean);
         this.biomesToSpawnIn.add(ModWorld.tropicShallows);
         this.biomesToSpawnIn.add(ModWorld.tropicReef);
@@ -67,21 +68,21 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
         return x;
     }
 
-    public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4, int par5) {
+    public Biome[] getBiomesForGeneration(Biome[] par1ArrayOfBiome, int par2, int par3, int par4, int par5) {
         IntCache.resetIntCache();
-        if (par1ArrayOfBiomeGenBase == null || par1ArrayOfBiomeGenBase.length < par4 * par5) {
-            par1ArrayOfBiomeGenBase = new BiomeGenBase[par4 * par5];
+        if (par1ArrayOfBiome == null || par1ArrayOfBiome.length < par4 * par5) {
+            par1ArrayOfBiome = new Biome[par4 * par5];
         }
         int[] aint = this.genBiomes.getInts(par2, par3, par4, par5);
         try {
             for (int i1 = 0; i1 < par4 * par5; ++i1) {
-                par1ArrayOfBiomeGenBase[i1] = BiomeGenBase.getBiomeForId(aint[i1]);
+                par1ArrayOfBiome[i1] = Biome.getBiomeForId(aint[i1]);
             }
-            return par1ArrayOfBiomeGenBase;
+            return par1ArrayOfBiome;
         } catch (Throwable throwable) {
             CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Invalid Biome id");
             CrashReportCategory crashreportcategory = crashreport.makeCategory("RawBiomeBlock");
-            crashreportcategory.addCrashSection("biomes[] size", Integer.valueOf(par1ArrayOfBiomeGenBase.length));
+            crashreportcategory.addCrashSection("biomes[] size", Integer.valueOf(par1ArrayOfBiome.length));
             crashreportcategory.addCrashSection("x", Integer.valueOf(par2));
             crashreportcategory.addCrashSection("z", Integer.valueOf(par3));
             crashreportcategory.addCrashSection("w", Integer.valueOf(par4));
@@ -90,26 +91,26 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
         }
     }
 
-    public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] listToReuse, int x, int z, int width, int height) {
+    public Biome[] loadBlockGeneratorData(Biome[] listToReuse, int x, int z, int width, int height) {
         return this.getBiomeGenAt(listToReuse, x, z, width, height, true);
     }
 
-    public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] listToReuse, int x, int z, int width, int height, boolean flag) {
+    public Biome[] getBiomeGenAt(Biome[] listToReuse, int x, int z, int width, int height, boolean flag) {
         IntCache.resetIntCache();
 
         if (listToReuse == null || listToReuse.length < width * height) {
-            listToReuse = new BiomeGenBase[width * height];
+            listToReuse = new Biome[width * height];
         }
 
         if (flag && width == 16 && height == 16 && (x & 15) == 0 && (z & 15) == 0) {
-            BiomeGenBase[] abiomegenbase1 = this.biomeCache.getCachedBiomes(x, z);
-            System.arraycopy(abiomegenbase1, 0, listToReuse, 0, width * height);
+            Biome[] aBiome1 = this.biomeCache.getCachedBiomes(x, z);
+            System.arraycopy(aBiome1, 0, listToReuse, 0, width * height);
             return listToReuse;
         } else {
             int[] aint = this.biomeIndexLayer.getInts(x, z, width, height);
 
             for (int i1 = 0; i1 < width * height; ++i1) {
-                listToReuse[i1] = BiomeGenBase.getBiome(aint[i1]);
+                listToReuse[i1] = Biome.getBiome(aint[i1]);
             }
 
             return listToReuse;
@@ -128,9 +129,9 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
 
         try {
             for (int j2 = 0; j2 < l1 * i2; ++j2) {
-                BiomeGenBase biomegenbase = BiomeGenBase.getBiome(aint[j2]);
+                Biome biome = Biome.getBiome(aint[j2]);
 
-                if (!allowed.contains(biomegenbase)) {
+                if (!allowed.contains(biome)) {
                     return false;
                 }
             }
@@ -163,9 +164,9 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
         for (int k2 = 0; k2 < l1 * i2; ++k2) {
             int l2 = l + k2 % l1 << 2;
             int i3 = i1 + k2 / l1 << 2;
-            BiomeGenBase biomegenbase = BiomeGenBase.getBiome(aint[k2]);
+            Biome biome = Biome.getBiome(aint[k2]);
 
-            if (allowed.contains(biomegenbase) && (chunkposition == null || rand.nextInt(j2 + 1) == 0)) {
+            if (allowed.contains(biome) && (chunkposition == null || rand.nextInt(j2 + 1) == 0)) {
                 chunkposition = new BlockPos(l2, 0, i3);
                 ++j2;
             }

@@ -46,7 +46,7 @@ public class WorldGeneratorArchipelago implements IWorldGenerator {
         for (int y = 0; y < 256; y++) {
             if (y > 2) {
                 BlockPos pos1 = pos.add(0, y + 1, 0);
-                if (world.getBlockState(pos1.up()).getBlock() == ModFluids.tropical_water && world.getBlockState(pos1).getMaterial() == Material.sand) {
+                if (world.getBlockState(pos1.up()).getBlock() == ModFluids.tropical_water && world.getBlockState(pos1).getMaterial() == Material.SAND) {
                     return pos1;
                 }
             }

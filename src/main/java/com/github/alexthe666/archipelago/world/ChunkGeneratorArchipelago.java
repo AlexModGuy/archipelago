@@ -1,17 +1,19 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -19,11 +21,10 @@ import net.minecraft.world.gen.ChunkProviderSettings;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
-import java.util.List;
-import java.util.Random;
+import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class ChunkGeneratorArchipelago implements IChunkGenerator {
-    protected static final IBlockState field_185982_a = Blocks.stone.getDefaultState();
+    protected static final IBlockState stone = Blocks.STONE.getDefaultState();
     private final Random rand;
     private NoiseGeneratorOctaves field_185991_j;
     private NoiseGeneratorOctaves field_185992_k;
@@ -39,7 +40,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
     private ChunkProviderSettings settings;
     private IBlockState oceanBlock = ModFluids.tropical_water.getDefaultState();
     private double[] field_186002_u = new double[256];
-    private BiomeGenBase[] biomesForGeneration;
+    private Biome[] biomesForGeneration;
     double[] field_185986_e;
     double[] field_185987_f;
     double[] field_185988_g;
@@ -88,7 +89,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         fact.stretchY = 6;
         fact.seaLevel = 63;
         fact.biomeSize = 6;
-        this.settings = fact.func_177864_b();
+        this.settings = fact.build();
     }
 
     public void setBlocksInChunk(int x, int z, ChunkPrimer primer) {
@@ -124,7 +125,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                             double lvt_45_1_ = d10 - d16;
                             for (int l2 = 0; l2 < 4; ++l2) {
                                 if ((lvt_45_1_ += d16) > 0.0D) {
-                                    primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, field_185982_a);
+                                    primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, stone);
                                 } else if (i2 * 8 + j2 < this.settings.seaLevel) {
                                     primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, this.oceanBlock);
                                 }
@@ -144,14 +145,14 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         }
     }
 
-    public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, BiomeGenBase[] biomes) {
+    public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, Biome[] biomes) {
         if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj)) return;
         double d0 = 0.03125D;
-        this.field_186002_u = this.field_185994_m.func_151599_a(this.field_186002_u, (double) (x * 16), (double) (z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+        this.field_186002_u = this.field_185994_m.getRegion(this.field_186002_u, (double) (x * 16), (double) (z * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
         for (int i = 0; i < 16; ++i) {
             for (int j = 0; j < 16; ++j) {
-                BiomeGenBase biome = biomes[j + i * 16];
+                Biome biome = biomes[j + i * 16];
                 biome.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + i, z * 16 + j, this.field_186002_u[j + i * 16]);
             }
         }
@@ -167,7 +168,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         byte[] biomes = chunk.getBiomeArray();
 
         for (int i = 0; i < biomes.length; ++i) {
-            biomes[i] = (byte) BiomeGenBase.getIdForBiome(this.biomesForGeneration[i]);
+            biomes[i] = (byte) Biome.getIdForBiome(this.biomesForGeneration[i]);
         }
 
         chunk.generateSkylightMap();
@@ -191,12 +192,12 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                 float f3 = 0.0F;
                 float f4 = 0.0F;
                 int i1 = 2;
-                BiomeGenBase biomegenbase = this.biomesForGeneration[k + 2 + (l + 2) * 10];
+                Biome Biome = this.biomesForGeneration[k + 2 + (l + 2) * 10];
                 for (int j1 = -i1; j1 <= i1; ++j1) {
                     for (int k1 = -i1; k1 <= i1; ++k1) {
-                        BiomeGenBase biomegenbase1 = this.biomesForGeneration[k + j1 + 2 + (l + k1 + 2) * 10];
-                        float f5 = this.settings.biomeDepthOffSet + biomegenbase1.getBaseHeight() * this.settings.biomeDepthWeight;
-                        float f6 = this.settings.biomeScaleOffset + biomegenbase1.getHeightVariation() * this.settings.biomeScaleWeight;
+                        Biome Biome1 = this.biomesForGeneration[k + j1 + 2 + (l + k1 + 2) * 10];
+                        float f5 = this.settings.biomeDepthOffSet + Biome1.getBaseHeight() * this.settings.biomeDepthWeight;
+                        float f6 = this.settings.biomeScaleOffset + Biome1.getHeightVariation() * this.settings.biomeScaleWeight;
 
                         if (this.terrainType == WorldType.AMPLIFIED && f5 > 0.0F) {
                             f5 = 1.0F + f5 * 2.0F;
@@ -205,7 +206,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
 
                         float f7 = this.field_185999_r[j1 + 2 + (k1 + 2) * 5] / (f5 + 2.0F);
 
-                        if (biomegenbase1.getBaseHeight() > biomegenbase.getBaseHeight()) {
+                        if (Biome1.getBaseHeight() > Biome.getBaseHeight()) {
                             f7 /= 2.0F;
                         }
 
@@ -268,13 +269,13 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         int i = x * 16;
         int j = z * 16;
         BlockPos blockpos = new BlockPos(i, 0, j);
-        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
+        Biome Biome = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
         this.rand.setSeed(this.worldObj.getSeed());
         long k = this.rand.nextLong() / 2L * 2L + 1L;
         long l = this.rand.nextLong() / 2L * 2L + 1L;
         this.rand.setSeed((long) x * k + (long) z * l ^ this.worldObj.getSeed());
         boolean flag = false;
-        ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(x, z);
+        ChunkPos chunkcoordintpair = new ChunkPos(x, z);
         net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
         if (this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
             if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE)) {
@@ -284,9 +285,9 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                 (new WorldGenArchipelagoLakes(ModFluids.tropical_water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
             }
 
-        biomegenbase.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
+        Biome.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
-            WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biomegenbase, i + 8, j + 8, 16, 16, this.rand);
+            WorldEntitySpawner.performWorldGenSpawning(this.worldObj, Biome, i + 8, j + 8, 16, 16, this.rand);
         blockpos = blockpos.add(8, 0, 8);
 
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE)) {
@@ -295,10 +296,10 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                     BlockPos blockpos1 = this.worldObj.getPrecipitationHeight(blockpos.add(k2, 0, j3));
                     BlockPos blockpos2 = blockpos1.down();
                     if (this.worldObj.canBlockFreezeWater(blockpos2)) {
-                        this.worldObj.setBlockState(blockpos2, Blocks.ice.getDefaultState(), 2);
+                        this.worldObj.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
                     }
                     if (this.worldObj.canSnowAt(blockpos1, true)) {
-                        this.worldObj.setBlockState(blockpos1, Blocks.snow_layer.getDefaultState(), 2);
+                        this.worldObj.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
                     }
                 }
             }
@@ -311,9 +312,9 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         return false;
     }
 
-    public List<BiomeGenBase.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
-        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(pos);
-        return biomegenbase.getSpawnableList(creatureType);
+    public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
+        Biome Biome = this.worldObj.getBiomeGenForCoords(pos);
+        return Biome.getSpawnableList(creatureType);
     }
 
     public BlockPos getStrongholdGen(World worldIn, String structureName, BlockPos position) {

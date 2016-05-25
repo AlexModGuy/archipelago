@@ -1,6 +1,10 @@
 package com.github.alexthe666.archipelago.block;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
+import java.lang.reflect.InvocationTargetException;
+import java.util.EnumSet;
+import java.util.Random;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
@@ -22,10 +26,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.EnumSet;
-import java.util.Random;
-import java.util.Set;
+import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class BlockTropicalWater extends BlockFluidClassic {
 
@@ -39,7 +40,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         IBlockState neighbor = blockAccess.getBlockState(pos.offset(side));
-        return !(neighbor.getMaterial() == blockState.getMaterial() || (!neighbor.isOpaqueCube() && neighbor.getBlock() != Blocks.air)) && (side == EnumFacing.UP || super.shouldSideBeRendered(blockState, blockAccess, pos, side));
+        return !(neighbor.getMaterial() == blockState.getMaterial() || (!neighbor.isOpaqueCube() && neighbor.getBlock() != Blocks.AIR)) && (side == EnumFacing.UP || super.shouldSideBeRendered(blockState, blockAccess, pos, side));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
     @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.water || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.coral) && worldIn.getBlockState(pos.down()).getMaterial() == Material.water && entityIn.getRidingEntity() == null) {
+        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
             if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
                 EntityLivingBase living = (EntityLivingBase) entityIn;
                 try {
@@ -110,7 +111,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
         int i = state.getValue(LEVEL);
         int j = 1;
 
-        if (this.blockMaterial == Material.lava && !worldIn.provider.doesWaterVaporize()) {
+        if (this.blockMaterial == Material.LAVA && !worldIn.provider.doesWaterVaporize()) {
             j = 2;
         }
 
@@ -140,7 +141,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
                 }
             }
 
-            if (this.adjacentSourceBlocks >= 2 && this.blockMaterial == Material.water) {
+            if (this.adjacentSourceBlocks >= 2 && this.blockMaterial == Material.WATER) {
                 IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
 
                 if (iblockstate1.getMaterial().isSolid()) {
@@ -171,8 +172,8 @@ public class BlockTropicalWater extends BlockFluidClassic {
         IBlockState iblockstate = worldIn.getBlockState(pos.down());
 
         if (this.canFlowInto(worldIn, pos.down(), iblockstate)) {
-            if (this.blockMaterial == Material.lava && worldIn.getBlockState(pos.down()).getMaterial() == Material.water) {
-                worldIn.setBlockState(pos.down(), Blocks.stone.getDefaultState());
+            if (this.blockMaterial == Material.LAVA && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER) {
+                worldIn.setBlockState(pos.down(), Blocks.STONE.getDefaultState());
                 this.triggerMixEffects(worldIn, pos.down());
                 return;
             }
@@ -202,7 +203,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
     private void tryFlowInto(World worldIn, BlockPos pos, IBlockState state, int level) {
         if (this.canFlowInto(worldIn, pos, state)) {
-            if (state.getBlock() != Blocks.air) {
+            if (state.getBlock() != Blocks.AIR) {
                 state.getBlock().dropBlockAsItem(worldIn, pos, state, 0);
             }
 
@@ -214,7 +215,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
         double d0 = (double) pos.getX();
         double d1 = (double) pos.getY();
         double d2 = (double) pos.getZ();
-        worldIn.playSound((EntityPlayer) null, pos, SoundEvents.block_lava_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
+        worldIn.playSound((EntityPlayer) null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
 
         for (int i = 0; i < 8; ++i) {
             worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0 + Math.random(), d1 + 1.2D, d2 + Math.random(), 0.0D, 0.0D, 0.0D);
@@ -223,7 +224,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
     private boolean canFlowInto(World worldIn, BlockPos pos, IBlockState state) {
         Material material = state.getMaterial();
-        return material != this.blockMaterial && material != Material.lava && !this.isBlocked(worldIn, pos, state);
+        return material != this.blockMaterial && material != Material.LAVA && !this.isBlocked(worldIn, pos, state);
     }
 
     private Set<EnumFacing> getPossibleFlowDirections(World worldIn, BlockPos pos) {
@@ -259,7 +260,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
     private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state) {
         Block block = worldIn.getBlockState(pos).getBlock();
-        return !(!(block instanceof BlockDoor) && block != Blocks.standing_sign && block != Blocks.ladder && block != Blocks.reeds) || (block.getMaterial(state) == Material.portal || block.getMaterial(state).blocksMovement());
+        return !(!(block instanceof BlockDoor) && block != Blocks.STANDING_SIGN && block != Blocks.LADDER && block != Blocks.REEDS) || (block.getMaterial(state) == Material.PORTAL || block.getMaterial(state).blocksMovement());
     }
 
     protected int getLevel(IBlockAccess worldIn, BlockPos pos) {
@@ -304,7 +305,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
 
         if (i > 0 && i < 8) {
             if (rand.nextInt(64) == 0) {
-                pos.playSound(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D, SoundEvents.block_water_ambient, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, rand.nextFloat() + 0.5F, false);
+                pos.playSound(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, rand.nextFloat() + 0.5F, false);
             }
         } else if (rand.nextInt(10) == 0) {
             pos.spawnParticle(EnumParticleTypes.SUSPENDED, d0 + (double) rand.nextFloat(), d1 + (double) rand.nextFloat(), d2 + (double) rand.nextFloat(), 0.0D, 0.0D, 0.0D);

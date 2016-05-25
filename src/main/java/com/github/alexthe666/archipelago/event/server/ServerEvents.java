@@ -34,7 +34,7 @@ public class ServerEvents {
 
     @SubscribeEvent
     public void onEntityUpdate(LivingUpdateEvent event) {
-        handleMaterialAcceleration(event.getEntity().getEntityBoundingBox(), Material.coral, event.getEntity());
+        handleMaterialAcceleration(event.getEntity().getEntityBoundingBox(), Material.CORAL, event.getEntity());
 
         if (event.getEntity() instanceof EntityPlayer) {
             ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(((EntityPlayer) event.getEntity()), ArchipelagoEntityProperties.class);
@@ -80,7 +80,7 @@ public class ServerEvents {
         Material material = iblockstate.getMaterial();
         boolean flag = !material.isSolid();
         boolean flag1 = iblockstate.getBlock().isReplaceable(pos, blockPos);
-        if (stack != null && stack.getItem() != null && stack.getItem() == Items.water_bucket)
+        if (stack != null && stack.getItem() != null && stack.getItem() == Items.WATER_BUCKET)
             if (!pos.isAirBlock(blockPos) && !flag && !flag1) {
                 return false;
             } else {
@@ -88,7 +88,7 @@ public class ServerEvents {
                     int l = blockPos.getX();
                     int i = blockPos.getY();
                     int j = blockPos.getZ();
-                    pos.playSound(worldIn, blockPos, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (pos.rand.nextFloat() - pos.rand.nextFloat()) * 0.8F);
+                    pos.playSound(worldIn, blockPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (pos.rand.nextFloat() - pos.rand.nextFloat()) * 0.8F);
 
                     for (int k = 0; k < 8; ++k) {
                         pos.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) l + Math.random(), (double) i + Math.random(), (double) j + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
@@ -98,7 +98,7 @@ public class ServerEvents {
                         pos.destroyBlock(blockPos, true);
                     }
 
-                    SoundEvent soundevent = SoundEvents.item_bucket_empty;
+                    SoundEvent soundevent = SoundEvents.ITEM_BUCKET_EMPTY;
                     pos.playSound(worldIn, blockPos, soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     //  pos.setBlockState(blockPos, ModFluids.tropical_water.getDefaultState(), 11);
                 }

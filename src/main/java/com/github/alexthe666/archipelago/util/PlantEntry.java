@@ -1,10 +1,10 @@
 package com.github.alexthe666.archipelago.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.biome.BiomeGenBase;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.world.biome.Biome;
 
 public class PlantEntry {
 
@@ -23,7 +23,7 @@ public class PlantEntry {
         this.biomesToSpawn.add(biome);
     }
 
-    public boolean canSpawnIn(BiomeGenBase biome) {
-        return biomesToSpawn.contains(BiomeGenBase.getIdForBiome(biome));
+    public boolean canSpawnIn(Biome biome) {
+        return biomesToSpawn.contains(Biome.getIdForBiome(biome));
     }
 }

@@ -21,7 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,11 +40,11 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
 
-    public BlockShortCoral(String name, int chance, BiomeGenBase[] biomes) {
-        super(Material.coral);
+    public BlockShortCoral(String name, int chance, Biome[] biomes) {
+        super(Material.CORAL);
         this.name = name;
         this.setHardness(0.0F);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.setUnlocalizedName("archipelago.plant." + name);
         this.setCreativeTab(Archipelago.tab);
         this.setLightOpacity(0);
@@ -52,15 +52,15 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
         GameRegistry.registerBlock(this, name);
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
         PlantEntry entry = new PlantEntry(this, chance, false);
-        for (BiomeGenBase biome : biomes) {
-            entry.addBiome(BiomeGenBase.getIdForBiome(biome));
+        for (Biome biome : biomes) {
+            entry.addBiome(Biome.getIdForBiome(biome));
         }
         WorldGeneratorArchipelago.coralsEntries.add(entry);
     }
 
     @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.water || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.coral) && worldIn.getBlockState(pos.down()).getMaterial() == Material.water && entityIn.getRidingEntity() == null) {
+        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
             if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
                 EntityLivingBase living = (EntityLivingBase) entityIn;
                 try {
@@ -94,7 +94,7 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return checkCanStay(world.getBlockState(pos.down()), world.getBlockState(pos.up())) && world.getBlockState(pos).getMaterial() == Material.water;
+        return checkCanStay(world.getBlockState(pos.down()), world.getBlockState(pos.up())) && world.getBlockState(pos).getMaterial() == Material.WATER;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
     }
 
     protected boolean checkCanStay(IBlockState state, IBlockState state2) {
-        return (state.getMaterial() == Material.sand || state.getMaterial() == Material.ground) && state2.getBlock() instanceof BlockTropicalWater;
+        return (state.getMaterial() == Material.SAND || state.getMaterial() == Material.GROUND) && state2.getBlock() instanceof BlockTropicalWater;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
         int light = MC.theWorld.getCombinedLight(pos, 0);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, (float) light / 65536.0F);
         RenderHelper.disableStandardItemLighting();
-        MC.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+        MC.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         float sway = (MC.thePlayer.ticksExisted + (pos.hashCode() * 0.2F)) * 0.025F;
         float swayX = (float) Math.sin(sway) / 4.0F;

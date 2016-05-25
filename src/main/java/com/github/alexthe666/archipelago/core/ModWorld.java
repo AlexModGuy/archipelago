@@ -3,25 +3,25 @@ package com.github.alexthe666.archipelago.core;
 import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
 import com.github.alexthe666.archipelago.enums.EnumGrassColor;
 import com.github.alexthe666.archipelago.world.BiomeGenTropical;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeManager;
 
 public class ModWorld {
 
-    public static BiomeGenBase tropicOcean;
-    public static BiomeGenBase tropicShallows;
-    public static BiomeGenBase tropicReef;
-    public static BiomeGenBase tropicSeaGrassBed;
-    public static BiomeGenBase tropicBlueHoles;
-    public static BiomeGenBase tropicTrench;
-    public static BiomeGenBase tropicKelpForest;
-    public static BiomeGenBase tropicGrasslands;
-    public static BiomeGenBase tropicShrublands;
-    public static BiomeGenBase tropicJungle;
-    public static BiomeGenBase dryPeaks;
-    public static BiomeGenBase dryScrubland;
-    public static BiomeGenBase ashField;
-    public static BiomeGenBase volcano;
+    public static Biome tropicOcean;
+    public static Biome tropicShallows;
+    public static Biome tropicReef;
+    public static Biome tropicSeaGrassBed;
+    public static Biome tropicBlueHoles;
+    public static Biome tropicTrench;
+    public static Biome tropicKelpForest;
+    public static Biome tropicGrasslands;
+    public static Biome tropicShrublands;
+    public static Biome tropicJungle;
+    public static Biome dryPeaks;
+    public static Biome dryScrubland;
+    public static Biome ashField;
+    public static Biome volcano;
 
     public static void init() {
         tropicOcean = new BiomeGenTropical("Tropic Ocean", ModConfig.tropicOceanId, -1.3F, 0.1F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);

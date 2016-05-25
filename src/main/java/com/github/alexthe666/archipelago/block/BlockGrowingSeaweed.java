@@ -26,7 +26,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -51,10 +51,10 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     public static final PropertyEnum<Part> PART = PropertyEnum.create("part", Part.class);
     private int height;
 
-    public BlockGrowingSeaweed(String name, int chance, int height, BiomeGenBase[] biomes) {
-        super(Material.coral);
+    public BlockGrowingSeaweed(String name, int chance, int height, Biome[] biomes) {
+        super(Material.CORAL);
         this.setHardness(0.0F);
-        this.setStepSound(SoundType.PLANT);
+        this.setSoundType(SoundType.PLANT);
         this.setDefaultState(this.blockState.getBaseState().withProperty(PART, Part.MIDDLE));
         this.setUnlocalizedName("archipelago.plant." + name);
         this.setCreativeTab(Archipelago.tab);
@@ -66,14 +66,14 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         GameRegistry.registerBlock(this, name);
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
         PlantEntry entry = new PlantEntry(this, chance, false);
-        for (BiomeGenBase biome : biomes) {
-            entry.addBiome(BiomeGenBase.getIdForBiome(biome));
+        for (Biome biome : biomes) {
+            entry.addBiome(Biome.getIdForBiome(biome));
         }
         WorldGeneratorArchipelago.kelpEntries.add(entry);
     }
 
     public AxisAlignedBB getCollisionBoundingBox(IBlockState worldIn, World pos, BlockPos state) {
-        return field_185515_b;
+        return BUSH_AABB;
     }
 
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
@@ -86,7 +86,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     }
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).getMaterial() == Material.sand && worldIn.getBlockState(pos).getBlock() instanceof BlockTropicalWater;
+        return worldIn.getBlockState(pos.down()).getMaterial() == Material.SAND && worldIn.getBlockState(pos).getBlock() instanceof BlockTropicalWater;
     }
 
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
@@ -98,11 +98,11 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
             return false;
         }
 
-        if (world.getBlockState(pos).getMaterial() != Material.water) {
+        if (world.getBlockState(pos).getMaterial() != Material.WATER) {
             return false;
         }
         if (world.getBlockState(pos).getBlock() == this) {
-            if (world.getBlockState(pos).getValue(PART) == Part.LOWER && world.getBlockState(pos.down()).getMaterial() != Material.sand) {
+            if (world.getBlockState(pos).getValue(PART) == Part.LOWER && world.getBlockState(pos.down()).getMaterial() != Material.SAND) {
                 return false;
             }
         }
@@ -128,7 +128,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         IBlockState state2 = worldIn.getBlockState(pos);
         IBlockState state3 = worldIn.getBlockState(pos.down());
         if (state2.getBlock() == this) {
-            if (state2.getValue(PART) == Part.LOWER && state3.getMaterial() != Material.sand) {
+            if (state2.getValue(PART) == Part.LOWER && state3.getMaterial() != Material.SAND) {
                 this.checkAndDropBlock(worldIn, pos, state);
             }
             if (state2.getValue(PART) != Part.LOWER && state3.getBlock() != this) {
@@ -151,7 +151,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 
     @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.water || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.coral) && worldIn.getBlockState(pos.down()).getMaterial() == Material.water && entityIn.getRidingEntity() == null) {
+        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
             if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
                 EntityLivingBase living = (EntityLivingBase) entityIn;
                 try {
@@ -192,7 +192,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     }
 
     protected boolean checkCanStay(IBlockState state, IBlockState state2) {
-        return (state.getBlock() == this || state.getMaterial() == Material.sand || state.getMaterial() == Material.ground) && state2.getBlock() instanceof BlockTropicalWater;
+        return (state.getBlock() == this || state.getMaterial() == Material.SAND || state.getMaterial() == Material.GROUND) && state2.getBlock() instanceof BlockTropicalWater;
     }
 
     protected BlockStateContainer createBlockState() {
@@ -200,7 +200,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     }
 
     public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-        return field_185515_b;
+        return BUSH_AABB;
     }
 
     @Override
@@ -229,7 +229,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 
 
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB bb, List<AxisAlignedBB> list, Entity mob) {
-        addCollisionBoxToList(pos, field_185515_b, list, state.getSelectedBoundingBox(worldIn, pos));
+        addCollisionBoxToList(pos, BUSH_AABB, list, state.getSelectedBoundingBox(worldIn, pos));
     }
 
     @SideOnly(Side.CLIENT)
@@ -244,7 +244,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         if (state.getValue(PART) == Part.LOWER) {
             GlStateManager.pushMatrix();
             GlStateManager.enableLighting();
-            MC.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            MC.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             double x = (pos.getX() + 0.5) - TileEntityRendererDispatcher.staticPlayerX;
             double y = pos.getY() - TileEntityRendererDispatcher.staticPlayerY;
