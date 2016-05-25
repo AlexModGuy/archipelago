@@ -9,7 +9,7 @@ import net.minecraft.world.chunk.IChunkGenerator;
 
 public class WorldProviderArchipelago extends WorldProvider {
 
-    public void registerWorldChunkManager() {
+    public void createBiomeProvider() {
         this.biomeProvider = new WorldChunkManagerArchipelago(worldObj.getSeed(), worldObj.getWorldType());
     }
 
