@@ -85,7 +85,8 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
                             if (methodInsnNode.owner.equals("java/util/concurrent/locks/ReentrantLock") && methodInsnNode.name.equals("lock") && methodInsnNode.desc.equals("()V")) {
                                 if (i > 0) {
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 5));
-                                    inject.add(new VarInsnNode(Opcodes.ALOAD, 9));
+                                    inject.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                                    inject.add(new FieldInsnNode(Opcodes.GETFIELD, obf ? "bqc" : "net/minecraft/client/renderer/chunk/RenderChunk", obf ? "r" : "region", "L" + (obf ? "ahx" : "net/minecraft/world/IBlockAccess") + ";"));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 7));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 8));
                                     String blockposName = obf ? "cj" : "net/minecraft/util/math/BlockPos";
