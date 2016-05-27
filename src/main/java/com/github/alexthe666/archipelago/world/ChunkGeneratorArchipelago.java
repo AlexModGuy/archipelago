@@ -192,29 +192,29 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                 float f3 = 0.0F;
                 float f4 = 0.0F;
                 int i1 = 2;
-                Biome Biome = this.biomesForGeneration[k + 2 + (l + 2) * 10];
-                for (int j1 = -i1; j1 <= i1; ++j1) {
-                    for (int k1 = -i1; k1 <= i1; ++k1) {
-                        Biome Biome1 = this.biomesForGeneration[k + j1 + 2 + (l + k1 + 2) * 10];
-                        float f5 = this.settings.biomeDepthOffSet + Biome1.getBaseHeight() * this.settings.biomeDepthWeight;
-                        float f6 = this.settings.biomeScaleOffset + Biome1.getHeightVariation() * this.settings.biomeScaleWeight;
+                Biome biomegenbase = this.biomesForGeneration[k + 2 + (l + 2) * 10];
+				for (int j1 = -i1; j1 <= i1; ++j1){
+					for (int k1 = -i1; k1 <= i1; ++k1){
+						Biome biomegenbase1 = this.biomesForGeneration[k + j1 + 2 + (l + k1 + 2) * 10];
+						float f5 = this.settings.biomeDepthOffSet + biomegenbase1.getBaseHeight() * this.settings.biomeDepthWeight;
+						float f6 = this.settings.biomeScaleOffset + biomegenbase1.getHeightVariation() * this.settings.biomeScaleWeight;
 
-                        if (this.terrainType == WorldType.AMPLIFIED && f5 > 0.0F) {
-                            f5 = 1.0F + f5 * 2.0F;
-                            f6 = 1.0F + f6 * 4.0F;
-                        }
+						if (this.terrainType == WorldType.AMPLIFIED && f5 > 0.0F){
+							f5 = 1.0F + f5 * 2.0F;
+							f6 = 1.0F + f6 * 4.0F;
+						}
 
-                        float f7 = this.field_185999_r[j1 + 2 + (k1 + 2) * 5] / (f5 + 2.0F);
+						float f7 = this.field_185999_r[j1 + 2 + (k1 + 2) * 5] / (f5 + 2.0F);
 
-                        if (Biome1.getBaseHeight() > Biome.getBaseHeight()) {
-                            f7 /= 2.0F;
-                        }
+						if (biomegenbase1.getBaseHeight() > biomegenbase.getBaseHeight()){
+							f7 /= 2.0F;
+						}
 
-                        f2 += f6 * f7;
-                        f3 += f5 * f7;
-                        f4 += f7;
-                    }
-                }
+						f2 += f6 * f7;
+						f3 += f5 * f7;
+						f4 += f7;
+					}
+				}
                 f2 = f2 / f4;
                 f3 = f3 / f4;
                 f2 = f2 * 0.9F + 0.1F;
