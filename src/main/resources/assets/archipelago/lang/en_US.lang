@@ -50,6 +50,11 @@ tile.archipelago.plant.shyleaf.name=Shyleaf
 tile.archipelago.plant.smokebush.name=Smokebush
 tile.archipelago.plant.titan_arum.name=Titan Arum
 tile.archipelago.plant.titan_arum_flowering.name=Flowering Titan Arum
+tile.archipelago.plant.lavatera_phoenicea_orange.name=Orange Lavatera Phoenicea
+tile.archipelago.plant.lavatera_phoenicea_pink.name=Pink Lavatera Phoenicea
+tile.archipelago.plant.lavatera_phoenicea_salmon.name=Salmon Lavatera Phoenicea
+tile.archipelago.plant.palma_de_la_virgen.name=Palma de la Virgen
+tile.archipelago.plant.rasp_fern.name=Rasp Fern
 
 tile.archipelago.plant.dendrophyllia_cribosa.name=Dendrophyllia Cribosa Coral
 tile.archipelago.plant.ivory_bush_coral.name=Ivory Bush Coral

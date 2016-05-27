@@ -8,7 +8,7 @@ import com.github.alexthe666.archipelago.core.ModWorld;
 
 public class GenLayerBiomesArchipelago extends GenLayer {
 
-    public static Biome[] islandBiomes = { ModWorld.tropicGrasslands, ModWorld.tropicShrublands, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland };
+    public static Biome[] islandBiomes = { ModWorld.tropicGrassland, ModWorld.tropicShrubland, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland };
     public static Biome[] oceanBiomes = { ModWorld.tropicOcean, ModWorld.tropicShallows, ModWorld.tropicReef, ModWorld.tropicSeaGrassBed, ModWorld.tropicBlueHoles, ModWorld.tropicTrench, ModWorld.tropicKelpForest };
     private boolean isIsland;
 

@@ -15,8 +15,8 @@ public class ModWorld {
     public static Biome tropicBlueHoles;
     public static Biome tropicTrench;
     public static Biome tropicKelpForest;
-    public static Biome tropicGrasslands;
-    public static Biome tropicShrublands;
+    public static Biome tropicGrassland;
+    public static Biome tropicShrubland;
     public static Biome tropicJungle;
     public static Biome dryPeaks;
     public static Biome dryScrubland;
@@ -31,8 +31,8 @@ public class ModWorld {
         tropicBlueHoles = new BiomeGenTropical("Tropic Bule Holes", ModConfig.tropicBlueHolesId, -0.5F, -0.015F, 0x479AFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
         tropicTrench = new BiomeGenTropical("Tropic Trench", ModConfig.tropicTrenchId, -1.9F, -0.05F, 0x479AFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
         tropicKelpForest = new BiomeGenTropical("Tropic Kelp Forest", ModConfig.tropicKelpForestId, -0.5F, -0.025F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.SANDY);
-        tropicGrasslands = new BiomeGenTropical("Tropic Grasslands", ModConfig.tropicGrasslandsId, 0.15F, 0.025F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.GRASSY);
-        tropicShrublands = new BiomeGenTropical("Tropic Shrublands", ModConfig.tropicShrublandsId, 0.175F, 0.05F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.GRASSY);
+        tropicGrassland = new BiomeGenTropical("Tropic Grasslands", ModConfig.tropicGrasslandsId, 0.15F, 0.025F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.GRASSY);
+        tropicShrubland = new BiomeGenTropical("Tropic Shrublands", ModConfig.tropicShrublandsId, 0.175F, 0.05F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.GRASSY);
         tropicJungle = new BiomeGenTropical("Tropic Jungle", ModConfig.tropicJungleId, 0.175F, 0.05F, 0x46FFFF, EnumGrassColor.CLASSIC_TROPICAL, EnumBiomeSediment.GRASSY);
         dryPeaks = new BiomeGenTropical("Dry Peaks", ModConfig.dryPeaksId, 0.2F, 0.2F, 0x46FFFF, EnumGrassColor.DRY, EnumBiomeSediment.GRASSY);
         dryScrubland = new BiomeGenTropical("Dry Scrublands", ModConfig.dryScrublandId, 0.175F, 0.05F, 0x46FFFF, EnumGrassColor.DRY, EnumBiomeSediment.GRASSY);
