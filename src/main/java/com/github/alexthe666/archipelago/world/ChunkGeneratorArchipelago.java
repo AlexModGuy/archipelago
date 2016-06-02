@@ -18,6 +18,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.gen.ChunkProviderSettings;
+import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
@@ -45,6 +46,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
     double[] field_185987_f;
     double[] field_185988_g;
     double[] field_185989_h;
+    private MapGenBase caveGenerator = new MapGenBlueHoles();
 
     public ChunkGeneratorArchipelago(World worldIn, long seed) {
         this.worldObj = worldIn;
@@ -90,6 +92,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         fact.seaLevel = 63;
         fact.biomeSize = 6;
         this.settings = fact.build();
+        caveGenerator = net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(caveGenerator, net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE);
     }
 
     public void setBlocksInChunk(int x, int z, ChunkPrimer primer) {
@@ -164,13 +167,13 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         this.setBlocksInChunk(x, z, chunkprimer);
         this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
         this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
+        this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
         byte[] biomes = chunk.getBiomeArray();
 
         for (int i = 0; i < biomes.length; ++i) {
             biomes[i] = (byte) Biome.getIdForBiome(this.biomesForGeneration[i]);
         }
-
         chunk.generateSkylightMap();
         return chunk;
     }
