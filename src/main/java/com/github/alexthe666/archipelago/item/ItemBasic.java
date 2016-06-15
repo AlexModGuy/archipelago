@@ -6,10 +6,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemBasic extends Item {
 
-    public ItemBasic(String name) {
-        this.setUnlocalizedName("archipelago." + name);
-        Archipelago.PROXY.addItemRender(this, name);
-        this.setCreativeTab(Archipelago.tab);
-        GameRegistry.registerItem(this, name);
-    }
+	public ItemBasic(String name) {
+		this.setUnlocalizedName("archipelago." + name);
+		Archipelago.PROXY.addItemRender(this, name);
+		this.setCreativeTab(Archipelago.tab);
+		GameRegistry.registerItem(this, name);
+	}
 }

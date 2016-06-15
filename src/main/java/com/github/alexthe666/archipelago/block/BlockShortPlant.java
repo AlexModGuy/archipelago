@@ -15,24 +15,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockShortPlant extends BlockBush {
 
-    public BlockShortPlant(String name, int chance, Biome[] biomes) {
-        super(Material.PLANTS);
-        this.setHardness(0.0F);
-        this.setSoundType(SoundType.PLANT);
-        this.setUnlocalizedName("archipelago.plant." + name);
-        this.setCreativeTab(Archipelago.tab);
-        GameRegistry.registerBlock(this, name);
-        Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
-        PlantEntry entry = new PlantEntry(this, chance, false);
-        for (Biome biome : biomes) {
-            entry.addBiome(Biome.getIdForBiome(biome));
-        }
-        WorldGeneratorArchipelago.flowersEntries.add(entry);
-    }
+	public BlockShortPlant(String name, int chance, Biome[] biomes) {
+		super(Material.PLANTS);
+		this.setHardness(0.0F);
+		this.setSoundType(SoundType.PLANT);
+		this.setUnlocalizedName("archipelago.plant." + name);
+		this.setCreativeTab(Archipelago.tab);
+		GameRegistry.registerBlock(this, name);
+		Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
+		PlantEntry entry = new PlantEntry(this, chance, false);
+		for (Biome biome : biomes) {
+			entry.addBiome(Biome.getIdForBiome(biome));
+		}
+		WorldGeneratorArchipelago.flowersEntries.add(entry);
+	}
 
-    @SideOnly(Side.CLIENT)
-    public Block.EnumOffsetType getOffsetType() {
-        return Block.EnumOffsetType.XZ;
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Block.EnumOffsetType getOffsetType() {
+		return Block.EnumOffsetType.XZ;
+	}
 
 }
