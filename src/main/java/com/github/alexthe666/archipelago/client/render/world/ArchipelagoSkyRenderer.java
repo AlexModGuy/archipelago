@@ -1,5 +1,7 @@
 package com.github.alexthe666.archipelago.client.render.world;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,7 +19,6 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 public class ArchipelagoSkyRenderer extends IRenderHandler {
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	private static final ResourceLocation SUN_TEXTURES = new ResourceLocation("textures/environment/sun.png");
-
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		GlStateManager.disableTexture2D();
@@ -94,7 +95,7 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
 		GlStateManager.enableTexture2D();
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.pushMatrix();
-		float f16 = 1.0F - mc.theWorld.getRainStrength(partialTicks);
+		float f16 = 3.0F - mc.theWorld.getRainStrength(partialTicks);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, f16);
 		GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(mc.theWorld.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
@@ -106,7 +107,7 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
 		vertexbuffer.pos((double) f17, 100.0D, (double) f17).tex(1.0D, 1.0D).endVertex();
 		vertexbuffer.pos((double) (-f17), 100.0D, (double) f17).tex(0.0D, 1.0D).endVertex();
 		tessellator.draw();
-		f17 = 20.0F;
+		f17 = 30.0F;
 		mc.renderEngine.bindTexture(MOON_PHASES_TEXTURES);
 		int i = mc.theWorld.getMoonPhase();
 		int k = i % 4;
@@ -138,7 +139,6 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
 				GlStateManager.callList(this.getStarCallist());
 			}
 		}
-
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
@@ -147,7 +147,6 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
 		GlStateManager.disableTexture2D();
 		GlStateManager.color(0.0F, 0.0F, 0.0F);
 		double d0 = mc.thePlayer.getPositionEyes(partialTicks).yCoord - mc.theWorld.getHorizon();
-
 		if (d0 < 0.0D) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0.0F, 12.0F, 0.0F);
