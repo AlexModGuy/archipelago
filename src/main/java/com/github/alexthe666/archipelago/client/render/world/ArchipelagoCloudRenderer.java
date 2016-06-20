@@ -23,14 +23,13 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		GL11.glPushMatrix();
-		GL11.glRotatef(180, 1, 0, 0);
-		renderCloudSide(partialTicks, world, mc, true);
+		renderCloudSide(partialTicks, world, mc);
 		GL11.glPopMatrix();
-		renderCloudSide(partialTicks, world, mc, false);
 
 	}
 	
-	public void renderCloudSide(float partialTicks, WorldClient world, Minecraft mc, boolean flip){
+	public void renderCloudSide(float partialTicks, WorldClient world, Minecraft mc){
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		Entity entity = mc.getRenderViewEntity();
 		float f = (float) (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks);
 		int i = 32;
@@ -62,27 +61,24 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
 		int l = MathHelper.floor_double(d1 / 2048.0D);
 		d0 = d0 - (double) (k * 2048);
 		d1 = d1 - (double) (l * 2048);
-		float f7;
-		if(flip){
-			f7 = -(mc.theWorld.provider.getCloudHeight()) - f + 0.33F;
-		}else{
-			f7 = mc.theWorld.provider.getCloudHeight() - f + 0.33F;
-		}
+		float f7 = mc.theWorld.provider.getCloudHeight() - f + 0.33F;
 		float f8 = (float) (d0 * 64.8828125E-4D);
 		float f9 = (float) (d1 * 64.8828125E-4D);
 		vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
 
 		for (int i1 = -256; i1 < 256; i1 += 32) {
 			for (int j1 = -256; j1 < 256; j1 += 32) {
-				vertexbuffer.pos((double) (i1 + 0), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 0) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-				vertexbuffer.pos((double) (i1 + 32), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-				vertexbuffer.pos((double) (i1 + 32), (double) f7, (double) (j1 + 0)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 0) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-				vertexbuffer.pos((double) (i1 + 0), (double) f7, (double) (j1 + 0)).tex((double) ((float) (i1 + 0) * 64.8828125E-4F + f8), (double) ((float) (j1 + 0) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+				vertexbuffer.pos((double) (i1 + 0), (double) -f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 0) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+				vertexbuffer.pos((double) (i1 + 32), (double) -f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+				vertexbuffer.pos((double) (i1 + 32), (double) -f7, (double) (j1 + 0)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 0) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+				vertexbuffer.pos((double) (i1 + 0), (double) -f7, (double) (j1 + 0)).tex((double) ((float) (i1 + 0) * 64.8828125E-4F + f8), (double) ((float) (j1 + 0) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
 			}
 		}
+		GL11.glScalef(1, -1, 1);
 		tessellator.draw();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_CULL_FACE);
 	}
 
 	public int getCloudTickCounter() {
