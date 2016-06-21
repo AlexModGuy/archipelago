@@ -38,6 +38,7 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
 		VertexBuffer vertexbuffer = tessellator.getBuffer();
 		mc.renderEngine.bindTexture(CLOUDS_TEXTURES);
 		GL11.glEnable(GL11.GL_BLEND);
+		GlStateManager.depthMask(false);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		Vec3d vec3d = mc.theWorld.getCloudColour(partialTicks);
 		float f1 = (float) vec3d.xCoord;
@@ -77,6 +78,7 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
 		GL11.glScalef(1, -1, 1);
 		tessellator.draw();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.depthMask(true);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 	}

@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class BiomeGenTropical extends Biome {
 	private EnumGrassColor grassColor;
+	float r, g, b;
 
 	public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment) {
 		super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
@@ -34,6 +35,34 @@ public class BiomeGenTropical extends Biome {
 		registerBiome(id, name, this);
 		this.theBiomeDecorator.reedsPerChunk = -1;
 		this.theBiomeDecorator.grassPerChunk = 3;
+
+	}
+
+	public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, float r, float g, float b) {
+		super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
+		this.spawnableCreatureList.clear();
+		this.spawnableWaterCreatureList.clear();
+		this.spawnableMonsterList.clear();
+		this.grassColor = grassColor;
+		this.topBlock = biomeSediment.topBlock.getDefaultState();
+		this.fillerBlock = biomeSediment.bottomBlock.getDefaultState();
+		registerBiome(id, name, this);
+		this.theBiomeDecorator.reedsPerChunk = -1;
+		this.theBiomeDecorator.grassPerChunk = 3;
+		this.r = r;
+		this.g = g;
+		this.b = b;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getSkyColorByTemp(float currentTemperature) {
+		if (r == 0 && g == 0 && b == 0) {
+			currentTemperature = currentTemperature / 3.0F;
+			currentTemperature = MathHelper.clamp_float(currentTemperature, -1.0F, 1.0F);
+			return MathHelper.hsvToRGB(0.62222224F - currentTemperature * 0.05F, 0.5F + currentTemperature * 0.1F, 1.0F);
+		} else {
+			return MathHelper.rgb(r, g, b);
+		}
 	}
 
 	@Override

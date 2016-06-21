@@ -21,7 +21,7 @@ public class WorldGenArchipelagoKelp extends WorldGenerator {
 		if (worldIn != null && plantType != null && plantType.block != null) {
 			for (int i = 0; i < 64; ++i) {
 				BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-				if (worldIn.isBlockLoaded(blockpos) && plantType.canSpawnIn(worldIn.getBiomeGenForCoords(blockpos)) && ((BlockGrowingSeaweed) plantType.block).canPlaceBlockAt(worldIn, blockpos)) {
+				if (worldIn.isBlockLoaded(blockpos) && plantType.canSpawnIn(worldIn.getBiomeGenForCoords(blockpos)) && ((BlockGrowingSeaweed) plantType.block).canPlaceBlockAt(worldIn, blockpos) && blockpos.getY() < 57) {
 					if (worldIn.getBlockState(blockpos.up()).getBlock().equals(plantType.block))
 						return false;
 					int length = Math.abs(61 - blockpos.getY() - rand.nextInt(3));
