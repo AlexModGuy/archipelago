@@ -19,6 +19,8 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 public class ArchipelagoSkyRenderer extends IRenderHandler {
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	private static final ResourceLocation SUN_TEXTURES = new ResourceLocation("textures/environment/sun.png");
+	private static final ResourceLocation CLOUDS_TEXTURES = new ResourceLocation("archipelago:textures/clouds.png");
+
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		GlStateManager.disableTexture2D();

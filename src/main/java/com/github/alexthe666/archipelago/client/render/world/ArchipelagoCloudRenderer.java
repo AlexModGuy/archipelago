@@ -83,6 +83,12 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
 		GL11.glEnable(GL11.GL_CULL_FACE);
 	}
 
+	public float getHeightFromCoords(int x, int z, float f){
+		float heightpoint = Minecraft.getMinecraft().theWorld.provider.getCloudHeight();
+		int actualX = x - 128;
+		int actualZ = z - 128;
+		return (Math.abs(actualX * actualZ)/ 2) - f + 0.33F;
+	}
 	public int getCloudTickCounter() {
 		try {
 			return (Integer) ReflectionHelper.findField(RenderGlobal.class, new String[] { "cloudTickCounter", "field_72773_u" }).get(Minecraft.getMinecraft().renderGlobal);
