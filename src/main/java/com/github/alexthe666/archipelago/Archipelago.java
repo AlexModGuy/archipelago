@@ -1,10 +1,12 @@
 package com.github.alexthe666.archipelago;
 
 import com.github.alexthe666.archipelago.core.*;
+import com.github.alexthe666.archipelago.enums.EnumTrees;
 import com.github.alexthe666.archipelago.event.server.ServerEvents;
 import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
 import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
 import com.github.alexthe666.archipelago.world.WorldProviderArchipelago;
+
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -55,6 +57,7 @@ public class Archipelago {
 		};
 		ModItems.init();
 		ModWorld.init();
+		EnumTrees.init();
 		ModBlocks.init();
 		ModRecipes.init();
 		GameRegistry.registerWorldGenerator(new WorldGeneratorArchipelago(), 20);
