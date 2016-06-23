@@ -83,7 +83,7 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 	}
 
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(STAGE, Integer.valueOf((meta & 8) >> 3));
+		return this.getDefaultState().withProperty(STAGE, Integer.valueOf(meta));
 	}
 
 	public int getMetaFromState(IBlockState state) {
