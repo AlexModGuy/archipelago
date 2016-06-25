@@ -10,9 +10,10 @@ import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 
 public enum EnumTrees {
 
-CANARY_ISLAND_DATE_PALM(null),
-COCONUT_PALM(null),
-CALOPHYLLUM(null);
+CANARY_ISLAND_DATE_PALM(null, false),
+COCONUT_PALM(null, false),
+CALOPHYLLUM(null, false),
+HISPANIOLAN_PINE(null, false);
 
 
 public Block sapling;
@@ -20,9 +21,11 @@ public Block log;
 public Block leaves;
 public Block planks;
 public WorldGenerator structure;
+public boolean isShrub;
 
-private EnumTrees(WorldGenerator structure) {
+private EnumTrees(WorldGenerator structure, boolean isShrub) {
 	this.structure = structure;
+	this.isShrub = isShrub;
 }
 
 public static void init() {

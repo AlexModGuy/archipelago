@@ -1,5 +1,7 @@
 package com.github.alexthe666.archipelago;
 
+import javax.annotation.Nullable;
+
 import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 import com.github.alexthe666.archipelago.client.particle.TeleportFX;
 import com.github.alexthe666.archipelago.core.ModFluids;
@@ -7,8 +9,10 @@ import com.github.alexthe666.archipelago.enums.EnumParticle;
 import com.github.alexthe666.archipelago.enums.EnumTrees;
 import com.github.alexthe666.archipelago.event.client.ClientEvents;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -17,10 +21,17 @@ import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ColorizerFoliage;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -32,6 +43,19 @@ public class ClientProxy extends CommonProxy {
 			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.leaves, (new StateMap.Builder()).ignore(new IProperty[] { BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE }).build());
 			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.sapling, (new StateMap.Builder()).ignore(new IProperty[] { BlockArchipelagoSapling.STAGE }).build());
 		}
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor() {
+			public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
+				return worldIn != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(worldIn, pos) : ColorizerFoliage.getFoliageColorBasic();
+			}
+		}, new Block[] { EnumTrees.HISPANIOLAN_PINE.leaves });
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
+        {
+            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+            {
+                IBlockState iblockstate = ((ItemBlock)stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
+                return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, (IBlockAccess)null, (BlockPos)null, tintIndex);
+            }
+        }, new Block[] { EnumTrees.HISPANIOLAN_PINE.leaves });
 	}
 
 	@Override
@@ -45,10 +69,10 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public boolean areLeavesFancy(){
+	public boolean areLeavesFancy() {
 		return Minecraft.getMinecraft().gameSettings.fancyGraphics;
 	}
-	
+
 	@Override
 	public void spawnParticle(EnumParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ) {
 		switch (particle) {
