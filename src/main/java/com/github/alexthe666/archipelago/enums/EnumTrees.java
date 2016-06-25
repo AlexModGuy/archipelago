@@ -13,13 +13,16 @@ public enum EnumTrees {
 CANARY_ISLAND_DATE_PALM(null, false),
 COCONUT_PALM(null, false),
 CALOPHYLLUM(null, false),
-HISPANIOLAN_PINE(null, false);
+HISPANIOLAN_PINE(null, false),
+CANARY_MADRONE(null, false),
+TAMBALACOQUE(null, false),
+CORRIOSA(null, true);
 
 
-public Block sapling;
 public Block log;
 public Block leaves;
 public Block planks;
+public Block sapling;
 public WorldGenerator structure;
 public boolean isShrub;
 
@@ -30,10 +33,12 @@ private EnumTrees(WorldGenerator structure, boolean isShrub) {
 
 public static void init() {
 	for (EnumTrees tree : EnumTrees.values()) {
-		tree.sapling = new BlockArchipelagoSapling(tree);
-		tree.log = new BlockArchipelagoLog(tree);
 		tree.leaves = new BlockArchipelagoLeaves(tree);
-		tree.planks = new BlockArchipelagoPlanks(tree);
+		if(!tree.isShrub){
+			tree.log = new BlockArchipelagoLog(tree);
+			tree.planks = new BlockArchipelagoPlanks(tree);	
+		}
+		tree.sapling = new BlockArchipelagoSapling(tree);
 	}
 }
 }

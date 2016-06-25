@@ -136,6 +136,16 @@ tile.archipelago.hispaniolan_pine_sapling.name=Hispaniolan Pine Sapling
 tile.archipelago.hispaniolan_pine_log.name=Hispaniolan Pine Log
 tile.archipelago.hispaniolan_pine_planks.name=Hispaniolan Pine Planks
 tile.archipelago.hispaniolan_pine_leaves.name=Hispaniolan Pine Leaves
+tile.archipelago.canary_madrone_sapling.name=Canary Madrone Sapling
+tile.archipelago.canary_madrone_log.name=Canary Madrone Log
+tile.archipelago.canary_madrone_planks.name=Canary Madrone Planks
+tile.archipelago.canary_madrone_leaves.name=Canary Madrone Leaves
+tile.archipelago.tambalacoque_sapling.name=Tambalacoque Sapling
+tile.archipelago.tambalacoque_log.name=Tambalacoque Log
+tile.archipelago.tambalacoque_planks.name=Tambalacoque Planks
+tile.archipelago.tambalacoque_leaves.name=Tambalacoque Leaves
+tile.archipelago.corriosa_sapling.name=Corriosa Sapling
+tile.archipelago.corriosa_leaves.name=Corriosa Leaves
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

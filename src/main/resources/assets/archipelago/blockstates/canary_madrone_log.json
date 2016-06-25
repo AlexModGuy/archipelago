@@ -1,0 +1,1 @@
+{"variants": {"axis=y":    { "model": "archipelago:canary_madrone_log" },"axis=z":     { "model": "archipelago:canary_madrone_log", "x": 90 },"axis=x":     { "model": "archipelago:canary_madrone_log", "x": 90, "y": 90 }, "axis=none":   { "model": "oak_bark" }}}
