@@ -146,6 +146,14 @@ tile.archipelago.tambalacoque_planks.name=Tambalacoque Planks
 tile.archipelago.tambalacoque_leaves.name=Tambalacoque Leaves
 tile.archipelago.corriosa_sapling.name=Corriosa Sapling
 tile.archipelago.corriosa_leaves.name=Corriosa Leaves
+tile.archipelago.galapagos_miconia_sapling.name=Galapagos Miconia Sapling
+tile.archipelago.galapagos_miconia_leaves.name=Galapagos Miconia Leaves
+tile.archipelago.kapok_sapling.name=Kapok Sapling
+tile.archipelago.kapok_log.name=Kapok Log
+tile.archipelago.kapok_planks.name=Kapok Planks
+tile.archipelago.kapok_leaves.name=Kapok Leaves
+tile.archipelago.tabernaemontana_cerifera_sapling.name=Tabernaemontana Cerifera Sapling
+tile.archipelago.tabernaemontana_cerifera_leaves.name=Tabernaemontana Cerifera Leaves
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff

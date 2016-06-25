@@ -9,15 +9,16 @@ import com.github.alexthe666.archipelago.block.BlockArchipelagoPlanks;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 
 public enum EnumTrees {
-
 CANARY_ISLAND_DATE_PALM(null, false),
 COCONUT_PALM(null, false),
 CALOPHYLLUM(null, false),
 HISPANIOLAN_PINE(null, false),
 CANARY_MADRONE(null, false),
 TAMBALACOQUE(null, false),
-CORRIOSA(null, true);
-
+CORRIOSA(null, true),
+GALAPAGOS_MICONIA(null, true),
+KAPOK(null, false),
+TABERNAEMONTANA_CERIFERA(null, true);
 
 public Block log;
 public Block leaves;

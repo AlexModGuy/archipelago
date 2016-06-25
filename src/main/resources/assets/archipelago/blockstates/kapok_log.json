@@ -1,0 +1,1 @@
+{"variants": {"axis=y":    { "model": "archipelago:kapok_log" },"axis=z":     { "model": "archipelago:kapok_log", "x": 90 },"axis=x":     { "model": "archipelago:kapok_log", "x": 90, "y": 90 }, "axis=none":   { "model": "oak_bark" }}}
