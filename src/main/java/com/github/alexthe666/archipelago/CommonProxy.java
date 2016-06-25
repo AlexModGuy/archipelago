@@ -19,7 +19,11 @@ public class CommonProxy {
 	}
 
 	;
-
+	
+	public boolean areLeavesFancy(){
+		return false;
+	}
+	
 	public void renderFluids() {
 	}
 

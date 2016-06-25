@@ -1,0 +1,1 @@
+{"variants": {"axis=y":    { "model": "archipelago:coconut_palm_log" },"axis=z":     { "model": "archipelago:coconut_palm_log", "x": 90 },"axis=x":     { "model": "archipelago:coconut_palm_log", "x": 90, "y": 90 }, "axis=none":   { "model": "oak_bark" }}}

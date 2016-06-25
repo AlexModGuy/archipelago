@@ -1,1 +1,1 @@
-{"variants": { "stage=0": { "model": "archipelago:canary_island_date_palm_sapling" },"stage=1":    { "model":"archipelago:canary_island_date_palm_sapling" }}
+{"variants": {"normal": { "model":  "archipelago:canary_island_date_palm_sapling"}}}

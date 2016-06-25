@@ -1,15 +1,23 @@
 package com.github.alexthe666.archipelago;
 
+import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 import com.github.alexthe666.archipelago.client.particle.TeleportFX;
 import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.enums.EnumParticle;
+import com.github.alexthe666.archipelago.enums.EnumTrees;
 import com.github.alexthe666.archipelago.event.client.ClientEvents;
+
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockOldLeaf;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -20,6 +28,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init() {
 		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		for (EnumTrees tree : EnumTrees.values()) {
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.leaves, (new StateMap.Builder()).ignore(new IProperty[] { BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE }).build());
+			Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.sapling, (new StateMap.Builder()).ignore(new IProperty[] { BlockArchipelagoSapling.STAGE }).build());
+		}
 	}
 
 	@Override
@@ -32,6 +44,11 @@ public class ClientProxy extends CommonProxy {
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta, new ModelResourceLocation("archipelago:" + name, "inventory"));
 	}
 
+	@Override
+	public boolean areLeavesFancy(){
+		return Minecraft.getMinecraft().gameSettings.fancyGraphics;
+	}
+	
 	@Override
 	public void spawnParticle(EnumParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ) {
 		switch (particle) {

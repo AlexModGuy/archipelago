@@ -10,7 +10,10 @@ import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 
 public enum EnumTrees {
 
-CANARY_ISLAND_DATE_PALM(null);
+CANARY_ISLAND_DATE_PALM(null),
+COCONUT_PALM(null),
+CALOPHYLLUM(null);
+
 
 public Block sapling;
 public Block log;

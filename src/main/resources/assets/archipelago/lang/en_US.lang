@@ -120,6 +120,19 @@ tile.archipelago.plant.turtlegrass.name=Turtlegrass
 tile.archipelago.plant.zostera_tasmanica.name=Zostera Tasmanica Seagrass
 tile.archipelago.coralrock.name=Reef Rock
 
+tile.archipelago.canary_island_date_palm_sapling.name=Canary Island Date Palm Sapling
+tile.archipelago.canary_island_date_palm_log.name=Canary Island Date Palm Log
+tile.archipelago.canary_island_date_palm_planks.name=Canary Island Date Palm Planks
+tile.archipelago.canary_island_date_palm_leaves.name=Canary Island Date Palm Leaves
+tile.archipelago.coconut_palm_sapling.name=Coconut Sapling
+tile.archipelago.coconut_palm_log.name=Coconut Palm Log
+tile.archipelago.coconut_palm_planks.name=Coconut Planks
+tile.archipelago.coconut_palm_leaves.name=Coconut Leaves
+tile.archipelago.calophyllum_sapling.name=Calophyllum Sapling
+tile.archipelago.calophyllum_log.name=Calophyllum Log
+tile.archipelago.calophyllum_planks.name=Calophyllum Planks
+tile.archipelago.calophyllum_leaves.name=Calophyllum Leaves
+
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
 item.archipelago.sunstone_staff_broken.name=Broken Sunstone Staff

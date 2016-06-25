@@ -1,6 +1,7 @@
 package com.github.alexthe666.archipelago.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -12,6 +13,7 @@ public class BlockArchipelagoPlanks extends Block {
 
 	public BlockArchipelagoPlanks(EnumTrees tree) {
 		super(Material.WOOD);
+        this.setSoundType(SoundType.WOOD);
 		this.setHardness(2.0F);
 		this.setHarvestLevel("axe", 0);
 		this.setCreativeTab(Archipelago.tab);
