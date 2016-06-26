@@ -64,7 +64,7 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 	}
 
 	public void generateTree(World worldIn, BlockPos pos, Random rand) {		
-        WorldGenerator worldgenerator = (WorldGenerator)(rand.nextInt(10) == 0 ? new WorldGenBigTree(true) : new WorldGenTrees(true));
+        WorldGenerator worldgenerator = new WorldGenTrees(true);
 
 		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(worldIn, rand, pos))
 			return;
