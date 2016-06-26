@@ -40,11 +40,13 @@ public class ClientProxy extends CommonProxy {
             Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.sapling, (new StateMap.Builder()).ignore(new IProperty[] { BlockArchipelagoSapling.STAGE }).build());
         }
         Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor() {
+            @Override
             public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
                 return worldIn != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(worldIn, pos) : ColorizerFoliage.getFoliageColorBasic();
             }
         }, EnumTrees.HISPANIOLAN_PINE.leaves);
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
+            @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex) {
                 IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
                 return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, null, null, tintIndex);

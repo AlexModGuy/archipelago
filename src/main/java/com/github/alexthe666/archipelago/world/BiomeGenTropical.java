@@ -54,6 +54,7 @@ public class BiomeGenTropical extends Biome {
         this.b = b;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getSkyColorByTemp(float currentTemperature) {
         if (r == 0 && g == 0 && b == 0) {

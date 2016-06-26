@@ -21,6 +21,7 @@ public class BlockArchipelagoLog extends BlockLog {
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), tree.name().toLowerCase() + "_log");
     }
 
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         IBlockState state = this.getDefaultState();
 
@@ -45,6 +46,7 @@ public class BlockArchipelagoLog extends BlockLog {
         return state;
     }
 
+    @Override
     public int getMetaFromState(IBlockState state) {
         switch (state.getValue(LOG_AXIS)) {
             case X:
@@ -59,6 +61,7 @@ public class BlockArchipelagoLog extends BlockLog {
         return 0;
     }
 
+    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, LOG_AXIS);
     }

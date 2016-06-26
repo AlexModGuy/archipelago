@@ -177,6 +177,7 @@ public class MapGenBlueHoles extends MapGenBase {
         return blockstate1.getBlock() == Blocks.STONE || (blockstate1.getBlock() == Blocks.DIRT || (blockstate1.getBlock() == Blocks.GRASS || (blockstate1.getBlock() == Blocks.HARDENED_CLAY || (blockstate1.getBlock() == Blocks.STAINED_HARDENED_CLAY || (blockstate1.getBlock() == Blocks.SANDSTONE || (blockstate1.getBlock() == Blocks.RED_SANDSTONE || (blockstate1.getBlock() == Blocks.MYCELIUM || (blockstate1.getBlock() == Blocks.SNOW_LAYER || (blockstate1.getBlock() == Blocks.SAND || blockstate1.getBlock() == Blocks.GRAVEL) && blockstate2.getMaterial() != Material.WATER))))))));
     }
 
+    @Override
     protected void recursiveGenerate(World world, int chunkX, int chunkZ, int width, int height, ChunkPrimer chunkPrimerIn) {
         double d0 = (double) (chunkX * 16 + this.rand.nextInt(16));
         double d1 = (double) this.rand.nextInt(55 - this.rand.nextInt(50));

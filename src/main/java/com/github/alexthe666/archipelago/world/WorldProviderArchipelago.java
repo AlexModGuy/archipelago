@@ -48,16 +48,19 @@ public class WorldProviderArchipelago extends WorldProvider {
         return 1.0;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public net.minecraftforge.client.IRenderHandler getSkyRenderer() {
         return this.newSkyRenderer;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public net.minecraftforge.client.IRenderHandler getCloudRenderer() {
         return this.newCloudRenderer;
     }
 
+    @Override
     public boolean shouldMapSpin(String entity, double x, double y, double z) {
         return false;
     }

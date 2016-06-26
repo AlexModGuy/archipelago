@@ -53,10 +53,12 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
         return Collections.singletonList(new ItemStack(this));
     }
 
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(DECAYABLE, (meta & 1) == 0).withProperty(CHECK_DECAY, (meta & 2) > 0);
     }
 
+    @Override
     public int getMetaFromState(IBlockState state) {
         int i = 0;
         if (!(Boolean) state.getValue(DECAYABLE)) {
@@ -70,6 +72,7 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
         return i;
     }
 
+    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, DECAYABLE, CHECK_DECAY);
     }
@@ -85,11 +88,13 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
         return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return Blocks.LEAVES.getBlockLayer();
     }
 
+    @Override
     public boolean isVisuallyOpaque() {
         return true;
     }
