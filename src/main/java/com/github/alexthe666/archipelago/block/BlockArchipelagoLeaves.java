@@ -1,10 +1,8 @@
 package com.github.alexthe666.archipelago.block;
 
-import java.util.List;
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.enums.EnumTrees;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -15,85 +13,85 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class BlockArchipelagoLeaves extends BlockLeaves {
-	private EnumTrees tree;
-	
-	public BlockArchipelagoLeaves(EnumTrees tree) {
-		super();
-		this.tree = tree;
-		this.setCreativeTab(Archipelago.tab);
-		this.setUnlocalizedName("archipelago." + tree.name().toLowerCase() + "_leaves");
-		this.setCreativeTab(Archipelago.tab);
-		GameRegistry.registerBlock(this, tree.name().toLowerCase() + "_leaves");
-		Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), tree.name().toLowerCase() + "_leaves");
-	}
+    private EnumTrees tree;
 
-	@Override
-	public EnumType getWoodType(int meta) {
-		return EnumType.OAK;
-	}
+    public BlockArchipelagoLeaves(EnumTrees tree) {
+        super();
+        this.tree = tree;
+        this.setCreativeTab(Archipelago.tab);
+        this.setUnlocalizedName("archipelago." + tree.name().toLowerCase() + "_leaves");
+        this.setCreativeTab(Archipelago.tab);
+        GameRegistry.registerBlock(this, tree.name().toLowerCase() + "_leaves");
+        Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), tree.name().toLowerCase() + "_leaves");
+    }
 
-	@Override
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if(!this.tree.isShrub){
-			super.updateTick(worldIn, pos, state, rand);
-		}
-	}
+    @Override
+    public EnumType getWoodType(int meta) {
+        return EnumType.OAK;
+    }
 
-	@Override
-	public List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
-		return java.util.Arrays.asList(new ItemStack(this));
-	}
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if (!this.tree.isShrub) {
+            super.updateTick(worldIn, pos, state, rand);
+        }
+    }
 
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(DECAYABLE, Boolean.valueOf((meta & 1) == 0)).withProperty(CHECK_DECAY, Boolean.valueOf((meta & 2) > 0));
-	}
+    @Override
+    public List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
+        return Collections.singletonList(new ItemStack(this));
+    }
 
-	public int getMetaFromState(IBlockState state) {
-		int i = 0;
-		if (!((Boolean) state.getValue(DECAYABLE)).booleanValue()) {
-			i |= 1;
-		}
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(DECAYABLE, (meta & 1) == 0).withProperty(CHECK_DECAY, (meta & 2) > 0);
+    }
 
-		if (((Boolean) state.getValue(CHECK_DECAY)).booleanValue()) {
-			i |= 2;
-		}
+    public int getMetaFromState(IBlockState state) {
+        int i = 0;
+        if (!(Boolean) state.getValue(DECAYABLE)) {
+            i |= 1;
+        }
 
-		return i;
-	}
+        if ((Boolean) state.getValue(CHECK_DECAY)) {
+            i |= 2;
+        }
 
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { DECAYABLE, CHECK_DECAY });
-	}
+        return i;
+    }
 
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return Blocks.LEAVES.isOpaqueCube(state);
-	}
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, DECAYABLE, CHECK_DECAY);
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);
-	}
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return Blocks.LEAVES.isOpaqueCube(state);
+    }
 
-	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
-		return Blocks.LEAVES.getBlockLayer();
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+        return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);
+    }
 
-	public boolean isVisuallyOpaque() {
-		return true;
-	}
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer() {
+        return Blocks.LEAVES.getBlockLayer();
+    }
+
+    public boolean isVisuallyOpaque() {
+        return true;
+    }
 
 }

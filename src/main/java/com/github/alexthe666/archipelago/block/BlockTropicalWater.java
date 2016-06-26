@@ -1,12 +1,6 @@
 package com.github.alexthe666.archipelago.block;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.EnumSet;
-import java.util.Random;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
+import com.github.alexthe666.archipelago.core.ModFluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockDoor;
@@ -30,320 +24,316 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
+import javax.annotation.Nullable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.EnumSet;
+import java.util.Random;
+import java.util.Set;
 
 public class BlockTropicalWater extends BlockFluidClassic {
 
-	int adjacentSourceBlocks;
+    int adjacentSourceBlocks;
 
-	public BlockTropicalWater(Fluid fluid, Material material) {
-		super(fluid, material);
-		this.setLightOpacity(1);
-	}
+    public BlockTropicalWater(Fluid fluid, Material material) {
+        super(fluid, material);
+        this.setLightOpacity(1);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		IBlockState neighbor = blockAccess.getBlockState(pos.offset(side));
-		return !(neighbor.getMaterial() == blockState.getMaterial() || (!neighbor.isOpaqueCube() && neighbor.getBlock() != Blocks.AIR)) && (side == EnumFacing.UP || neighbor.getBlock() instanceof BlockChest || super.shouldSideBeRendered(blockState, blockAccess, pos, side));
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        IBlockState neighbor = blockAccess.getBlockState(pos.offset(side));
+        return !(neighbor.getMaterial() == blockState.getMaterial() || (!neighbor.isOpaqueCube() && neighbor.getBlock() != Blocks.AIR)) && (side == EnumFacing.UP || neighbor.getBlock() instanceof BlockChest || super.shouldSideBeRendered(blockState, blockAccess, pos, side));
+    }
 
-	@Override
-	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-		return NULL_AABB;
-	}
+    @Override
+    @Nullable
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+        return NULL_AABB;
+    }
 
-	@Override
-	public int getQuantaValue(IBlockAccess world, BlockPos pos) {
-		if (world != null && world instanceof World) {
-			if (((World) world).isBlockLoaded(pos) && world.getBlockState(pos) != null) {
-				return super.getQuantaValue(world, pos);
-			}
-		}
-		return 0;
-	}
+    @Override
+    public int getQuantaValue(IBlockAccess world, BlockPos pos) {
+        if (world != null && world instanceof World) {
+            if (((World) world).isBlockLoaded(pos) && world.getBlockState(pos) != null) {
+                return super.getQuantaValue(world, pos);
+            }
+        }
+        return 0;
+    }
 
-	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
-			if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
-				EntityLivingBase living = (EntityLivingBase) entityIn;
-				try {
-					ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(living, 7, true);
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				}
-			}
-			if (entityIn instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer) entityIn;
-				if (!player.capabilities.isFlying) {
-					try {
-						ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(player, 7, true);
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
-						e.printStackTrace();
-					}
-					entityIn.motionX *= 1.02;
-					entityIn.motionZ *= 1.02;
-				}
-			}
-		}
-	}
+    @Override
+    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
+            if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
+                EntityLivingBase living = (EntityLivingBase) entityIn;
+                try {
+                    ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(living, 7, true);
+                } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (entityIn instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) entityIn;
+                if (!player.capabilities.isFlying) {
+                    try {
+                        ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(player, 7, true);
+                    } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
+                        e.printStackTrace();
+                    }
+                    entityIn.motionX *= 1.02;
+                    entityIn.motionZ *= 1.02;
+                }
+            }
+        }
+    }
 
-	protected int checkAdjacentBlock(World worldIn, BlockPos pos, int currentMinLevel) {
-		int i = this.getLevel(worldIn, pos);
+    protected int checkAdjacentBlock(World worldIn, BlockPos pos, int currentMinLevel) {
+        int i = this.getLevel(worldIn, pos);
 
-		if (i < 0) {
-			return currentMinLevel;
-		} else {
-			if (i == 0) {
-				++this.adjacentSourceBlocks;
-			}
+        if (i < 0) {
+            return currentMinLevel;
+        } else {
+            if (i == 0) {
+                ++this.adjacentSourceBlocks;
+            }
 
-			if (i >= 8) {
-				i = 0;
-			}
+            if (i >= 8) {
+                i = 0;
+            }
 
-			return currentMinLevel >= 0 && i >= currentMinLevel ? currentMinLevel : i;
-		}
-	}
+            return currentMinLevel >= 0 && i >= currentMinLevel ? currentMinLevel : i;
+        }
+    }
 
-	@Override
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		super.updateTick(worldIn, pos, state, rand);
-		int i = state.getValue(LEVEL);
-		int j = 1;
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        super.updateTick(worldIn, pos, state, rand);
+        int i = state.getValue(LEVEL);
+        int j = 1;
 
-		if (this.blockMaterial == Material.LAVA && !worldIn.provider.doesWaterVaporize()) {
-			j = 2;
-		}
+        if (this.blockMaterial == Material.LAVA && !worldIn.provider.doesWaterVaporize()) {
+            j = 2;
+        }
 
-		int k = this.tickRate(worldIn);
+        int k = this.tickRate(worldIn);
 
-		if (i > 0) {
-			int l = -100;
-			this.adjacentSourceBlocks = 0;
+        if (i > 0) {
+            int l = -100;
+            this.adjacentSourceBlocks = 0;
 
-			for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-				l = this.checkAdjacentBlock(worldIn, pos.offset(enumfacing), l);
-			}
+            for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
+                l = this.checkAdjacentBlock(worldIn, pos.offset(enumfacing), l);
+            }
 
-			int i1 = l + j;
+            int i1 = l + j;
 
-			if (i1 >= 8 || l < 0) {
-				i1 = -1;
-			}
+            if (i1 >= 8 || l < 0) {
+                i1 = -1;
+            }
 
-			if (this.getLevel(worldIn, pos.up()) >= 0) {
-				int j1 = this.getLevel(worldIn, pos.up());
+            if (this.getLevel(worldIn, pos.up()) >= 0) {
+                int j1 = this.getLevel(worldIn, pos.up());
 
-				if (j1 >= 8) {
-					i1 = j1;
-				} else {
-					i1 = j1 + 8;
-				}
-			}
+                if (j1 >= 8) {
+                    i1 = j1;
+                } else {
+                    i1 = j1 + 8;
+                }
+            }
 
-			if (this.adjacentSourceBlocks >= 2 && this.blockMaterial == Material.WATER) {
-				IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
+            if (this.adjacentSourceBlocks >= 2 && this.blockMaterial == Material.WATER) {
+                IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
 
-				if (iblockstate1.getMaterial().isSolid()) {
-					i1 = 0;
-				} else if (iblockstate1.getMaterial() == this.blockMaterial && iblockstate1.getValue(LEVEL) == 0) {
-					i1 = 0;
-				}
-			}
+                if (iblockstate1.getMaterial().isSolid()) {
+                    i1 = 0;
+                } else if (iblockstate1.getMaterial() == this.blockMaterial && iblockstate1.getValue(LEVEL) == 0) {
+                    i1 = 0;
+                }
+            }
 
-			if (i1 == i) {
-				this.placeStaticBlock(worldIn, pos, state);
-			} else {
-				i = i1;
+            if (i1 == i) {
+                this.placeStaticBlock(worldIn, pos, state);
+            } else {
+                i = i1;
 
-				if (i1 < 0) {
-					worldIn.setBlockToAir(pos);
-				} else {
-					state = state.withProperty(LEVEL, i1);
-					worldIn.setBlockState(pos, state, 2);
-					worldIn.scheduleUpdate(pos, this, k);
-					worldIn.notifyNeighborsOfStateChange(pos, this);
-				}
-			}
-		} else {
-			this.placeStaticBlock(worldIn, pos, state);
-		}
+                if (i1 < 0) {
+                    worldIn.setBlockToAir(pos);
+                } else {
+                    state = state.withProperty(LEVEL, i1);
+                    worldIn.setBlockState(pos, state, 2);
+                    worldIn.scheduleUpdate(pos, this, k);
+                    worldIn.notifyNeighborsOfStateChange(pos, this);
+                }
+            }
+        } else {
+            this.placeStaticBlock(worldIn, pos, state);
+        }
 
-		IBlockState iblockstate = worldIn.getBlockState(pos.down());
+        IBlockState iblockstate = worldIn.getBlockState(pos.down());
 
-		if (this.canFlowInto(worldIn, pos.down(), iblockstate)) {
-			if (this.blockMaterial == Material.LAVA && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER) {
-				worldIn.setBlockState(pos.down(), Blocks.STONE.getDefaultState());
-				this.triggerMixEffects(worldIn, pos.down());
-				return;
-			}
+        if (this.canFlowInto(worldIn, pos.down(), iblockstate)) {
+            if (this.blockMaterial == Material.LAVA && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER) {
+                worldIn.setBlockState(pos.down(), Blocks.STONE.getDefaultState());
+                this.triggerMixEffects(worldIn, pos.down());
+                return;
+            }
 
-			if (i >= 8) {
-				this.tryFlowInto(worldIn, pos.down(), iblockstate, i);
-			} else {
-				this.tryFlowInto(worldIn, pos.down(), iblockstate, i + 8);
-			}
-		} else if (i >= 0 && (i == 0 || this.isBlocked(worldIn, pos.down(), iblockstate))) {
-			Set<EnumFacing> set = this.getPossibleFlowDirections(worldIn, pos);
-			int k1 = i + j;
+            if (i >= 8) {
+                this.tryFlowInto(worldIn, pos.down(), iblockstate, i);
+            } else {
+                this.tryFlowInto(worldIn, pos.down(), iblockstate, i + 8);
+            }
+        } else if (i >= 0 && (i == 0 || this.isBlocked(worldIn, pos.down(), iblockstate))) {
+            Set<EnumFacing> set = this.getPossibleFlowDirections(worldIn, pos);
+            int k1 = i + j;
 
-			if (i >= 8) {
-				k1 = 1;
-			}
+            if (i >= 8) {
+                k1 = 1;
+            }
 
-			if (k1 >= 8) {
-				return;
-			}
+            if (k1 >= 8) {
+                return;
+            }
 
-			for (EnumFacing enumfacing1 : set) {
-				this.tryFlowInto(worldIn, pos.offset(enumfacing1), worldIn.getBlockState(pos.offset(enumfacing1)), k1);
-			}
-		}
-	}
+            for (EnumFacing enumfacing1 : set) {
+                this.tryFlowInto(worldIn, pos.offset(enumfacing1), worldIn.getBlockState(pos.offset(enumfacing1)), k1);
+            }
+        }
+    }
 
-	private void tryFlowInto(World worldIn, BlockPos pos, IBlockState state, int level) {
-		if (this.canFlowInto(worldIn, pos, state)) {
-			if (state.getBlock() != Blocks.AIR) {
-				state.getBlock().dropBlockAsItem(worldIn, pos, state, 0);
-			}
+    private void tryFlowInto(World worldIn, BlockPos pos, IBlockState state, int level) {
+        if (this.canFlowInto(worldIn, pos, state)) {
+            if (state.getBlock() != Blocks.AIR) {
+                state.getBlock().dropBlockAsItem(worldIn, pos, state, 0);
+            }
 
-			worldIn.setBlockState(pos, this.getDefaultState().withProperty(LEVEL, level), 3);
-		}
-	}
+            worldIn.setBlockState(pos, this.getDefaultState().withProperty(LEVEL, level), 3);
+        }
+    }
 
-	protected void triggerMixEffects(World worldIn, BlockPos pos) {
-		double d0 = pos.getX();
-		double d1 = pos.getY();
-		double d2 = pos.getZ();
-		worldIn.playSound((EntityPlayer) null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
+    protected void triggerMixEffects(World worldIn, BlockPos pos) {
+        double d0 = pos.getX();
+        double d1 = pos.getY();
+        double d2 = pos.getZ();
+        worldIn.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
 
-		for (int i = 0; i < 8; ++i) {
-			worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0 + Math.random(), d1 + 1.2D, d2 + Math.random(), 0.0D, 0.0D, 0.0D);
-		}
-	}
+        for (int i = 0; i < 8; ++i) {
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0 + Math.random(), d1 + 1.2D, d2 + Math.random(), 0.0D, 0.0D, 0.0D);
+        }
+    }
 
-	private boolean canFlowInto(World worldIn, BlockPos pos, IBlockState state) {
-		Material material = state.getMaterial();
-		return material != this.blockMaterial && material != Material.LAVA && !this.isBlocked(worldIn, pos, state);
-	}
+    private boolean canFlowInto(World worldIn, BlockPos pos, IBlockState state) {
+        Material material = state.getMaterial();
+        return material != this.blockMaterial && material != Material.LAVA && !this.isBlocked(worldIn, pos, state);
+    }
 
-	private Set<EnumFacing> getPossibleFlowDirections(World worldIn, BlockPos pos) {
-		int i = 1000;
-		Set<EnumFacing> set = EnumSet.<EnumFacing> noneOf(EnumFacing.class);
+    private Set<EnumFacing> getPossibleFlowDirections(World worldIn, BlockPos pos) {
+        int i = 1000;
+        Set<EnumFacing> set = EnumSet.noneOf(EnumFacing.class);
 
-		for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-			BlockPos blockpos = pos.offset(enumfacing);
-			IBlockState iblockstate = worldIn.getBlockState(blockpos);
+        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
+            BlockPos blockpos = pos.offset(enumfacing);
+            IBlockState iblockstate = worldIn.getBlockState(blockpos);
 
-			if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || iblockstate.getValue(LEVEL) > 0)) {
-				int j;
+            if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || iblockstate.getValue(LEVEL) > 0)) {
+                int j;
 
-				if (this.isBlocked(worldIn, blockpos.down(), worldIn.getBlockState(blockpos.down()))) {
-					j = this.func_176374_a(worldIn, blockpos, 1, enumfacing.getOpposite());
-				} else {
-					j = 0;
-				}
+                if (this.isBlocked(worldIn, blockpos.down(), worldIn.getBlockState(blockpos.down()))) {
+                    j = this.func_176374_a(worldIn, blockpos, 1, enumfacing.getOpposite());
+                } else {
+                    j = 0;
+                }
 
-				if (j < i) {
-					set.clear();
-				}
+                if (j < i) {
+                    set.clear();
+                }
 
-				if (j <= i) {
-					set.add(enumfacing);
-					i = j;
-				}
-			}
-		}
+                if (j <= i) {
+                    set.add(enumfacing);
+                    i = j;
+                }
+            }
+        }
 
-		return set;
-	}
+        return set;
+    }
 
-	private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state) {
-		Block block = worldIn.getBlockState(pos).getBlock();
-		return !(!(block instanceof BlockDoor) && block != Blocks.STANDING_SIGN && block != Blocks.LADDER && block != Blocks.REEDS) || (block.getMaterial(state) == Material.PORTAL || block.getMaterial(state).blocksMovement());
-	}
+    private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state) {
+        Block block = worldIn.getBlockState(pos).getBlock();
+        return !(!(block instanceof BlockDoor) && block != Blocks.STANDING_SIGN && block != Blocks.LADDER && block != Blocks.REEDS) || (block.getMaterial(state) == Material.PORTAL || block.getMaterial(state).blocksMovement());
+    }
 
-	protected int getLevel(IBlockAccess worldIn, BlockPos pos) {
-		return worldIn.getBlockState(pos).getBlock() == this ? worldIn.getBlockState(pos).getMaterial() == this.blockMaterial ? worldIn.getBlockState(pos).getValue(LEVEL) : -1 : 0;
-	}
+    protected int getLevel(IBlockAccess worldIn, BlockPos pos) {
+        return worldIn.getBlockState(pos).getBlock() == this ? worldIn.getBlockState(pos).getMaterial() == this.blockMaterial ? worldIn.getBlockState(pos).getValue(LEVEL) : -1 : 0;
+    }
 
-	private int func_176374_a(World worldIn, BlockPos pos, int distance, EnumFacing calculateFlowCost) {
-		int i = 1000;
-		for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-			if (enumfacing != calculateFlowCost) {
-				BlockPos blockpos = pos.offset(enumfacing);
-				IBlockState iblockstate = worldIn.getBlockState(blockpos);
-				if (iblockstate.getBlock() == this) {
-					if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || iblockstate.getValue(LEVEL) > 0)) {
-						if (!this.isBlocked(worldIn, blockpos.down(), iblockstate)) {
-							return distance;
-						}
-						if (distance < 2) {
-							int j = this.func_176374_a(worldIn, blockpos, distance + 1, enumfacing.getOpposite());
+    private int func_176374_a(World worldIn, BlockPos pos, int distance, EnumFacing calculateFlowCost) {
+        int i = 1000;
+        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
+            if (enumfacing != calculateFlowCost) {
+                BlockPos blockpos = pos.offset(enumfacing);
+                IBlockState iblockstate = worldIn.getBlockState(blockpos);
+                if (iblockstate.getBlock() == this) {
+                    if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial || iblockstate.getValue(LEVEL) > 0)) {
+                        if (!this.isBlocked(worldIn, blockpos.down(), iblockstate)) {
+                            return distance;
+                        }
+                        if (distance < 2) {
+                            int j = this.func_176374_a(worldIn, blockpos, distance + 1, enumfacing.getOpposite());
 
-							if (j < i) {
-								i = j;
-							}
-						}
-					}
-				}
-			}
-		}
-		return i;
-	}
+                            if (j < i) {
+                                i = j;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return i;
+    }
 
-	private void placeStaticBlock(World worldIn, BlockPos pos, IBlockState currentState) {
-		worldIn.setBlockState(pos, ModFluids.tropical_water.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
-	}
+    private void placeStaticBlock(World worldIn, BlockPos pos, IBlockState currentState) {
+        worldIn.setBlockState(pos, ModFluids.tropical_water.getDefaultState().withProperty(LEVEL, currentState.getValue(LEVEL)), 2);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(IBlockState worldIn, World pos, BlockPos state, Random rand) {
-		double d0 = state.getX();
-		double d1 = state.getY();
-		double d2 = state.getZ();
-		int i = worldIn.getValue(LEVEL);
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState worldIn, World pos, BlockPos state, Random rand) {
+        double d0 = state.getX();
+        double d1 = state.getY();
+        double d2 = state.getZ();
+        int i = worldIn.getValue(LEVEL);
 
-		if (i > 0 && i < 8) {
-			if (rand.nextInt(64) == 0) {
-				pos.playSound(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, rand.nextFloat() + 0.5F, false);
-			}
-		} else if (rand.nextInt(10) == 0) {
-			pos.spawnParticle(EnumParticleTypes.SUSPENDED, d0 + rand.nextFloat(), d1 + rand.nextFloat(), d2 + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
-		}
+        if (i > 0 && i < 8) {
+            if (rand.nextInt(64) == 0) {
+                pos.playSound(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, rand.nextFloat() + 0.5F, false);
+            }
+        } else if (rand.nextInt(10) == 0) {
+            pos.spawnParticle(EnumParticleTypes.SUSPENDED, d0 + rand.nextFloat(), d1 + rand.nextFloat(), d2 + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
+        }
 
-		if (rand.nextInt(10) == 0 && pos.getBlockState(state.down()).isFullyOpaque()) {
-			Material material = pos.getBlockState(state.down(2)).getMaterial();
+        if (rand.nextInt(10) == 0 && pos.getBlockState(state.down()).isFullyOpaque()) {
+            Material material = pos.getBlockState(state.down(2)).getMaterial();
 
-			if (!material.blocksMovement() && !material.isLiquid()) {
-				double d3 = d0 + rand.nextFloat();
-				double d5 = d1 - 1.05D;
-				double d7 = d2 + rand.nextFloat();
-				pos.spawnParticle(EnumParticleTypes.DRIP_WATER, d3, d5, d7, 0.0D, 0.0D, 0.0D);
-			}
-		}
-	}
+            if (!material.blocksMovement() && !material.isLiquid()) {
+                double d3 = d0 + rand.nextFloat();
+                double d5 = d1 - 1.05D;
+                double d7 = d2 + rand.nextFloat();
+                pos.spawnParticle(EnumParticleTypes.DRIP_WATER, d3, d5, d7, 0.0D, 0.0D, 0.0D);
+            }
+        }
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-		int i = source.getCombinedLight(pos, 0);
-		int j = source.getCombinedLight(pos.up(), 0);
-		int k = i & 255;
-		int l = j & 255;
-		int i1 = i >> 16 & 255;
-		int j1 = j >> 16 & 255;
-		return (k > l ? k : l) | (i1 > j1 ? i1 : j1) << 16;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
+        int i = source.getCombinedLight(pos, 0);
+        int j = source.getCombinedLight(pos.up(), 0);
+        int k = i & 255;
+        int l = j & 255;
+        int i1 = i >> 16 & 255;
+        int j1 = j >> 16 & 255;
+        return (k > l ? k : l) | (i1 > j1 ? i1 : j1) << 16;
+    }
 }

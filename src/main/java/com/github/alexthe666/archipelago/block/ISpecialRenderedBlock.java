@@ -6,6 +6,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface ISpecialRenderedBlock {
-	@SideOnly(Side.CLIENT)
-	void render(IBlockAccess world, BlockPos pos);
+    @SideOnly(Side.CLIENT)
+    void render(IBlockAccess world, BlockPos pos);
 }

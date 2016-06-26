@@ -9,29 +9,29 @@ import java.util.Map;
 @MCVersion("1.9.4")
 @TransformerExclusions({ "com.github.alexthe666.archipelago.classtransformer." })
 public class ArchipelagoClassLoader implements IFMLLoadingPlugin {
-	@Override
-	public String[] getASMTransformerClass() {
-		return new String[] { ArchipelagoClassTransformer.class.getCanonicalName() };
-	}
+    @Override
+    public String[] getASMTransformerClass() {
+        return new String[] { ArchipelagoClassTransformer.class.getCanonicalName() };
+    }
 
-	@Override
-	public String getModContainerClass() {
-		return null;
-	}
+    @Override
+    public String getModContainerClass() {
+        return null;
+    }
 
-	@Override
-	public String getSetupClass() {
-		return null;
-	}
+    @Override
+    public String getSetupClass() {
+        return null;
+    }
 
-	@Override
-	public void injectData(Map<String, Object> data) {
+    @Override
+    public void injectData(Map<String, Object> data) {
 
-	}
+    }
 
-	@Override
-	public String getAccessTransformerClass() {
-		return null;
-	}
+    @Override
+    public String getAccessTransformerClass() {
+        return null;
+    }
 
 }
