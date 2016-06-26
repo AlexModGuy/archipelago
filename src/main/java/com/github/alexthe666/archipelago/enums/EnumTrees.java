@@ -16,7 +16,8 @@ public enum EnumTrees {
     CORRIOSA(true),
     GALAPAGOS_MICONIA(true),
     KAPOK(false),
-    TABERNAEMONTANA_CERIFERA(true);
+    TABERNAEMONTANA_CERIFERA(true),
+    MANGROVE(false);
 
     public Block log;
     public Block leaves;

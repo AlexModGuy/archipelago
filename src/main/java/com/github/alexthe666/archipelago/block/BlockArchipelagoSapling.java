@@ -66,13 +66,13 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
             return;
         switch (treeType) {
             case CORRIOSA:
-                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK), EnumTrees.CORRIOSA.leaves.getDefaultState());
+                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.CORRIOSA.leaves.getDefaultState());
                 break;
             case GALAPAGOS_MICONIA:
-                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK), EnumTrees.GALAPAGOS_MICONIA.leaves.getDefaultState());
+                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.GALAPAGOS_MICONIA.leaves.getDefaultState());
                 break;
             case TABERNAEMONTANA_CERIFERA:
-                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK), EnumTrees.TABERNAEMONTANA_CERIFERA.leaves.getDefaultState());
+                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.TABERNAEMONTANA_CERIFERA.leaves.getDefaultState());
                 break;
             default:
                 break;

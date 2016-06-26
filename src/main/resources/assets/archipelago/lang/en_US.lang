@@ -154,6 +154,10 @@ tile.archipelago.kapok_planks.name=Kapok Planks
 tile.archipelago.kapok_leaves.name=Kapok Leaves
 tile.archipelago.tabernaemontana_cerifera_sapling.name=Tabernaemontana Cerifera Sapling
 tile.archipelago.tabernaemontana_cerifera_leaves.name=Tabernaemontana Cerifera Leaves
+tile.archipelago.mangrove_sapling.name=Mangrove Sapling
+tile.archipelago.mangrove_log.name=Mangrove Log
+tile.archipelago.mangrove_planks.name=Mangrove Planks
+tile.archipelago.mangrove_leaves.name=Mangrove Leaves
 
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
