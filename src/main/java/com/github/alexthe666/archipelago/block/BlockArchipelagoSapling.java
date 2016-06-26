@@ -1,9 +1,9 @@
 package com.github.alexthe666.archipelago.block;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -11,17 +11,17 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenBigTree;
+import net.minecraft.world.gen.feature.WorldGenShrub;
+import net.minecraft.world.gen.feature.WorldGenTrees;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.enums.EnumTrees;
@@ -32,7 +32,7 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 	private EnumTrees treeType;
 
 	public BlockArchipelagoSapling(EnumTrees tree) {
-        this.setSoundType(SoundType.PLANT);
+		this.setSoundType(SoundType.PLANT);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, Integer.valueOf(0)));
 		this.setCreativeTab(Archipelago.tab);
 		this.setUnlocalizedName("archipelago." + tree.name().toLowerCase() + "_sapling");
@@ -49,7 +49,6 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (!worldIn.isRemote) {
 			super.updateTick(worldIn, pos, state, rand);
-
 			if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
 				this.grow(worldIn, pos, state, rand);
 			}
@@ -64,12 +63,26 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 		}
 	}
 
-	public void generateTree(World worldIn, BlockPos pos, Random rand) {
+	public void generateTree(World worldIn, BlockPos pos, Random rand) {		
+        WorldGenerator worldgenerator = (WorldGenerator)(rand.nextInt(10) == 0 ? new WorldGenBigTree(true) : new WorldGenTrees(true));
+
 		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(worldIn, rand, pos))
 			return;
-		if (treeType.structure != null) {
-			treeType.structure.generate(worldIn, rand, pos);
+		switch (treeType) {
+		case CORRIOSA:
+			worldgenerator = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK), EnumTrees.CORRIOSA.leaves.getDefaultState());
+			break;
+		case GALAPAGOS_MICONIA:
+			worldgenerator = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK), EnumTrees.GALAPAGOS_MICONIA.leaves.getDefaultState());
+			break;
+		case TABERNAEMONTANA_CERIFERA:
+			worldgenerator = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK), EnumTrees.TABERNAEMONTANA_CERIFERA.leaves.getDefaultState());
+			break;
+		default:
+			break;
 		}
+		worldgenerator.generate(worldIn, rand, pos);
+
 	}
 
 	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
