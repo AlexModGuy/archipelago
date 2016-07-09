@@ -1,9 +1,7 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModBlocks;
-import com.github.alexthe666.archipelago.core.ModWorld;
-import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
-import com.github.alexthe666.archipelago.enums.EnumGrassColor;
+import java.util.Random;
+
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
@@ -18,7 +16,10 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
+import com.github.alexthe666.archipelago.core.ModBlocks;
+import com.github.alexthe666.archipelago.core.ModWorld;
+import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
+import com.github.alexthe666.archipelago.enums.EnumGrassColor;
 
 public class BiomeGenTropical extends Biome {
     float r, g, b;

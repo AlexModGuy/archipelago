@@ -1,12 +1,13 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.util.PlantEntry;
+import java.util.Random;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-import java.util.Random;
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.util.PlantEntry;
 
 public class WorldGenArchipelagoKelp extends WorldGenerator {
     public PlantEntry plantType;

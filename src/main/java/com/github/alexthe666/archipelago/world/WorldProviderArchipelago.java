@@ -1,9 +1,5 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.client.render.world.ArchipelagoCloudRenderer;
-import com.github.alexthe666.archipelago.client.render.world.ArchipelagoSkyRenderer;
-import com.github.alexthe666.archipelago.core.ModConfig;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
@@ -11,6 +7,11 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.client.render.world.ArchipelagoCloudRenderer;
+import com.github.alexthe666.archipelago.client.render.world.ArchipelagoSkyRenderer;
+import com.github.alexthe666.archipelago.core.ModConfig;
 
 public class WorldProviderArchipelago extends WorldProvider {
     @SideOnly(Side.CLIENT)

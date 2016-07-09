@@ -1,10 +1,11 @@
 package com.github.alexthe666.archipelago.block;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -19,9 +20,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.enums.EnumTrees;
 
 public class BlockArchipelagoLeaves extends BlockLeaves {
     private EnumTrees tree;

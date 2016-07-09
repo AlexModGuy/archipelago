@@ -1,8 +1,10 @@
 package com.github.alexthe666.archipelago.classtransformer;
 
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.block.ISpecialRenderedBlock;
-import com.github.alexthe666.archipelago.core.ModConfig;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,10 +23,9 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.block.ISpecialRenderedBlock;
+import com.github.alexthe666.archipelago.core.ModConfig;
 
 public class ArchipelagoHooks {
     @SideOnly(Side.CLIENT)
@@ -48,7 +49,7 @@ public class ArchipelagoHooks {
 
     public static void rebuildChunk(CompiledChunk chunk, IBlockAccess world, BlockPos pos1, BlockPos pos2) {
         synchronized (SPECIAL_RENDERER_LOCK) {
-            if (!world.extendedLevelsInChunkCache()) {
+            //if (!world.extendedLevelsInChunkCache()) {
                 List<BlockPos> blocks = new ArrayList<>();
                 for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
                     IBlockState state = world.getBlockState(pos);
@@ -58,7 +59,7 @@ public class ArchipelagoHooks {
                     }
                 }
                 SPECIAL_RENDERERS.put(chunk, blocks);
-            }
+            //}
         }
     }
 

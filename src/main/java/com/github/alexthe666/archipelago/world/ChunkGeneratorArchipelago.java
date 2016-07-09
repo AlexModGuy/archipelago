@@ -1,6 +1,8 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
@@ -21,8 +23,7 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.common.BiomeManager;
 
-import java.util.List;
-import java.util.Random;
+import com.github.alexthe666.archipelago.core.ModFluids;
 
 public class ChunkGeneratorArchipelago implements IChunkGenerator {
     protected static final IBlockState stone = Blocks.STONE.getDefaultState();

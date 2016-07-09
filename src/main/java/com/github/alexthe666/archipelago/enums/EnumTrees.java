@@ -1,10 +1,11 @@
 package com.github.alexthe666.archipelago.enums;
 
+import net.minecraft.block.Block;
+
 import com.github.alexthe666.archipelago.block.BlockArchipelagoLeaves;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoLog;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoPlanks;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
-import net.minecraft.block.Block;
 
 public enum EnumTrees {
     CANARY_ISLAND_DATE_PALM(false),

@@ -1,10 +1,6 @@
 package com.github.alexthe666.archipelago.event.server;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.core.ModConfig;
-import com.github.alexthe666.archipelago.enums.EnumParticle;
-import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
-import com.github.alexthe666.archipelago.world.TeleporterArchipelago;
+import java.util.Random;
 
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
@@ -29,7 +25,11 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Random;
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.core.ModConfig;
+import com.github.alexthe666.archipelago.enums.EnumParticle;
+import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
+import com.github.alexthe666.archipelago.world.TeleporterArchipelago;
 
 public class ServerEvents {
 
@@ -134,7 +134,7 @@ public class ServerEvents {
 			for (int k1 = i; k1 < j; ++k1) {
 				for (int l1 = k; l1 < l; ++l1) {
 					for (int i2 = i1; i2 < j1; ++i2) {
-						blockpos$pooledmutableblockpos.set(k1, l1, i2);
+						blockpos$pooledmutableblockpos.setPos(k1, l1, i2);
 						IBlockState iblockstate = entityIn.worldObj.getBlockState(blockpos$pooledmutableblockpos);
 						Block block = iblockstate.getBlock();
 

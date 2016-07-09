@@ -1,8 +1,7 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.core.ModWorld;
-import com.google.common.base.Objects;
+import java.util.Random;
+
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +12,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenBase;
 
-import java.util.Random;
+import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.core.ModWorld;
+import com.google.common.base.Objects;
 
 public class MapGenBlueHoles extends MapGenBase {
     protected static final IBlockState BLK_LAVA = Blocks.LAVA.getDefaultState();

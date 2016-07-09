@@ -1,12 +1,7 @@
 package com.github.alexthe666.archipelago;
 
-import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
-import com.github.alexthe666.archipelago.client.particle.TeleportFX;
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.enums.EnumParticle;
-import com.github.alexthe666.archipelago.enums.EnumTrees;
-import com.github.alexthe666.archipelago.event.client.ClientEvents;
-import net.minecraft.block.Block;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +24,12 @@ import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 
-import javax.annotation.Nullable;
+import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
+import com.github.alexthe666.archipelago.client.particle.TeleportFX;
+import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.enums.EnumParticle;
+import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.event.client.ClientEvents;
 
 public class ClientProxy extends CommonProxy {
     @Override

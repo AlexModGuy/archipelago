@@ -1,8 +1,14 @@
 package com.github.alexthe666.archipelago.core;
 
-import com.github.alexthe666.archipelago.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
+
+import com.github.alexthe666.archipelago.block.BlockCoralRock;
+import com.github.alexthe666.archipelago.block.BlockGlowingCoral;
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.block.BlockShortCoral;
+import com.github.alexthe666.archipelago.block.BlockShortPlant;
+import com.github.alexthe666.archipelago.block.BlockTallPlant;
 
 public class ModBlocks {
 

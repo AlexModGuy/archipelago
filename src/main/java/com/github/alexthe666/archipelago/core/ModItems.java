@@ -1,8 +1,9 @@
 package com.github.alexthe666.archipelago.core;
 
+import net.minecraft.item.Item;
+
 import com.github.alexthe666.archipelago.item.ItemBasic;
 import com.github.alexthe666.archipelago.item.ItemSunstoneStaff;
-import net.minecraft.item.Item;
 
 public class ModItems {
 

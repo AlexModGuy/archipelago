@@ -1,6 +1,7 @@
 package com.github.alexthe666.archipelago.block;
 
-import com.github.alexthe666.archipelago.Archipelago;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.Random;
+import com.github.alexthe666.archipelago.Archipelago;
 
 public class BlockCoralRock extends Block {
 

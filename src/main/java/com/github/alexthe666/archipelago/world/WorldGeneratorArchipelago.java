@@ -1,8 +1,9 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModConfig;
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.util.PlantEntry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,9 +11,9 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.github.alexthe666.archipelago.core.ModConfig;
+import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.util.PlantEntry;
 
 public class WorldGeneratorArchipelago implements IWorldGenerator {
 

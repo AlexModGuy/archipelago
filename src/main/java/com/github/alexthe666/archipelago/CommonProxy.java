@@ -1,8 +1,9 @@
 package com.github.alexthe666.archipelago;
 
-import com.github.alexthe666.archipelago.enums.EnumParticle;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+
+import com.github.alexthe666.archipelago.enums.EnumParticle;
 
 public class CommonProxy {
 

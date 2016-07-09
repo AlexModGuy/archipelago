@@ -1,10 +1,11 @@
 package com.github.alexthe666.archipelago.core;
 
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeManager;
+
 import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
 import com.github.alexthe666.archipelago.enums.EnumGrassColor;
 import com.github.alexthe666.archipelago.world.BiomeGenTropical;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeManager;
 
 public class ModWorld {
 

@@ -1,9 +1,10 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.core.ModWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
+
+import com.github.alexthe666.archipelago.core.ModWorld;
 
 public class GenLayerBiomesArchipelago extends GenLayer {
 
