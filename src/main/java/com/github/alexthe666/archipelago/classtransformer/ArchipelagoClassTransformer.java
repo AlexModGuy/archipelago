@@ -95,11 +95,11 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
                                 if (i > 0) {
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 5));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 0));
-                                    inject.add(new FieldInsnNode(Opcodes.GETFIELD, obf ? "bqc" : "net/minecraft/client/renderer/chunk/RenderChunk", obf ? "r" : "region", "L" + (obf ? "ahx" : "net/minecraft/world/IBlockAccess") + ";"));
+                                    inject.add(new FieldInsnNode(Opcodes.GETFIELD, obf ? "bqc" : "net/minecraft/client/renderer/chunk/RenderChunk", obf ? "r" : "region", "L" + (obf ? "aim" : "net/minecraft/world/ChunkCache") + ";"));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 7));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 8));
                                     String blockposName = obf ? "cj" : "net/minecraft/util/math/BlockPos";
-                                    inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/github/alexthe666/archipelago/classtransformer/ArchipelagoHooks", "rebuildChunk", "(L" + (obf ? "bqc" : "net/minecraft/client/renderer/chunk/CompiledChunk") + ";L" + (obf ? "ahx" : "net/minecraft/world/IBlockAccess") + ";L" + blockposName + ";L" + blockposName + ";)V", false));
+                                    inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/github/alexthe666/archipelago/classtransformer/ArchipelagoHooks", "rebuildChunk", "(L" + (obf ? "bqc" : "net/minecraft/client/renderer/chunk/CompiledChunk") + ";L" + (obf ? "aim" : "net/minecraft/world/ChunkCache") + ";L" + blockposName + ";L" + blockposName + ";)V", false));
                                 }
                                 i++;
                             }

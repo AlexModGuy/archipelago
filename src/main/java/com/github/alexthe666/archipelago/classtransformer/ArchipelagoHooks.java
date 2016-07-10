@@ -17,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -47,19 +48,19 @@ public class ArchipelagoHooks {
         }
     }
 
-    public static void rebuildChunk(CompiledChunk chunk, IBlockAccess world, BlockPos pos1, BlockPos pos2) {
+    public static void rebuildChunk(CompiledChunk chunk, ChunkCache region, BlockPos pos1, BlockPos pos2) {
         synchronized (SPECIAL_RENDERER_LOCK) {
-            //if (!world.extendedLevelsInChunkCache()) {
+            if (!region.extendedLevelsInChunkCache()) {
                 List<BlockPos> blocks = new ArrayList<>();
                 for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
-                    IBlockState state = world.getBlockState(pos);
+                    IBlockState state = region.getBlockState(pos);
                     Block block = state.getBlock();
                     if (block instanceof ISpecialRenderedBlock) {
                         blocks.add(new BlockPos(pos));
                     }
                 }
                 SPECIAL_RENDERERS.put(chunk, blocks);
-            //}
+            }
         }
     }
 
