@@ -22,13 +22,13 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
     @Override
     public void render(float partialTicks, WorldClient world, Minecraft mc) {
         GL11.glPushMatrix();
-        renderCloudSide(partialTicks, world, mc);
+        //renderCloudSide(partialTicks, world, mc);
         GL11.glPopMatrix();
 
     }
 
     public void renderCloudSide(float partialTicks, WorldClient world, Minecraft mc) {
-        GL11.glDisable(GL11.GL_CULL_FACE);
+        GL11.glEnable(GL11.GL_CULL_FACE);
         Entity entity = mc.getRenderViewEntity();
         float f = (float) (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks);
         int i = 32;
@@ -37,7 +37,6 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
         VertexBuffer vertexbuffer = tessellator.getBuffer();
         mc.renderEngine.bindTexture(CLOUDS_TEXTURES);
         GL11.glEnable(GL11.GL_BLEND);
-        GlStateManager.depthMask(false);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         Vec3d vec3d = mc.theWorld.getCloudColour(partialTicks);
         float f1 = (float) vec3d.xCoord;
@@ -65,13 +64,13 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
         float f8 = (float) (d0 * 64.8828125E-4D);
         float f9 = (float) (d1 * 64.8828125E-4D);
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-
+        
         for (int i1 = -256; i1 < 256; i1 += 32) {
             for (int j1 = -256; j1 < 256; j1 += 32) {
-                vertexbuffer.pos((double) (i1), (double) -f7, (double) (j1 + 32)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-                vertexbuffer.pos((double) (i1 + 32), (double) -f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-                vertexbuffer.pos((double) (i1 + 32), (double) -f7, (double) (j1)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-                vertexbuffer.pos((double) (i1), (double) -f7, (double) (j1)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+                vertexbuffer.pos((double) (i1), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+                vertexbuffer.pos((double) (i1 + 32), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+                vertexbuffer.pos((double) (i1 + 32), (double) f7, (double) (j1)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+                vertexbuffer.pos((double) (i1), (double) f7, (double) (j1)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
             }
         }
         GL11.glScalef(1, -1, 1);

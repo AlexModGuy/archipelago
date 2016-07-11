@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryIslandDatePalm;
 
 public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
@@ -71,10 +72,8 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, pos))
 			return;
 		switch (treeType) {
-		case KAPOK:
-			IBlockState iblockstate = EnumTrees.KAPOK.log.getDefaultState();
-			IBlockState iblockstate1 = EnumTrees.KAPOK.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-			gen = new WorldGenMegaJungle(true, 10, 20, iblockstate, iblockstate1);
+		case CANARY_ISLAND_DATE_PALM:
+			gen = new WorldGenCanaryIslandDatePalm();
 			break;
 		case CORRIOSA:
 			gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.CORRIOSA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false)));

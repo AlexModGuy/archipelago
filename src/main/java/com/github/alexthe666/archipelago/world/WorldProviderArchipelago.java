@@ -56,12 +56,6 @@ public class WorldProviderArchipelago extends WorldProvider {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public net.minecraftforge.client.IRenderHandler getCloudRenderer() {
-        return this.newCloudRenderer;
-    }
-
-    @Override
     public boolean shouldMapSpin(String entity, double x, double y, double z) {
         return false;
     }
