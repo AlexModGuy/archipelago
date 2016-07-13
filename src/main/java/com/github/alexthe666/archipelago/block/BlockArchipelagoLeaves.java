@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -26,7 +28,7 @@ import com.github.alexthe666.archipelago.enums.EnumTrees;
 
 public class BlockArchipelagoLeaves extends BlockLeaves {
 	private EnumTrees tree;
-	private int[] surroundings;
+	private byte[] adjacentTreeBlocks;
 
 	public BlockArchipelagoLeaves(EnumTrees tree) {
 		super();
@@ -43,6 +45,11 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
 		return EnumType.OAK;
 	}
 
+	@Nullable
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Item.getItemFromBlock(tree.sapling);
+	}
+
 	@Override
 	public List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
 		return Collections.singletonList(new ItemStack(this));
@@ -50,18 +57,18 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(DECAYABLE, (meta & 1) == 0).withProperty(CHECK_DECAY, (meta & 2) > 0);
+		return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		int i = 0;
 		if (!(Boolean) state.getValue(DECAYABLE)) {
-			i |= 1;
+			i |= 4;
 		}
 
 		if ((Boolean) state.getValue(CHECK_DECAY)) {
-			i |= 2;
+			i |= 8;
 		}
 
 		return i;
@@ -83,71 +90,49 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
 		return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);
 	}
 
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if (!worldIn.isRemote) {
+	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+		if (!world.isRemote) {
 			if (((Boolean) state.getValue(CHECK_DECAY)).booleanValue() && ((Boolean) state.getValue(DECAYABLE)).booleanValue()) {
-				int i = 4;
-				int j = 5;
-				int k = pos.getX();
-				int l = pos.getY();
-				int i1 = pos.getZ();
-				int j1 = 32;
-				int k1 = 1024;
-				int l1 = 16;
-
-				if (this.surroundings == null) {
-					this.surroundings = new int[32768];
+				byte scanArea = 4;
+				int i = scanArea + 1;
+				byte size = 32;
+				int sizeSquared = size * size;
+				int center = size / 2;
+				if (this.adjacentTreeBlocks == null) {
+					this.adjacentTreeBlocks = new byte[size * size * size];
 				}
 
-				if (worldIn.isAreaLoaded(new BlockPos(k - 9, l - 9, i1 - 9), new BlockPos(k + 9, l + 9, i1 + 9))) {
-					BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-
-					for (int i2 = -8; i2 <= 8; ++i2) {
-						for (int j2 = -8; j2 <= 8; ++j2) {
-							for (int k2 = -8; k2 <= 8; ++k2) {
-								IBlockState iblockstate = worldIn.getBlockState(blockpos$mutableblockpos.setPos(k + i2, l + j2, i1 + k2));
-								Block block = iblockstate.getBlock();
-
-								if (!block.canSustainLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(k + i2, l + j2, i1 + k2))) {
-									if (block.isLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(k + i2, l + j2, i1 + k2))) {
-										this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = -2;
+				if (world.isAreaLoaded(pos.add(-i, -i, -i), pos.add(i, i, i))) {
+					for (int offsetX = -scanArea; offsetX <= scanArea; ++offsetX) {
+						for (int offsetY = -scanArea; offsetY <= scanArea; ++offsetY) {
+							for (int offsetZ = -scanArea; offsetZ <= scanArea; ++offsetZ) {
+								Block block = world.getBlockState(pos.add(offsetX, offsetY, offsetZ)).getBlock();
+								if (!block.canSustainLeaves(world.getBlockState(pos.add(offsetX, offsetY, offsetZ)), world, pos.add(offsetX, offsetY, offsetZ))) {
+									if (block.isLeaves(world.getBlockState(pos.add(offsetX, offsetY, offsetZ)), world, pos.add(offsetX, offsetY, offsetZ))) {
+										this.adjacentTreeBlocks[(offsetX + center) * sizeSquared + (offsetY + center) * size + offsetZ + center] = -2;
 									} else {
-										this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = -1;
+										this.adjacentTreeBlocks[(offsetX + center) * sizeSquared + (offsetY + center) * size + offsetZ + center] = -1;
 									}
 								} else {
-									this.surroundings[(i2 + 16) * 1024 + (j2 + 16) * 32 + k2 + 16] = 0;
+									this.adjacentTreeBlocks[(offsetX + center) * sizeSquared + (offsetY + center) * size + offsetZ + center] = 0;
 								}
 							}
 						}
 					}
-
-					for (int i3 = 1; i3 <= 8; ++i3) {
-						for (int j3 = -8; j3 <= 8; ++j3) {
-							for (int k3 = -8; k3 <= 8; ++k3) {
-								for (int l3 = -8; l3 <= 8; ++l3) {
-									if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16] == i3 - 1) {
-										if (this.surroundings[(j3 + 16 - 1) * 1024 + (k3 + 16) * 32 + l3 + 16] == -2) {
-											this.surroundings[(j3 + 16 - 1) * 1024 + (k3 + 16) * 32 + l3 + 16] = i3;
-										}
-
-										if (this.surroundings[(j3 + 16 + 1) * 1024 + (k3 + 16) * 32 + l3 + 16] == -2) {
-											this.surroundings[(j3 + 16 + 1) * 1024 + (k3 + 16) * 32 + l3 + 16] = i3;
-										}
-
-										if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16 - 1) * 32 + l3 + 16] == -2) {
-											this.surroundings[(j3 + 16) * 1024 + (k3 + 16 - 1) * 32 + l3 + 16] = i3;
-										}
-
-										if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16 + 1) * 32 + l3 + 16] == -2) {
-											this.surroundings[(j3 + 16) * 1024 + (k3 + 16 + 1) * 32 + l3 + 16] = i3;
-										}
-
-										if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + (l3 + 16 - 1)] == -2) {
-											this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + (l3 + 16 - 1)] = i3;
-										}
-
-										if (this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16 + 1] == -2) {
-											this.surroundings[(j3 + 16) * 1024 + (k3 + 16) * 32 + l3 + 16 + 1] = i3;
+					for (int blockType = 1; blockType <= 4; ++blockType) {
+						for (int offsetX = -scanArea; offsetX <= scanArea; ++offsetX) {
+							for (int offsetY = -scanArea; offsetY <= scanArea; ++offsetY) {
+								for (int offsetZ = -scanArea; offsetZ <= scanArea; ++offsetZ) {
+									if (this.adjacentTreeBlocks[(offsetX + center) * sizeSquared + (offsetY + center) * size + offsetZ + center] == blockType - 1) {
+										for (int adjacentX = -1; adjacentX <= 1; adjacentX++) {
+											for (int adjacentY = -1; adjacentY <= 1; adjacentY++) {
+												for (int adjacentZ = -1; adjacentZ <= 1; adjacentZ++) {
+													int index = (offsetX + center + adjacentX) * sizeSquared + (offsetY + center + adjacentY) * size + offsetZ + center + adjacentZ;
+													if (this.adjacentTreeBlocks[index] == -2) {
+														this.adjacentTreeBlocks[index] = (byte) blockType;
+													}
+												}
+											}
 										}
 									}
 								}
@@ -155,14 +140,11 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
 						}
 					}
 				}
-
-				int l2 = this.surroundings[16912];
-
-				if (l2 >= 0) {
-					worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, Boolean.valueOf(false)), 4);
+				if (this.adjacentTreeBlocks[center * sizeSquared + center * size + center] >= 0) {
+					world.setBlockState(pos, state.withProperty(CHECK_DECAY, Boolean.valueOf(false)), 4);
 				} else {
-					this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
-					worldIn.setBlockToAir(pos);
+					this.dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
+					world.setBlockToAir(pos);
 				}
 			}
 		}

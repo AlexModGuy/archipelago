@@ -17,7 +17,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenMegaJungle;
 import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -26,6 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.enums.EnumTrees;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryIslandDatePalm;
+import com.github.alexthe666.archipelago.world.tree.WorldGenCoconutPalm;
 
 public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
@@ -74,6 +74,9 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 		switch (treeType) {
 		case CANARY_ISLAND_DATE_PALM:
 			gen = new WorldGenCanaryIslandDatePalm();
+			break;
+		case COCONUT_PALM:
+			gen = new WorldGenCoconutPalm();
 			break;
 		case CORRIOSA:
 			gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.CORRIOSA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false)));
