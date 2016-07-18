@@ -43,7 +43,7 @@ public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
 		setBlockState(world, position.add(-2, maxHeight + 2, 0), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 2, 2), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 2, -2), leavesBlock);
-		
+
 		setBlockState(world, position.add(-2, maxHeight + 3, 0), leavesBlock);
 		setBlockState(world, position.add(-3, maxHeight + 3, 0), leavesBlock);
 		setBlockState(world, position.add(-4, maxHeight + 2, 0), leavesBlock);
@@ -51,20 +51,20 @@ public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
 		setBlockState(world, position.add(2, maxHeight + 3, 0), leavesBlock);
 		setBlockState(world, position.add(3, maxHeight + 3, 0), leavesBlock);
 		setBlockState(world, position.add(4, maxHeight + 2, 0), leavesBlock);
-		
+
 		setBlockState(world, position.add(0, maxHeight + 3, 2), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 3, 3), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 2, 4), leavesBlock);
-		
+
 		setBlockState(world, position.add(0, maxHeight + 3, -2), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 3, -3), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 2, -4), leavesBlock);
-		
+
 		setBlockState(world, position.add(2, maxHeight, 0), leavesBlock);
 		setBlockState(world, position.add(-2, maxHeight, 0), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight, 2), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight, -2), leavesBlock);
-		
+
 		setBlockState(world, position.add(3, maxHeight - 1, 0), leavesBlock);
 		setBlockState(world, position.add(-3, maxHeight - 1, 0), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight - 1, 3), leavesBlock);
@@ -87,7 +87,7 @@ public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
 		setBlockState(world, position.add(2, maxHeight + 2, -2), leavesBlock);
 		setBlockState(world, position.add(-2, maxHeight + 1, -2), leavesBlock);
 		setBlockState(world, position.add(-2, maxHeight + 2, -2), leavesBlock);
-		
+
 		setBlockState(world, position.add(3, maxHeight - 1, 3), leavesBlock);
 		setBlockState(world, position.add(3, maxHeight, 3), leavesBlock);
 		setBlockState(world, position.add(3, maxHeight + 1, 3), leavesBlock);
@@ -95,11 +95,11 @@ public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
 		setBlockState(world, position.add(-3, maxHeight - 1, 3), leavesBlock);
 		setBlockState(world, position.add(-3, maxHeight, 3), leavesBlock);
 		setBlockState(world, position.add(-3, maxHeight + 1, 3), leavesBlock);
-		
+
 		setBlockState(world, position.add(3, maxHeight - 1, -3), leavesBlock);
 		setBlockState(world, position.add(3, maxHeight, -3), leavesBlock);
 		setBlockState(world, position.add(3, maxHeight + 1, -3), leavesBlock);
-		
+
 		setBlockState(world, position.add(-3, maxHeight - 1, -3), leavesBlock);
 		setBlockState(world, position.add(-3, maxHeight, -3), leavesBlock);
 		setBlockState(world, position.add(-3, maxHeight + 1, -3), leavesBlock);
