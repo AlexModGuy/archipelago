@@ -21,6 +21,9 @@ public class ArchipelagoAIFindWaterTarget extends EntityAIBase {
     }
 
     public boolean shouldExecute() {
+        if(!mob.isInWater()){
+            return false;
+        }
         if (mob.currentTarget != null && !mob.isDirectPathBetweenPoints(mob.getPositionVector(), new Vec3d(mob.currentTarget))) {
             mob.currentTarget = null;
         }

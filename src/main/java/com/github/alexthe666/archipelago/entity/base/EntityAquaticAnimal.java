@@ -153,72 +153,61 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
                 }
                 this.motionZ *= (double)f4;
             }
-            else
-            {
-                float f2 = 0.91F;
+            else {
+                if (this.suffocates) {
+                    float f2 = 0.91F;
 
-                if (this.onGround)
-                {
-                    f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
-                }
-
-                float f3 = 0.16277136F / (f2 * f2 * f2);
-
-                if (this.onGround)
-                {
-                    f4 = this.getAIMoveSpeed() * f3;
-                }
-                else
-                {
-                    f4 = this.jumpMovementFactor;
-                }
-                this.moveEntity(x, z, f4);
-                f2 = 0.91F;
-
-                if (this.onGround)
-                {
-                    f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
-                }
-
-                if (this.isOnLadder())
-                {
-                    f5 = 0.15F;
-                    this.motionX = MathHelper.clamp_double(this.motionX, (double)(-f5), (double)f5);
-                    this.motionZ = MathHelper.clamp_double(this.motionZ, (double)(-f5), (double)f5);
-                    this.fallDistance = 0.0F;
-
-                    if (this.motionY < -0.15D)
-                    {
-                        this.motionY = -0.15D;
+                    if (this.onGround) {
+                        f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
                     }
-                }
 
-                this.moveEntity(this.motionX, this.motionY, this.motionZ);
+                    float f3 = 0.16277136F / (f2 * f2 * f2);
 
-                if (this.isCollidedHorizontally && this.isOnLadder())
-                {
-                    this.motionY = 0.2D;
-                }
-
-                if (this.worldObj.isRemote && (!this.worldObj.isBlockLoaded(new BlockPos((int)this.posX, 0, (int)this.posZ)) || !this.worldObj.getChunkFromBlockCoords(new BlockPos((int)this.posX, 0, (int)this.posZ)).isLoaded()))
-                {
-                    if (this.posY > 0.0D)
-                    {
-                        this.motionY = -0.1D;
+                    if (this.onGround) {
+                        f4 = this.getAIMoveSpeed() * f3;
+                    } else {
+                        f4 = this.jumpMovementFactor;
                     }
-                    else
-                    {
-                        this.motionY = 0.0D;
-                    }
-                }
-                else
-                {
-                    this.motionY -= 0.08D;
-                }
+                    this.moveEntity(x, z, f4);
+                    f2 = 0.91F;
 
-                this.motionY *= 0.9800000190734863D;
-                this.motionX *= (double)f2;
-                this.motionZ *= (double)f2;
+                    if (this.onGround) {
+                        f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                    }
+
+                    if (this.isOnLadder()) {
+                        f5 = 0.15F;
+                        this.motionX = MathHelper.clamp_double(this.motionX, (double) (-f5), (double) f5);
+                        this.motionZ = MathHelper.clamp_double(this.motionZ, (double) (-f5), (double) f5);
+                        this.fallDistance = 0.0F;
+
+                        if (this.motionY < -0.15D) {
+                            this.motionY = -0.15D;
+                        }
+                    }
+
+                    this.moveEntity(this.motionX, this.motionY, this.motionZ);
+
+                    if (this.isCollidedHorizontally && this.isOnLadder()) {
+                        this.motionY = 0.2D;
+                    }
+
+                    if (this.worldObj.isRemote && (!this.worldObj.isBlockLoaded(new BlockPos((int) this.posX, 0, (int) this.posZ)) || !this.worldObj.getChunkFromBlockCoords(new BlockPos((int) this.posX, 0, (int) this.posZ)).isLoaded())) {
+                        if (this.posY > 0.0D) {
+                            this.motionY = -0.1D;
+                        } else {
+                            this.motionY = 0.0D;
+                        }
+                    } else {
+                        this.motionY -= 0.08D;
+                    }
+
+                    this.motionY *= 0.9800000190734863D;
+                    this.motionX *= (double) f2;
+                    this.motionZ *= (double) f2;
+                }else{
+                    super.moveEntityWithHeading(x, z);
+                }
             }
         }
 

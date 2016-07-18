@@ -4,6 +4,7 @@ import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -148,6 +150,10 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
 
+    }
+
+    public boolean attackEntityAsMob(Entity entityIn) {
+        return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() );
     }
 
     @Override

@@ -4,8 +4,13 @@ import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
 import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWaterTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTableList;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class EntityClownfish extends EntityAquaticAnimal {
@@ -18,8 +23,15 @@ public class EntityClownfish extends EntityAquaticAnimal {
 
     @Override
     protected void initEntityAI() {
-        this.tasks.addTask(0, new EntityAILookIdle(this));
-        this.tasks.addTask(1, new ArchipelagoAIFindWaterTarget(this));
+        this.tasks.addTask(0, new ArchipelagoAIFindWaterTarget(this));
+        this.tasks.addTask(1, new EntityAILookIdle(this));
+        this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+    }
+
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return LootTableList.register(new ResourceLocation("archipelago", "entities/clownfish"));
     }
 
     @Override

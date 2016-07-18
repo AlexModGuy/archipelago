@@ -1,12 +1,14 @@
 package com.github.alexthe666.archipelago.core;
 
 import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
 import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities {
     public static void init(){
         registerSpawnable(EntityClownfish.class, "clownfish", 0, 0XFE7100, 0XF6F6F6);
+        registerSpawnable(EntityBrownCrab.class, "brown_crab", 1, 0XB8A36E, 0X733223);
     }
 
     public static void registerSpawnable(Class entityClass, String name, int id, int mainColor, int subColor) {
