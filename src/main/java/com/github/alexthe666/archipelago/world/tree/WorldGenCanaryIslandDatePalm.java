@@ -20,89 +20,89 @@ public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
 	public boolean generateTree(World world, Random rand, BlockPos position) {
 		int maxHeight = 7 + rand.nextInt(6);
 		for (int height = 0; height < maxHeight; height++) {
-			world.setBlockState(position.up(height), logBlock);
+			setBlockState(world, position.up(height), logBlock);
 		}
 		for (int palmX = -1; palmX < 2; palmX++) {
 			for (int palmY = -1; palmY < 1; palmY++) {
 				for (int palmZ = -1; palmZ < 2; palmZ++) {
-					world.setBlockState(position.add(palmX, maxHeight + 1 + palmY, palmZ), leavesBlock);
+					setBlockState(world, position.add(palmX, maxHeight + 1 + palmY, palmZ), leavesBlock);
 				}
 			}
 		}
-		world.setBlockState(position.up(maxHeight + 2), leavesBlock);
-		world.setBlockState(position.up(maxHeight + 3), leavesBlock);
-		world.setBlockState(position.up(maxHeight + 4), leavesBlock);
+		setBlockState(world, position.up(maxHeight + 2), leavesBlock);
+		setBlockState(world, position.up(maxHeight + 3), leavesBlock);
+		setBlockState(world, position.up(maxHeight + 4), leavesBlock);
 		
 		
-		world.setBlockState(position.add(1, maxHeight + 2, 0), leavesBlock);
-		world.setBlockState(position.add(-1, maxHeight + 2, 0), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 2, 1), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 2, -1), leavesBlock);
+		setBlockState(world, position.add(1, maxHeight + 2, 0), leavesBlock);
+		setBlockState(world, position.add(-1, maxHeight + 2, 0), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 2, 1), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 2, -1), leavesBlock);
 
-		world.setBlockState(position.add(2, maxHeight + 2, 0), leavesBlock);
-		world.setBlockState(position.add(-2, maxHeight + 2, 0), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 2, 2), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 2, -2), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight + 2, 0), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight + 2, 0), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 2, 2), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 2, -2), leavesBlock);
 		
-		world.setBlockState(position.add(-2, maxHeight + 3, 0), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight + 3, 0), leavesBlock);
-		world.setBlockState(position.add(-4, maxHeight + 2, 0), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight + 3, 0), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight + 3, 0), leavesBlock);
+		setBlockState(world, position.add(-4, maxHeight + 2, 0), leavesBlock);
 
-		world.setBlockState(position.add(2, maxHeight + 3, 0), leavesBlock);
-		world.setBlockState(position.add(3, maxHeight + 3, 0), leavesBlock);
-		world.setBlockState(position.add(4, maxHeight + 2, 0), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight + 3, 0), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight + 3, 0), leavesBlock);
+		setBlockState(world, position.add(4, maxHeight + 2, 0), leavesBlock);
 		
-		world.setBlockState(position.add(0, maxHeight + 3, 2), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 3, 3), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 2, 4), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 3, 2), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 3, 3), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 2, 4), leavesBlock);
 		
-		world.setBlockState(position.add(0, maxHeight + 3, -2), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 3, -3), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight + 2, -4), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 3, -2), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 3, -3), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight + 2, -4), leavesBlock);
 		
-		world.setBlockState(position.add(2, maxHeight, 0), leavesBlock);
-		world.setBlockState(position.add(-2, maxHeight, 0), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight, 2), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight, -2), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight, 0), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight, 0), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight, 2), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight, -2), leavesBlock);
 		
-		world.setBlockState(position.add(3, maxHeight - 1, 0), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight - 1, 0), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight - 1, 3), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight - 1, -3), leavesBlock);
-		world.setBlockState(position.add(3, maxHeight - 2, 0), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight - 2, 0), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight - 2, 3), leavesBlock);
-		world.setBlockState(position.add(0, maxHeight - 2, -3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight - 1, 0), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight - 1, 0), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight - 1, 3), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight - 1, -3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight - 2, 0), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight - 2, 0), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight - 2, 3), leavesBlock);
+		setBlockState(world, position.add(0, maxHeight - 2, -3), leavesBlock);
 		if(rand.nextBoolean()){
-			world.setBlockState(position.add(3, maxHeight - 3, 0), leavesBlock);
-			world.setBlockState(position.add(-3, maxHeight - 3, 0), leavesBlock);
-			world.setBlockState(position.add(0, maxHeight - 3, 3), leavesBlock);
-			world.setBlockState(position.add(0, maxHeight - 3, -3), leavesBlock);
+			setBlockState(world, position.add(3, maxHeight - 3, 0), leavesBlock);
+			setBlockState(world, position.add(-3, maxHeight - 3, 0), leavesBlock);
+			setBlockState(world, position.add(0, maxHeight - 3, 3), leavesBlock);
+			setBlockState(world, position.add(0, maxHeight - 3, -3), leavesBlock);
 		}
-		world.setBlockState(position.add(2, maxHeight + 1, 2), leavesBlock);
-		world.setBlockState(position.add(2, maxHeight + 2, 2), leavesBlock);
-		world.setBlockState(position.add(-2, maxHeight + 1, 2), leavesBlock);
-		world.setBlockState(position.add(-2, maxHeight + 2, 2), leavesBlock);
-		world.setBlockState(position.add(2, maxHeight + 1, -2), leavesBlock);
-		world.setBlockState(position.add(2, maxHeight + 2, -2), leavesBlock);
-		world.setBlockState(position.add(-2, maxHeight + 1, -2), leavesBlock);
-		world.setBlockState(position.add(-2, maxHeight + 2, -2), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight + 1, 2), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight + 2, 2), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight + 1, 2), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight + 2, 2), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight + 1, -2), leavesBlock);
+		setBlockState(world, position.add(2, maxHeight + 2, -2), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight + 1, -2), leavesBlock);
+		setBlockState(world, position.add(-2, maxHeight + 2, -2), leavesBlock);
 		
-		world.setBlockState(position.add(3, maxHeight - 1, 3), leavesBlock);
-		world.setBlockState(position.add(3, maxHeight, 3), leavesBlock);
-		world.setBlockState(position.add(3, maxHeight + 1, 3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight - 1, 3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight, 3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight + 1, 3), leavesBlock);
 
-		world.setBlockState(position.add(-3, maxHeight - 1, 3), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight, 3), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight + 1, 3), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight - 1, 3), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight, 3), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight + 1, 3), leavesBlock);
 		
-		world.setBlockState(position.add(3, maxHeight - 1, -3), leavesBlock);
-		world.setBlockState(position.add(3, maxHeight, -3), leavesBlock);
-		world.setBlockState(position.add(3, maxHeight + 1, -3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight - 1, -3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight, -3), leavesBlock);
+		setBlockState(world, position.add(3, maxHeight + 1, -3), leavesBlock);
 		
-		world.setBlockState(position.add(-3, maxHeight - 1, -3), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight, -3), leavesBlock);
-		world.setBlockState(position.add(-3, maxHeight + 1, -3), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight - 1, -3), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight, -3), leavesBlock);
+		setBlockState(world, position.add(-3, maxHeight + 1, -3), leavesBlock);
 		return true;
 	}
 

@@ -19,6 +19,8 @@ public class WorldGenCoconutPalm extends BasicTreeGen {
 	@Override
 	public boolean generateTree(World world, Random rand, BlockPos position) {
 		int maxHeight = 7 + rand.nextInt(2);
+		rotation = rand.nextInt(3);
+		System.out.println(rotation);
 		int additiveheight = 0;
 		for (int height = 0; height < maxHeight; height++) {
 			if (additiveheight < 3) {
@@ -30,58 +32,58 @@ public class WorldGenCoconutPalm extends BasicTreeGen {
 					additiveheight++;
 				}
 			}
-			world.setBlockState(position.up(height + 1).north(additiveheight), logBlock);
+			setBlockState(world, position.up(height + 1).north(additiveheight), logBlock);
 		}
 		BlockPos top = position.up(maxHeight + 1).north(additiveheight);
-		world.setBlockState(top, logBlock);
-		world.setBlockState(top.up(), leavesBlock);
-		world.setBlockState(top.add(1, 0, 0), leavesBlock);
-		world.setBlockState(top.add(-1, 0, 0), leavesBlock);
-		world.setBlockState(top.add(2, 0, 0), leavesBlock);
-		world.setBlockState(top.add(-2, 0, 0), leavesBlock);
-		world.setBlockState(top.add(0, 0, 1), leavesBlock);
-		world.setBlockState(top.add(0, 0, -1), leavesBlock);
-		world.setBlockState(top.add(0, 0, 2), leavesBlock);
-		world.setBlockState(top.add(0, 0, -2), leavesBlock);
-		world.setBlockState(top.add(0, -1, 3), leavesBlock);
-		world.setBlockState(top.add(0, -1, -3), leavesBlock);
-		world.setBlockState(top.add(3, -1, 0), leavesBlock);
-		world.setBlockState(top.add(-3, -1, 0), leavesBlock);
+		setBlockState(world, top, logBlock);
+		setBlockState(world, top.up(), leavesBlock);
+		setBlockState(world, top.add(1, 0, 0), leavesBlock);
+		setBlockState(world, top.add(-1, 0, 0), leavesBlock);
+		setBlockState(world, top.add(2, 0, 0), leavesBlock);
+		setBlockState(world, top.add(-2, 0, 0), leavesBlock);
+		setBlockState(world, top.add(0, 0, 1), leavesBlock);
+		setBlockState(world, top.add(0, 0, -1), leavesBlock);
+		setBlockState(world, top.add(0, 0, 2), leavesBlock);
+		setBlockState(world, top.add(0, 0, -2), leavesBlock);
+		setBlockState(world, top.add(0, -1, 3), leavesBlock);
+		setBlockState(world, top.add(0, -1, -3), leavesBlock);
+		setBlockState(world, top.add(3, -1, 0), leavesBlock);
+		setBlockState(world, top.add(-3, -1, 0), leavesBlock);
 		if (rand.nextBoolean()) {
-			world.setBlockState(top.add(0, -2, 3), leavesBlock);
-			world.setBlockState(top.add(0, -2, -3), leavesBlock);
-			world.setBlockState(top.add(3, -2, 0), leavesBlock);
-			world.setBlockState(top.add(-3, -2, 0), leavesBlock);
+			setBlockState(world, top.add(0, -2, 3), leavesBlock);
+			setBlockState(world, top.add(0, -2, -3), leavesBlock);
+			setBlockState(world, top.add(3, -2, 0), leavesBlock);
+			setBlockState(world, top.add(-3, -2, 0), leavesBlock);
 		}
-		world.setBlockState(top.add(-1, 1, -1), leavesBlock);
-		world.setBlockState(top.add(1, 1, 1), leavesBlock);
-		world.setBlockState(top.add(-1, 1, 1), leavesBlock);
-		world.setBlockState(top.add(1, 1, -1), leavesBlock);
-		world.setBlockState(top.add(-2, 1, -2), leavesBlock);
-		world.setBlockState(top.add(2, 1, 2), leavesBlock);
-		world.setBlockState(top.add(-2, 1, 2), leavesBlock);
-		world.setBlockState(top.add(2, 1, -2), leavesBlock);
-		world.setBlockState(top.add(-3, 0, -3), leavesBlock);
-		world.setBlockState(top.add(3, 0, 3), leavesBlock);
-		world.setBlockState(top.add(-3, 0, 3), leavesBlock);
-		world.setBlockState(top.add(3, 0, -3), leavesBlock);
+		setBlockState(world, top.add(-1, 1, -1), leavesBlock);
+		setBlockState(world, top.add(1, 1, 1), leavesBlock);
+		setBlockState(world, top.add(-1, 1, 1), leavesBlock);
+		setBlockState(world, top.add(1, 1, -1), leavesBlock);
+		setBlockState(world, top.add(-2, 1, -2), leavesBlock);
+		setBlockState(world, top.add(2, 1, 2), leavesBlock);
+		setBlockState(world, top.add(-2, 1, 2), leavesBlock);
+		setBlockState(world, top.add(2, 1, -2), leavesBlock);
+		setBlockState(world, top.add(-3, 0, -3), leavesBlock);
+		setBlockState(world, top.add(3, 0, 3), leavesBlock);
+		setBlockState(world, top.add(-3, 0, 3), leavesBlock);
+		setBlockState(world, top.add(3, 0, -3), leavesBlock);
 		
-		world.setBlockState(top.add(1, 2, 0), leavesBlock);
-		world.setBlockState(top.add(2, 2, 0), leavesBlock);
-		world.setBlockState(top.add(3, 3, 0), leavesBlock);
-		world.setBlockState(top.add(4, 3, 0), leavesBlock);
-		world.setBlockState(top.add(-1, 2, 0), leavesBlock);
-		world.setBlockState(top.add(-2, 2, 0), leavesBlock);
-		world.setBlockState(top.add(-3, 3, 0), leavesBlock);
-		world.setBlockState(top.add(-4, 3, 0), leavesBlock);
-		world.setBlockState(top.add(0, 2, 1), leavesBlock);
-		world.setBlockState(top.add(0, 2, 2), leavesBlock);
-		world.setBlockState(top.add(0, 3, 3), leavesBlock);
-		world.setBlockState(top.add(0, 3, 4), leavesBlock);
-		world.setBlockState(top.add(0, 2, -1), leavesBlock);
-		world.setBlockState(top.add(0, 2, -2), leavesBlock);
-		world.setBlockState(top.add(0, 3, -3), leavesBlock);
-		world.setBlockState(top.add(0, 3, -4), leavesBlock);
+		setBlockState(world, top.add(1, 2, 0), leavesBlock);
+		setBlockState(world, top.add(2, 2, 0), leavesBlock);
+		setBlockState(world, top.add(3, 3, 0), leavesBlock);
+		setBlockState(world, top.add(4, 3, 0), leavesBlock);
+		setBlockState(world, top.add(-1, 2, 0), leavesBlock);
+		setBlockState(world, top.add(-2, 2, 0), leavesBlock);
+		setBlockState(world, top.add(-3, 3, 0), leavesBlock);
+		setBlockState(world, top.add(-4, 3, 0), leavesBlock);
+		setBlockState(world, top.add(0, 2, 1), leavesBlock);
+		setBlockState(world, top.add(0, 2, 2), leavesBlock);
+		setBlockState(world, top.add(0, 3, 3), leavesBlock);
+		setBlockState(world, top.add(0, 3, 4), leavesBlock);
+		setBlockState(world, top.add(0, 2, -1), leavesBlock);
+		setBlockState(world, top.add(0, 2, -2), leavesBlock);
+		setBlockState(world, top.add(0, 3, -3), leavesBlock);
+		setBlockState(world, top.add(0, 3, -4), leavesBlock);
 		return true;
 	}
 

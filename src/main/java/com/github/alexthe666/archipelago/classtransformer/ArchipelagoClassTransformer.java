@@ -34,7 +34,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             for (MethodNode methodNode : classNode.methods) {
                 if (setupFogName.equals(methodNode.name) && setupFogDesc.equals(methodNode.desc)) {
                     InsnList inject = new InsnList();
-                    List<AbstractInsnNode> nodesInLine = new ArrayList<>();
+                    List<AbstractInsnNode> nodesInLine = new ArrayList<AbstractInsnNode>();
                     for (AbstractInsnNode node : methodNode.instructions.toArray()) {
                         boolean target = false;
                         if (node instanceof LabelNode) {

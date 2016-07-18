@@ -2,6 +2,7 @@ package com.github.alexthe666.archipelago.block;
 
 import java.util.Random;
 
+import com.github.alexthe666.archipelago.world.tree.BasicTreeGen;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLog;
@@ -90,6 +91,9 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 		
 		default:
 			break;
+		}
+		if(gen instanceof BasicTreeGen){
+			((BasicTreeGen)gen).rotation = rand.nextInt(3);
 		}
 		gen.generate(world, rand, pos.down());
 

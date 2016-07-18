@@ -30,7 +30,7 @@ import com.github.alexthe666.archipelago.core.ModConfig;
 
 public class ArchipelagoHooks {
     @SideOnly(Side.CLIENT)
-    private static final Map<CompiledChunk, List<BlockPos>> SPECIAL_RENDERERS = new WeakHashMap<>();
+    private static final Map<CompiledChunk, List<BlockPos>> SPECIAL_RENDERERS = new WeakHashMap<CompiledChunk, List<BlockPos>>();
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
     private static final Object SPECIAL_RENDERER_LOCK = new Object();
@@ -51,7 +51,7 @@ public class ArchipelagoHooks {
     public static void rebuildChunk(CompiledChunk chunk, ChunkCache region, BlockPos pos1, BlockPos pos2) {
         synchronized (SPECIAL_RENDERER_LOCK) {
             if (!region.extendedLevelsInChunkCache()) {
-                List<BlockPos> blocks = new ArrayList<>();
+                List<BlockPos> blocks = new ArrayList<BlockPos>();
                 for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
                     IBlockState state = region.getBlockState(pos);
                     Block block = state.getBlock();
