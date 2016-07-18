@@ -162,3 +162,5 @@ tile.archipelago.mangrove_leaves.name=Mangrove Leaves
 item.archipelago.sunstone.name=Sunstone
 item.archipelago.sunstone_staff.name=Sunstone Staff
 item.archipelago.sunstone_staff_broken.name=Broken Sunstone Staff
+
+entity.archipelago.clownfish.name=Clownfish

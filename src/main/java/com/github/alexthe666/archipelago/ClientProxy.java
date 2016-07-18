@@ -2,10 +2,14 @@ package com.github.alexthe666.archipelago;
 
 import javax.annotation.Nullable;
 
+import com.github.alexthe666.archipelago.client.model.entity.ModelClownfish;
+import com.github.alexthe666.archipelago.client.render.entity.RenderArchipelagoAnimal;
+import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelSheep1;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -30,6 +34,7 @@ import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.enums.EnumParticle;
 import com.github.alexthe666.archipelago.enums.EnumTrees;
 import com.github.alexthe666.archipelago.event.client.ClientEvents;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -52,6 +57,7 @@ public class ClientProxy extends CommonProxy {
                 return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, null, null, tintIndex);
             }
         }, EnumTrees.HISPANIOLAN_PINE.leaves);
+        RenderingRegistry.registerEntityRenderingHandler(EntityClownfish.class, new RenderArchipelagoAnimal(new ModelClownfish(), 0.3F));
     }
 
     @Override
