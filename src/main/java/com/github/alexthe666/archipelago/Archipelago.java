@@ -1,5 +1,6 @@
 package com.github.alexthe666.archipelago;
 
+import com.github.alexthe666.archipelago.core.*;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -15,12 +16,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import com.github.alexthe666.archipelago.core.ModBlocks;
-import com.github.alexthe666.archipelago.core.ModConfig;
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.core.ModItems;
-import com.github.alexthe666.archipelago.core.ModRecipes;
-import com.github.alexthe666.archipelago.core.ModWorld;
 import com.github.alexthe666.archipelago.enums.EnumTrees;
 import com.github.alexthe666.archipelago.event.server.ServerEvents;
 import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
@@ -65,6 +60,7 @@ public class Archipelago {
         EnumTrees.init();
         ModBlocks.init();
         ModRecipes.init();
+        ModEntities.init();
         GameRegistry.registerWorldGenerator(new WorldGeneratorArchipelago(), 20);
         PROXY.init();
     }
