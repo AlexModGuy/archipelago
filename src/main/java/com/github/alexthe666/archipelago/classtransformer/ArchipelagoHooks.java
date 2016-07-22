@@ -1,14 +1,12 @@
 package com.github.alexthe666.archipelago.classtransformer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
 import net.minecraft.client.renderer.culling.ICamera;
@@ -18,7 +16,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkCache;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
@@ -51,7 +48,7 @@ public class ArchipelagoHooks {
     public static void rebuildChunk(CompiledChunk chunk, ChunkCache region, BlockPos pos1, BlockPos pos2) {
         synchronized (SPECIAL_RENDERER_LOCK) {
             if (!region.extendedLevelsInChunkCache()) {
-                List<BlockPos> blocks = new ArrayList<BlockPos>();
+                List<BlockPos> blocks = new LinkedList<>();
                 for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
                     IBlockState state = region.getBlockState(pos);
                     Block block = state.getBlock();
@@ -68,14 +65,17 @@ public class ArchipelagoHooks {
         if (MinecraftForgeClient.getRenderPass() == 0) {
             synchronized (SPECIAL_RENDERER_LOCK) {
                 World world = MC.theWorld;
+                EntityPlayerSP player = MC.thePlayer;
                 for (Map.Entry<CompiledChunk, List<BlockPos>> entry : SPECIAL_RENDERERS.entrySet()) {
                     for (BlockPos pos : entry.getValue()) {
                         IBlockState state = world.getBlockState(pos);
                         if (camera.isBoundingBoxInFrustum(state.getBlock() instanceof BlockGrowingSeaweed ? BLOCK_BOUNDS_KELP.offset(pos) : BLOCK_BOUNDS.offset(pos))) {
-                            Block block = state.getBlock();
-                            if (block instanceof ISpecialRenderedBlock) {
-                                ISpecialRenderedBlock specialRenderedBlock = (ISpecialRenderedBlock) block;
-                                specialRenderedBlock.render(world, pos);
+                            if (player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < 16384) {
+                                Block block = state.getBlock();
+                                if (block instanceof ISpecialRenderedBlock) {
+                                    ISpecialRenderedBlock specialRenderedBlock = (ISpecialRenderedBlock) block;
+                                    specialRenderedBlock.render(world, pos);
+                                }
                             }
                         }
                     }

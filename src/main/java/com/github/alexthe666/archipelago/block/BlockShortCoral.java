@@ -18,6 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock {
     @SideOnly(Side.CLIENT)
@@ -38,6 +40,8 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
     private TextureAtlasSprite sprite;
     @SideOnly(Side.CLIENT)
     private float minU, maxU, minV, maxV;
+
+    public static final Method SET_FLAG;
 
     public BlockShortCoral(String name, int chance, Biome[] biomes) {
         super(Material.CORAL);
@@ -58,26 +62,33 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
-            if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
-                EntityLivingBase living = (EntityLivingBase) entityIn;
-                try {
-                    ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(living, 7, true);
-                } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
-			}
-            if (entityIn instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) entityIn;
-                if (!player.capabilities.isFlying) {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.INVISIBLE;
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+        if (SET_FLAG != null) {
+            if ((world.getBlockState(new BlockPos(entity).down()).getMaterial() == Material.WATER || world.getBlockState(new BlockPos(entity).down()).getMaterial() == Material.CORAL) && world.getBlockState(pos.down()).getMaterial() == Material.WATER && entity.getRidingEntity() == null) {
+                if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
+                    EntityLivingBase living = (EntityLivingBase) entity;
                     try {
-                        ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(player, 7, true);
+                        SET_FLAG.invoke(living, 7, true);
                     } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
                         e.printStackTrace();
                     }
-					entityIn.motionX *= 1.02;
-                    entityIn.motionZ *= 1.02;
+                }
+                if (entity instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) entity;
+                    if (!player.capabilities.isFlying) {
+                        try {
+                            SET_FLAG.invoke(player, 7, true);
+                        } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
+                            e.printStackTrace();
+                        }
+                        entity.motionX *= 1.02;
+                        entity.motionZ *= 1.02;
+                    }
                 }
             }
         }
@@ -142,5 +153,9 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
         buffer.pos(-0.5F + swayX, 1.0F, 0.5F + swayZ).tex(minU, minV).endVertex();
         tessellator.draw();
         GlStateManager.popMatrix();
+    }
+
+    static {
+        SET_FLAG = ReflectionHelper.findMethod(Entity.class, null, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class);
     }
 }

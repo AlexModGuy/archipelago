@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -67,6 +68,11 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
             entry.addBiome(Biome.getIdForBiome(biome));
         }
         WorldGeneratorArchipelago.kelpEntries.add(entry);
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.INVISIBLE;
     }
 
     @Override
@@ -155,26 +161,26 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if ((worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.WATER || worldIn.getBlockState(new BlockPos(entityIn).down()).getMaterial() == Material.CORAL) && worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER && entityIn.getRidingEntity() == null) {
-            if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
-                EntityLivingBase living = (EntityLivingBase) entityIn;
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+        if ((world.getBlockState(new BlockPos(entity).down()).getMaterial() == Material.WATER || world.getBlockState(new BlockPos(entity).down()).getMaterial() == Material.CORAL) && world.getBlockState(pos.down()).getMaterial() == Material.WATER && entity.getRidingEntity() == null) {
+            if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
+                EntityLivingBase living = (EntityLivingBase) entity;
                 try {
-                    ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(living, 7, true);
+                    BlockShortCoral.SET_FLAG.invoke(living, 7, true);
                 } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
-			}
-            if (entityIn instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) entityIn;
+            }
+            if (entity instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) entity;
                 if (!player.capabilities.isFlying) {
                     try {
-                        ReflectionHelper.findMethod(Entity.class, entityIn, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(player, 7, true);
+                        BlockShortCoral.SET_FLAG.invoke(player, 7, true);
                     } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
                         e.printStackTrace();
                     }
-					entityIn.motionX *= 1.02;
-                    entityIn.motionZ *= 1.02;
+                    entity.motionX *= 1.02;
+                    entity.motionZ *= 1.02;
                 }
             }
         }
@@ -245,21 +251,23 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     public void render(IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         if (state.getValue(PART) == Part.LOWER) {
+            float sway = (MC.thePlayer.ticksExisted + (pos.hashCode() * 0.2F)) * 0.0125F;
+            float swayX = (float) Math.sin(sway) / 8.0F;
+            float swayZ = (float) Math.cos(sway) / 8.0F;
+            Tessellator tessellator = Tessellator.getInstance();
+            VertexBuffer buffer = tessellator.getBuffer();
             GlStateManager.pushMatrix();
             GlStateManager.enableLighting();
             MC.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            int light = MC.theWorld.getCombinedLight(pos, 0);
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, light / 65536.0F);
+            RenderHelper.disableStandardItemLighting();
             double x = (pos.getX() + 0.5) - TileEntityRendererDispatcher.staticPlayerX;
             double y = pos.getY() - TileEntityRendererDispatcher.staticPlayerY;
             double z = (pos.getZ() + 0.5) - TileEntityRendererDispatcher.staticPlayerZ;
             GlStateManager.translate(x, y, z);
             while (state.getBlock() instanceof BlockGrowingSeaweed) {
-                int light = MC.theWorld.getCombinedLight(pos, 0);
-                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, light / 65536.0F);
-                RenderHelper.disableStandardItemLighting();
-                float sway = (MC.thePlayer.ticksExisted + (pos.hashCode() * 0.2F)) * 0.0125F;
-                float swayX = (float) Math.sin(sway) / 8.0F;
-                float swayZ = (float) Math.cos(sway) / 8.0F;
                 Part part = state.getValue(PART);
                 int ordinal = part.ordinal();
                 if (sprite[ordinal] == null) {
@@ -274,8 +282,6 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
                 float minV = this.minV[ordinal];
                 float maxU = this.maxU[ordinal];
                 float maxV = this.maxV[ordinal];
-                Tessellator tessellator = Tessellator.getInstance();
-                VertexBuffer buffer = tessellator.getBuffer();
                 buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
                 buffer.pos(-0.5F, 0.0F, -0.5F).tex(minU, maxV).endVertex();
                 buffer.pos(0.5F, 0.0F, 0.5F).tex(maxU, maxV).endVertex();
@@ -288,8 +294,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
                 buffer.pos(0.5F + swayX, 1.0F, -0.5F + swayZ).tex(maxU, minV).endVertex();
                 buffer.pos(-0.5F + swayX, 1.0F, 0.5F + swayZ).tex(minU, minV).endVertex();
                 tessellator.draw();
-                pos = pos.up();
-                state = world.getBlockState(pos);
+                state = world.getBlockState(pos = pos.up());
                 GlStateManager.translate(swayX, 1.0F, swayZ);
             }
             GlStateManager.popMatrix();
