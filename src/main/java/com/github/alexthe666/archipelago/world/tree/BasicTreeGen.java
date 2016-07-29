@@ -15,16 +15,23 @@ public abstract class BasicTreeGen extends WorldGenerator {
     private BlockPos center;
 
     @Override
-    public boolean generate(World worldIn, Random rand, BlockPos position) {
+    public boolean generate(World world, Random rand, BlockPos position) {
         center = position;
         rotation = rand.nextInt(3);
-        return generateTree(worldIn, rand, position);
+        return generateTree(world, rand, position);
     }
 
-    public abstract boolean generateTree(World worldIn, Random rand, BlockPos position);
+    public abstract boolean generateTree(World world, Random rand, BlockPos position);
 
-    public void setBlockState(World world, BlockPos position, IBlockState blockstate) {
+    public void setBlockState(World world, BlockPos position, IBlockState state) {
+        world.setBlockState(this.getRotatedPosition(position), state);
+    }
+
+    protected BlockPos getRotatedPosition(BlockPos position) {
         BlockPos offset = position.subtract(center);
+        if (offset.getX() == 0 && offset.getZ() == 0) {
+            return position;
+        }
         switch (rotation) {
             case 0:
                 break;
@@ -38,6 +45,22 @@ public abstract class BasicTreeGen extends WorldGenerator {
                 offset = new BlockPos(-offset.getZ(), offset.getY(), -offset.getX());
                 break;
         }
-        world.setBlockState(center.add(offset), blockstate);
+        return center.add(offset);
+    }
+
+    protected void generateLeafClump(World world, BlockPos pos, double size) {
+        int blockRadius = (int) Math.ceil(size);
+        for (int x = -blockRadius; x < blockRadius; x++) {
+            for (int y = -blockRadius; y < blockRadius; y++) {
+                for (int z = -blockRadius; z < blockRadius; z++) {
+                    if (Math.abs(x * x + y * y + z * z) <= size) {
+                        BlockPos leafPos = pos.add(x, y, z);
+                        if (world.isAirBlock(this.getRotatedPosition(leafPos))) {
+                            this.setBlockState(world, leafPos, this.leavesBlock);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

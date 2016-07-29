@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
-
 	public WorldGenCanaryIslandDatePalm() {
 		this.leavesBlock = EnumTrees.CANARY_ISLAND_DATE_PALM.leaves.getDefaultState();
 		this.logBlock = EnumTrees.CANARY_ISLAND_DATE_PALM.log.getDefaultState();
@@ -32,8 +31,7 @@ public class WorldGenCanaryIslandDatePalm extends BasicTreeGen {
 		setBlockState(world, position.up(maxHeight + 2), leavesBlock);
 		setBlockState(world, position.up(maxHeight + 3), leavesBlock);
 		setBlockState(world, position.up(maxHeight + 4), leavesBlock);
-		
-		
+
 		setBlockState(world, position.add(1, maxHeight + 2, 0), leavesBlock);
 		setBlockState(world, position.add(-1, maxHeight + 2, 0), leavesBlock);
 		setBlockState(world, position.add(0, maxHeight + 2, 1), leavesBlock);
