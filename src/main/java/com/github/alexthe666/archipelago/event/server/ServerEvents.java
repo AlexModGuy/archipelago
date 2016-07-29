@@ -9,8 +9,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -23,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.github.alexthe666.archipelago.Archipelago;
@@ -30,6 +33,8 @@ import com.github.alexthe666.archipelago.core.ModConfig;
 import com.github.alexthe666.archipelago.enums.EnumParticle;
 import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
 import com.github.alexthe666.archipelago.world.TeleporterArchipelago;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ServerEvents {
 
@@ -79,6 +84,15 @@ public class ServerEvents {
 	public void onReedsDecorate(DecorateBiomeEvent.Decorate event) {
 		if (event.getType() == EventType.REED && event.getWorld().provider.getDimension() == ModConfig.ARCHIPELAGO_DIMENSION_ID) {
 			event.setCanceled(true);
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerCraft(PlayerEvent.ItemCraftedEvent event){
+		if(event.player.dimension == ModConfig.ARCHIPELAGO_DIMENSION_ID && (event.crafting.getItem() == Item.getItemFromBlock(Blocks.CRAFTING_TABLE) || OreDictionary.itemMatches(event.crafting, new ItemStack(Blocks.PLANKS), true))){
+			event.setResult(Event.Result.DENY);
+			event.player.closeScreen();
+			event.player.playSound(SoundEvents.ENTITY_ZOMBIE_BREAK_DOOR_WOOD, 1, 1);
 		}
 	}
 
