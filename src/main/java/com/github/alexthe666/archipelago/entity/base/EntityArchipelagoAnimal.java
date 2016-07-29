@@ -136,6 +136,10 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
         return this.minimumSize + ((step * this.getAgeInTicks()));
     }
 
+    protected boolean canDropLoot() {
+        return true;
+    }
+
     @SideOnly(Side.CLIENT)
     public void calculateBuffer(){
         tail_buffer.calculateChainSwingBuffer(50, 10, 4, this);
