@@ -2,22 +2,18 @@ package com.github.alexthe666.archipelago.entity.living;
 
 import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
 import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWaterTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableList;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
-public class EntityClownfish extends EntityAquaticAnimal {
+public class EntityButterflyfish extends EntityAquaticAnimal {
 
-    public EntityClownfish(World world) {
+    public EntityButterflyfish(World world) {
         super(world, 3, 0.3F, 0.6F, 1, 1, 2, 4, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
@@ -45,11 +41,11 @@ public class EntityClownfish extends EntityAquaticAnimal {
     }
 
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
-        this.entityDropItem(new ItemStack(Items.FISH, 1, 2), 0);
+        //this.entityDropItem(new ItemStack(Items.FISH, 1, 2), 0);
     }
 
     @Override
     public String getTexture() {
-        return "archipelago:textures/models/clownfish/clownfish_" + this.getVariant();
+        return "archipelago:textures/models/butterflyfish/butterflyfish_" + this.getVariant();
     }
 }

@@ -1,5 +1,7 @@
 package com.github.alexthe666.archipelago.entity.living.ai;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
@@ -47,20 +49,18 @@ public class ArchipelagoAIFindWaterTarget extends EntityAIBase {
 
     public Vec3d findWaterTarget() {
         if (mob.getAttackTarget() == null) {
-            Random random = this.mob.getRNG();
-            mob.setAttackTarget(null);
-            BlockPos blockpos = new BlockPos(this.mob.posX, this.mob.getEntityBoundingBox().minY, this.mob.posZ);
-
-            for (int i = 0; i < 10; ++i) {
-                BlockPos blockpos1;
-                if (mob.isFreeSwimmer()) {
-                    blockpos1 = blockpos.add(random.nextInt(20) - 10, random.nextInt(6) - 3, random.nextInt(20) - 10);
-                } else {
-                    blockpos1 = blockpos.add(random.nextInt(20) - 10, 0, random.nextInt(20) - 10);
-                }
-                if (mob.worldObj.getBlockState(blockpos1).getMaterial() == Material.WATER) {
-                    return new Vec3d((double) blockpos1.getX(), (double) blockpos1.getY(), (double) blockpos1.getZ());
-                }
+                    List<Vec3d> water = new ArrayList<Vec3d>();
+                    for(int x = (int)mob.posX - 5; x < (int)mob.posX + 5; x++){
+                        for(int y = mob.isFreeSwimmer() ? (int)mob.posY - 5 : (int)mob.posY; y < (mob.isFreeSwimmer() ? (int)mob.posY + 5 : (int)mob.posY); y++){
+                            for(int z = (int)mob.posZ - 5; z < (int)mob.posZ + 5; z++){
+                                if(mob.isDirectPathBetweenPoints(mob.getPositionVector(), new Vec3d(x, y, z))) {
+                                    water.add(new Vec3d(x, y, z));
+                                }
+                            }
+                        }
+                    }
+            if(!water.isEmpty()){
+                return water.get(mob.getRNG().nextInt(water.size()));
             }
         } else {
             Random random = this.mob.getRNG();

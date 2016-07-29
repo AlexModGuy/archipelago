@@ -3,9 +3,11 @@ package com.github.alexthe666.archipelago;
 import javax.annotation.Nullable;
 
 import com.github.alexthe666.archipelago.client.model.entity.ModelBrownCrab;
+import com.github.alexthe666.archipelago.client.model.entity.ModelButterflyfish;
 import com.github.alexthe666.archipelago.client.model.entity.ModelClownfish;
 import com.github.alexthe666.archipelago.client.render.entity.RenderArchipelagoAnimal;
 import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
+import com.github.alexthe666.archipelago.entity.living.EntityButterflyfish;
 import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.properties.IProperty;
@@ -61,6 +63,7 @@ public class ClientProxy extends CommonProxy {
         }, EnumTrees.HISPANIOLAN_PINE.leaves);
         RenderingRegistry.registerEntityRenderingHandler(EntityClownfish.class, new RenderArchipelagoAnimal(new ModelClownfish(), 0.3F));
         RenderingRegistry.registerEntityRenderingHandler(EntityBrownCrab.class, new RenderArchipelagoAnimal(new ModelBrownCrab(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityButterflyfish.class, new RenderArchipelagoAnimal(new ModelButterflyfish(), 0.4F));
     }
 
     @Override

@@ -157,6 +157,9 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
                 if (this.suffocates) {
                     float f2 = 0.91F;
 
+                    if (this.onGround && this.isInWater()) {
+                        this.jump();
+                    }
                     if (this.onGround) {
                         f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
                     }
