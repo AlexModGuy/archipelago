@@ -4,7 +4,7 @@
         "0": "blocks/log_oak_top",
         "1": "blocks/log_oak",
         "2": "blocks/fire_layer_0",
-        "3": "pn:blocks/blank",
+        "3": "archipelago:blocks/blank",
         "4": "blocks/fire_layer_1"
     },
     "elements": [
