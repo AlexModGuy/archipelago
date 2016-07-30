@@ -17,7 +17,7 @@ public abstract class BasicTreeGen extends WorldGenerator {
     @Override
     public boolean generate(World world, Random rand, BlockPos position) {
         center = position;
-        rotation = rand.nextInt(3);
+        rotation = rand.nextInt(4);
         return generateTree(world, rand, position);
     }
 
@@ -54,6 +54,23 @@ public abstract class BasicTreeGen extends WorldGenerator {
             for (int y = -blockRadius; y < blockRadius; y++) {
                 for (int z = -blockRadius; z < blockRadius; z++) {
                     if (Math.abs(x * x + y * y + z * z) <= size) {
+                        BlockPos leafPos = pos.add(x, y, z);
+                        if (world.isAirBlock(this.getRotatedPosition(leafPos))) {
+                            this.setBlockState(world, leafPos, this.leavesBlock);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected void generateLeafClump(World world, BlockPos pos, double size, double sizeY) {
+        int blockRadius = (int) Math.ceil(size);
+        int yRadius = (int) Math.ceil(sizeY);
+        for (int x = -blockRadius; x < blockRadius; x++) {
+            for (int y = -yRadius; y < yRadius; y++) {
+                for (int z = -blockRadius; z < blockRadius; z++) {
+                    if (Math.abs(x * x + z * z) <= size && Math.abs(x * x + y * y + z * z) <= size * sizeY) {
                         BlockPos leafPos = pos.add(x, y, z);
                         if (world.isAirBlock(this.getRotatedPosition(leafPos))) {
                             this.setBlockState(world, leafPos, this.leavesBlock);

@@ -7,6 +7,7 @@ import com.github.alexthe666.archipelago.world.tree.WorldGenCalophyllum;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryIslandDatePalm;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryMadrone;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCoconutPalm;
+import com.github.alexthe666.archipelago.world.tree.WorldGenHispaniolan;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLog;
@@ -86,6 +87,9 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
             case CANARY_MADRONE:
                 gen = new WorldGenCanaryMadrone();
                 break;
+            case HISPANIOLAN_PINE:
+                gen = new WorldGenHispaniolan();
+                break;
             case CORRIOSA:
                 gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.CORRIOSA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
                 break;
@@ -97,9 +101,6 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
                 break;
             default:
                 break;
-        }
-        if (gen instanceof BasicTreeGen) {
-            ((BasicTreeGen) gen).rotation = rand.nextInt(3);
         }
         gen.generate(world, rand, pos.down());
     }
