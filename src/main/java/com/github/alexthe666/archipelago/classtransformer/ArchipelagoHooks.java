@@ -8,7 +8,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
+import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -58,6 +60,12 @@ public class ArchipelagoHooks {
                 }
                 SPECIAL_RENDERERS.put(chunk, blocks);
             }
+        }
+    }
+
+    public static void endChunk(RenderChunk renderer) {
+        synchronized (SPECIAL_RENDERER_LOCK) {
+            SPECIAL_RENDERERS.remove(renderer.compiledChunk);
         }
     }
 

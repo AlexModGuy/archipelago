@@ -59,6 +59,11 @@ public class BiomeGenTropical extends Biome {
         this.treeGenerators = treeGenerators;
     }
 
+    public BiomeGenTropical setTreesPerChunk(int treesPerChunk) {
+        this.theBiomeDecorator.treesPerChunk = treesPerChunk;
+        return this;
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public int getSkyColorByTemp(float currentTemperature) {

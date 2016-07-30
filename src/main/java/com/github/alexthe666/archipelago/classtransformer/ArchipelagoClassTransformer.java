@@ -78,7 +78,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             classNode.accept(classWriter);
             saveBytecode(name, classWriter);
             return classWriter.toByteArray();
-        } else if ((obf = "bqf".equals(name)) || "net.minecraft.client.renderer.chunk.RenderChunk".equals(name)) {
+        } else if ((obf = "bqy".equals(name)) || "net.minecraft.client.renderer.chunk.RenderChunk".equals(name)) {
             ClassReader classReader = new ClassReader(classBytes);
             classReader.accept(classNode, 0);
             String rebuildChunkName = obf ? "b" : "rebuildChunk";
@@ -95,7 +95,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
                                 if (i > 0) {
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 5));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 0));
-                                    inject.add(new FieldInsnNode(Opcodes.GETFIELD, obf ? "bqc" : "net/minecraft/client/renderer/chunk/RenderChunk", obf ? "r" : "region", "L" + (obf ? "aim" : "net/minecraft/world/ChunkCache") + ";"));
+                                    inject.add(new FieldInsnNode(Opcodes.GETFIELD, obf ? "bqy" : "net/minecraft/client/renderer/chunk/RenderChunk", obf ? "r" : "region", "L" + (obf ? "aim" : "net/minecraft/world/ChunkCache") + ";"));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 7));
                                     inject.add(new VarInsnNode(Opcodes.ALOAD, 8));
                                     String blockposName = obf ? "cj" : "net/minecraft/util/math/BlockPos";
@@ -107,6 +107,11 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
                     }
                     methodNode.instructions.clear();
                     methodNode.instructions.add(inject);
+                } else if (methodNode.name.equals(obf ? "b" : "finishCompileTask") && methodNode.desc.equals("()V")) {
+                    InsnList inject = new InsnList();
+                    inject.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    inject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/github/alexthe666/archipelago/classtransformer/ArchipelagoHooks", "endChunk", "(L" + (obf ? "bqy" : "net/minecraft/client/renderer/chunk/RenderChunk") + ";)V", false));
+                    methodNode.instructions.insert(inject);
                 }
             }
             ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
