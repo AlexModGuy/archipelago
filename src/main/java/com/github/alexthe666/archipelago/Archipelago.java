@@ -1,5 +1,6 @@
 package com.github.alexthe666.archipelago;
 
+import com.github.alexthe666.archipelago.client.GuiHandler;
 import com.github.alexthe666.archipelago.core.*;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.github.alexthe666.archipelago.enums.EnumTrees;
@@ -61,6 +63,7 @@ public class Archipelago {
         ModBlocks.init();
         ModRecipes.init();
         ModEntities.init();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         GameRegistry.registerWorldGenerator(new WorldGeneratorArchipelago(), 20);
         PROXY.init();
     }
