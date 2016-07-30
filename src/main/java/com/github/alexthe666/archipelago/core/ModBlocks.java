@@ -1,16 +1,12 @@
 package com.github.alexthe666.archipelago.core;
 
+import com.github.alexthe666.archipelago.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 
-import com.github.alexthe666.archipelago.block.BlockCoralRock;
-import com.github.alexthe666.archipelago.block.BlockGlowingCoral;
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.block.BlockShortCoral;
-import com.github.alexthe666.archipelago.block.BlockShortPlant;
-import com.github.alexthe666.archipelago.block.BlockTallPlant;
-
 public class ModBlocks {
+
+    public static Block campfire;
 
     public static Block anthurium_andraeanum;
     public static Block bottle_palm;
@@ -127,8 +123,8 @@ public class ModBlocks {
     public static Block turtlegrass;
     public static Block zostera_tasmanica;
     public static Block coral_rock;
-
     public static void init() {
+        campfire = new BlockCampfire();
         anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });
         bottle_palm = new BlockTallPlant("bottle_palm", 5, new Biome[] { ModWorld.tropicJungle });
         ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });

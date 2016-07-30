@@ -3,6 +3,8 @@ itemGroup.archipelago=Archipelago
 tile.archipelago.tropical_water.name=Water
 tile.archipelago.tropical_water_seafoam.name=Water
 
+tile.archipelago.campfire.name=Campfire
+
 tile.archipelago.plant.anthurium_andraeanum.name=Anthurium Andraeanum
 tile.archipelago.plant.bottle_palm.name=Bottle Palm
 tile.archipelago.plant.ceratozamia_mexicana.name=Ceratozamia Mexicana
