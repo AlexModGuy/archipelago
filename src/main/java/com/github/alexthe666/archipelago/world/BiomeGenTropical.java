@@ -27,6 +27,7 @@ public class BiomeGenTropical extends Biome {
     float r, g, b;
     private EnumGrassColor grassColor;
     private TreeGenerator[] treeGenerators;
+    private int generationChance = 10;
 
     public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
@@ -61,6 +62,11 @@ public class BiomeGenTropical extends Biome {
 
     public BiomeGenTropical setTreesPerChunk(int treesPerChunk) {
         this.theBiomeDecorator.treesPerChunk = treesPerChunk;
+        return this;
+    }
+
+    public BiomeGenTropical setGenerationChance(int generationChance) {
+        this.generationChance = generationChance;
         return this;
     }
 
@@ -175,6 +181,10 @@ public class BiomeGenTropical extends Biome {
             }
         }
         return super.genBigTreeChance(rand);
+    }
+
+    public int getGenerationChance() {
+        return generationChance;
     }
 
     public static class TreeGenerator {
