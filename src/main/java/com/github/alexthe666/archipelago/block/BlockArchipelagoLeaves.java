@@ -12,6 +12,7 @@ import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -145,6 +146,9 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
 				} else {
 					this.dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
 					world.setBlockToAir(pos);
+					if(new Random().nextInt(5) == 0){
+						spawnAsEntity(world, pos, new ItemStack(Items.STICK));
+					}
 				}
 			}
 		}
