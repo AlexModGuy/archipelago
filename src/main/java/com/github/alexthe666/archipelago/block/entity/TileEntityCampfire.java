@@ -1,10 +1,13 @@
 package com.github.alexthe666.archipelago.block.entity;
 
+import com.github.alexthe666.archipelago.block.BlockCampfire;
 import net.minecraft.block.BlockFurnace;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
@@ -12,16 +15,19 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 public class TileEntityCampfire extends TileEntity implements ITickable, ISidedInventory {
     private static final int[] SLOTS_TOP = new int[] {0};
     private static final int[] SLOTS_BOTTOM = new int[] {1};
-    private ItemStack[] stacks = new ItemStack[2];
+    private ItemStack[] stacks = new ItemStack[3];
     private int burnTime;
     private int cookTime;
     private int totalCookTime;
@@ -73,21 +79,21 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
             if (itemstack == null) return false;
             if (itemstack.getItem() == null) return false;
             if (!(itemstack.getItem() instanceof ItemFood)) return false;
-            if (this.stacks[2] == null) return true;
-            if (!this.stacks[2].isItemEqual(itemstack)) return false;
-            int result = stacks[2].stackSize + itemstack.stackSize;
-            return result <= getInventoryStackLimit() && result <= this.stacks[2].getMaxStackSize();
+            if (this.stacks[1] == null) return true;
+            if (!this.stacks[1].isItemEqual(itemstack)) return false;
+            int result = stacks[1].stackSize + itemstack.stackSize;
+            return result <= getInventoryStackLimit() && result <= this.stacks[1].getMaxStackSize();
         }
     }
 
     public void smeltItem() {
         if (this.canSmelt()) {
             ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(this.stacks[0]);
-            if (this.stacks[2] == null) {
-                this.stacks[2] = itemstack.copy();
+            if (this.stacks[1] == null) {
+                this.stacks[1] = itemstack.copy();
             }
-            else if (this.stacks[2].getItem() == itemstack.getItem()) {
-                this.stacks[2].stackSize += itemstack.stackSize;
+            else if (this.stacks[1].getItem() == itemstack.getItem()) {
+                this.stacks[1].stackSize += itemstack.stackSize;
             }
             --this.stacks[0].stackSize;
             if (this.stacks[0].stackSize <= 0) {
@@ -221,7 +227,7 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
 
             if (flag != this.canSmelt()) {
                 flag1 = true;
-                BlockFurnace.setState(this.canSmelt(), this.worldObj, this.pos);
+                BlockCampfire.setState(this.canSmelt(), this.worldObj, this.pos);
             }
         }
 

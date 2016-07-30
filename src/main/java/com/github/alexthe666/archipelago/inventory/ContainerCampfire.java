@@ -21,7 +21,7 @@ public class ContainerCampfire extends Container
     public ContainerCampfire(InventoryPlayer playerInventory, IInventory inv)
     {
         this.tileFurnace = inv;
-        this.addSlotToContainer(new Slot(inv, 0, 56, 17));
+        this.addSlotToContainer(new Slot(inv, 0, 56, 35));
         this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, inv, 1, 116, 35));
 
         for (int i = 0; i < 3; ++i) {
@@ -83,14 +83,14 @@ public class ContainerCampfire extends Container
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            if (index == 2) {
+            if (index == 1) {
                 if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
                     return null;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
-            else if (index != 1 && index != 0) {
+            else if (index != 0) {
                 if (FurnaceRecipes.instance().getSmeltingResult(itemstack1) != null) {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {

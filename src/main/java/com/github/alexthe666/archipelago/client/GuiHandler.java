@@ -1,22 +1,13 @@
 package com.github.alexthe666.archipelago.client;
 
 import com.github.alexthe666.archipelago.block.entity.TileEntityCampfire;
+import com.github.alexthe666.archipelago.client.gui.GuiCampfire;
 import com.github.alexthe666.archipelago.inventory.ContainerCampfire;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-
-import com.github.backtolifemod.backtolife.client.gui.GuiFertilizationMachine;
-import com.github.backtolifemod.backtolife.client.gui.GuiFossilSlicer;
-import com.github.backtolifemod.backtolife.client.gui.GuiTissueAnalyzer;
-import com.github.backtolifemod.backtolife.client.inventory.ContainerFertilizationMachine;
-import com.github.backtolifemod.backtolife.client.inventory.ContainerFossilSlicer;
-import com.github.backtolifemod.backtolife.client.inventory.ContainerTissueAnalyzer;
-import com.github.backtolifemod.backtolife.entity.tile.TileEntityFertilizationMachine;
-import com.github.backtolifemod.backtolife.entity.tile.TileEntityFossilSlicer;
-import com.github.backtolifemod.backtolife.entity.tile.TileEntityTissueAnalyzer;
 
 public class GuiHandler implements IGuiHandler {
 

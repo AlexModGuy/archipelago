@@ -15,9 +15,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +36,8 @@ import java.util.Random;
 public class BlockCampfire extends BlockContainer {
 
     public boolean isActive;
+    private static boolean keepInventory;
+
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 0.25D, 1D);
     public BlockCampfire(boolean isActive) {
         super(Material.PLANTS);
@@ -43,7 +47,7 @@ public class BlockCampfire extends BlockContainer {
         this.setHarvestLevel("axe", 0);
         this.setSoundType(SoundType.WOOD);
         this.setUnlocalizedName("archipelago.campfire");
-        this.setCreativeTab(isActive ? Archipelago.tab : null);
+        this.setCreativeTab(!isActive ? Archipelago.tab : null);
         GameRegistry.registerBlock(this, isActive ? "campfire_on" : "campfire_off");
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), isActive ? "campfire_on" : "campfire_off");
     }
@@ -52,10 +56,54 @@ public class BlockCampfire extends BlockContainer {
         if(!isActive && heldItem != null && heldItem.getItem() != null && heldItem.getItem() == Items.FLINT){
             worldIn.setBlockState(pos, ModBlocks.campfire_on.getDefaultState());
             worldIn.playSound(playerIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, new Random().nextFloat() * 0.4F + 0.8F);
+        }else if(isActive){
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if(tileentity instanceof TileEntityCampfire){
+                playerIn.openGui(Archipelago.INSTANCE, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            }
         }
         return true;
     }
 
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
+    }
+
+    public static void setState(boolean active, World worldIn, BlockPos pos)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        keepInventory = true;
+
+        if (active) {
+            worldIn.setBlockState(pos, ModBlocks.campfire_on.getDefaultState(), 3);
+            worldIn.setBlockState(pos, ModBlocks.campfire_on.getDefaultState(), 3);
+        }
+        else {
+            worldIn.setBlockState(pos, ModBlocks.campfire_off.getDefaultState(), 3);
+            worldIn.setBlockState(pos, ModBlocks.campfire_off.getDefaultState(), 3);
+        }
+        keepInventory = false;
+        if (tileentity != null) {
+            tileentity.validate();
+            worldIn.setTileEntity(pos, tileentity);
+        }
+    }
+
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if (!keepInventory) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof TileEntityCampfire) {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityCampfire)tileentity);
+                worldIn.updateComparatorOutputLevel(pos, this);
+            }
+        }
+        super.breakBlock(worldIn, pos, state);
+    }
+
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        return new ItemStack(ModBlocks.campfire_off);
+    }
 
 
     @SideOnly(Side.CLIENT)
