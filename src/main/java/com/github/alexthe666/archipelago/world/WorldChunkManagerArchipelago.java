@@ -31,9 +31,6 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
     public WorldChunkManagerArchipelago() {
         this.biomeCache = new BiomeCache(this);
         this.biomesToSpawnIn = new ArrayList<>();
-        this.biomesToSpawnIn.add(ModWorld.tropicOcean);
-        this.biomesToSpawnIn.add(ModWorld.tropicShallows);
-        this.biomesToSpawnIn.add(ModWorld.tropicReef);
         this.biomesToSpawnIn.add(ModWorld.tropicGrassland);
         this.biomesToSpawnIn.add(ModWorld.tropicShrubland);
         this.biomesToSpawnIn.add(ModWorld.tropicJungle);
@@ -41,18 +38,13 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
         this.biomesToSpawnIn.add(ModWorld.dryScrubland);
         this.biomesToSpawnIn.add(ModWorld.ashField);
         this.biomesToSpawnIn.add(ModWorld.volcano);
-        this.biomesToSpawnIn.add(ModWorld.tropicSeaGrassBed);
-        this.biomesToSpawnIn.add(ModWorld.tropicBlueHoles);
-        this.biomesToSpawnIn.add(ModWorld.tropicTrench);
-        this.biomesToSpawnIn.add(ModWorld.tropicKelpForest);
-
     }
 
     public WorldChunkManagerArchipelago(long seed, WorldType worldtype) {
         this();
-        GenLayer[] agenlayer = GenLayerArchipelago.initializeAllBiomeGenerators(seed, worldtype, null);
-        this.genBiomes = agenlayer[0];
-        this.biomeIndexLayer = agenlayer[1];
+        GenLayer[] layers = GenLayerArchipelago.initializeAllBiomeGenerators(seed, worldtype, null);
+        this.genBiomes = layers[0];
+        this.biomeIndexLayer = layers[1];
     }
 
     @Override

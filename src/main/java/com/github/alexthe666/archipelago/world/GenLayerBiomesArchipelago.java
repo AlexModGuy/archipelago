@@ -29,7 +29,7 @@ public class GenLayerBiomesArchipelago extends GenLayer {
     }
 
     private Biome getBiome() {
-        if (nextInt(4) == 0) {
+        if (nextInt(3) == 0) {
             return nextInt(10) == 0 ? volcanoBiomes[nextInt(volcanoBiomes.length)] : islandBiomes[nextInt(islandBiomes.length)];
         } else {
             return oceanBiomes[nextInt(oceanBiomes.length)];

@@ -19,7 +19,7 @@ public abstract class GenLayerArchipelago extends GenLayer {
         biomes = new GenLayerZoom(1003L, biomes);
 //        biomes = new GenLayerZoom(1004L, biomes);
 //        biomes = new GenLayerZoom(1005L, biomes);
-        GenLayer voronoiZoom = new GenLayerVoronoiZoom(25L, biomes);
+        GenLayer voronoiZoom = new GenLayerVoronoiZoom(40L, biomes);
         biomes.initWorldGenSeed(seed);
         voronoiZoom.initWorldGenSeed(seed);
         return new GenLayer[] { biomes, voronoiZoom };
