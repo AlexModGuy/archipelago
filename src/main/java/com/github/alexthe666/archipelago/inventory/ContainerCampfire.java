@@ -97,8 +97,8 @@ public class ContainerCampfire extends Container
                         return null;
                     }
                 }
-                else if (index >= 3 && index < 30) {
-                    if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
+                else if (index >= 2 && index < 30) {
+                    if (!this.mergeItemStack(itemstack1, 30, 38, false)) {
                         return null;
                     }
                 }

@@ -45,9 +45,10 @@ public class GuiCampfire extends GuiContainer
     }
 
     private int getCookProgressScaled(int pixels) {
-        int i = this.tileFurnace.getField(2);
-        int j = this.tileFurnace.getField(1);
-        return j != 0 && i != 0 ? i * pixels / j : 0;
+        int i = this.tileFurnace.getField(1);
+        int j = this.tileFurnace.getField(2);
+        System.out.println(i);
+        return i * pixels / j;
     }
 
     private int getBurnLeftScaled(int pixels) {

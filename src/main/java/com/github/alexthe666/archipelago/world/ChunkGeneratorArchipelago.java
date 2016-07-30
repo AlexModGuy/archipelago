@@ -283,15 +283,15 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         this.rand.setSeed(x * k + z * l ^ this.worldObj.getSeed());
         boolean flag = false;
         ChunkPos chunkcoordintpair = new ChunkPos(x, z);
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
-        if (this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0 && !BiomeManager.oceanBiomes.contains(Biome))
+        if (this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0 && !BiomeManager.oceanBiomes.contains(Biome)){
             if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE)) {
                 int i1 = this.rand.nextInt(16) + 8;
                 int j1 = this.rand.nextInt(256);
                 int k1 = this.rand.nextInt(16) + 8;
                 (new WorldGenArchipelagoLakes(ModFluids.tropical_water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
             }
-
+        }
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
         Biome.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
         if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
             WorldEntitySpawner.performWorldGenSpawning(this.worldObj, Biome, i + 8, j + 8, 16, 16, this.rand);

@@ -73,17 +73,6 @@ public class BlockCampfire extends BlockContainer {
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
-        keepInventory = true;
-
-        if (active) {
-            worldIn.setBlockState(pos, ModBlocks.campfire_on.getDefaultState(), 3);
-            worldIn.setBlockState(pos, ModBlocks.campfire_on.getDefaultState(), 3);
-        }
-        else {
-            worldIn.setBlockState(pos, ModBlocks.campfire_off.getDefaultState(), 3);
-            worldIn.setBlockState(pos, ModBlocks.campfire_off.getDefaultState(), 3);
-        }
-        keepInventory = false;
         if (tileentity != null) {
             tileentity.validate();
             worldIn.setTileEntity(pos, tileentity);

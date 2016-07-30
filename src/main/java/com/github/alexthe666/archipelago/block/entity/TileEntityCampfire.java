@@ -67,7 +67,7 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
 
     @Override
     public int getInventoryStackLimit() {
-        return 0;
+        return 64;
     }
 
     private boolean canSmelt() {
@@ -99,6 +99,7 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
             if (this.stacks[0].stackSize <= 0) {
                 this.stacks[0] = null;
             }
+            this.cookTime = 0;
         }
     }
 
@@ -210,10 +211,11 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
                 if (this.canSmelt()) {
                     ++this.cookTime;
 
-                    if (this.cookTime == this.totalCookTime) {
+                    if (this.cookTime >= 200) {
                         this.cookTime = 0;
                         this.totalCookTime = 200;
                         this.smeltItem();
+                        this.burnTime = 0;
                         flag1 = true;
                     }
                 }

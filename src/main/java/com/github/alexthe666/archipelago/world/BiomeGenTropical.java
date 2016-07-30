@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -161,7 +162,15 @@ public class BiomeGenTropical extends Biome {
     public int getGrassColorAtPos(BlockPos pos) {
         double temperature = MathHelper.clamp_float(grassColor.tempature, 0.0F, 1.0F);
         double humidity = MathHelper.clamp_float(grassColor.humidity, 0.0F, 1.0F);
-        return getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(temperature, humidity));
+        return this.grassColor == EnumGrassColor.BURNT ? 0X303030 : getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(temperature, humidity));
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getFoliageColorAtPos(BlockPos pos)
+    {
+        double d0 = (double)MathHelper.clamp_float(this.getFloatTemperature(pos), 0.0F, 1.0F);
+        double d1 = (double)MathHelper.clamp_float(this.getRainfall() * 2, 0.0F, 1.0F);
+        return getModdedBiomeFoliageColor(ColorizerFoliage.getFoliageColor(d0, d1));
     }
 
     @Override
