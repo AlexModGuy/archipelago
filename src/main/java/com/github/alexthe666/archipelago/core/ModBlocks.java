@@ -6,7 +6,8 @@ import net.minecraft.world.biome.Biome;
 
 public class ModBlocks {
 
-    public static Block campfire;
+    public static Block campfire_on;
+    public static Block campfire_off;
 
     public static Block anthurium_andraeanum;
     public static Block bottle_palm;
@@ -124,7 +125,8 @@ public class ModBlocks {
     public static Block zostera_tasmanica;
     public static Block coral_rock;
     public static void init() {
-        campfire = new BlockCampfire();
+        campfire_on = new BlockCampfire(true);
+        campfire_off = new BlockCampfire(false);
         anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });
         bottle_palm = new BlockTallPlant("bottle_palm", 5, new Biome[] { ModWorld.tropicJungle });
         ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });

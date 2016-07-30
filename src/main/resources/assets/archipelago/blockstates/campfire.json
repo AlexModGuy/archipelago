@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "active=true": { "model": "archipelago:campfire_on" },
-        "active=false":    { "model":"archipelago:campfire_off" }
-    }
-}
