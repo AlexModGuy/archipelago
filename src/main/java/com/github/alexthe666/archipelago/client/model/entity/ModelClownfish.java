@@ -98,16 +98,18 @@ public class ModelClownfish extends AdvancedModelBase {
         float idleDegree = 1F;
         float walkSpeed = 1F;
         float walkDegree = 2F;
-        this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, entity.ticksExisted, 1);
-        this.swing(RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, entity.ticksExisted, 1);
-        this.swing(LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, entity.ticksExisted, 1);
+        this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, f2, 1);
+        this.swing(RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
+        this.swing(LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
         this.chainSwing(tail, walkSpeed, walkDegree * 0.3F, -3, f, f1);
-        this.walk(DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, entity.ticksExisted, 1);
-        this.walk(PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, entity.ticksExisted, 1);
+        this.walk(DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, f2, 1);
+        this.walk(PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
         if (!entity.isInWater()) {
             this.Body.rotateAngleZ = (float) Math.toRadians(90);
-            this.bob(Body, -idleSpeed * 2, idleSpeed * 2F, false, entity.ticksExisted, 1);
-            this.swing(Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, entity.ticksExisted, 1);
+            this.bob(Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
+            this.swing(Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
+        } else {
+            this.bob(Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
         }
     }
 

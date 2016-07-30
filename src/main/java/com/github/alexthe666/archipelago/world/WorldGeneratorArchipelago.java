@@ -35,7 +35,6 @@ public class WorldGeneratorArchipelago implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-
         if (world.provider.getDimension() == ModConfig.ARCHIPELAGO_DIMENSION_ID) {
             for (int k = 0; k < 4; k++) {
                 int x = (chunkX * 16) + random.nextInt(16);

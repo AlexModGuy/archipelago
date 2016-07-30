@@ -3,6 +3,7 @@ package com.github.alexthe666.archipelago.block;
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.util.PlantEntry;
 import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -251,7 +252,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     public void render(IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         if (state.getValue(PART) == Part.LOWER) {
-            float sway = (MC.thePlayer.ticksExisted + (pos.hashCode() * 0.2F)) * 0.0125F;
+            float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.hashCode() * 0.2F)) * 0.0125F;
             float swayX = (float) Math.sin(sway) / 8.0F;
             float swayZ = (float) Math.cos(sway) / 8.0F;
             Tessellator tessellator = Tessellator.getInstance();

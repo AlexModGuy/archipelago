@@ -138,7 +138,7 @@ public class ModelBrownCrab extends AdvancedModelBase {
     @Override
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        float idleSpeed = 0.3F;
+        float idleSpeed = 0.15F;
         float idleDegree = 1F;
         float walkSpeed = 1.5F;
         float walkDegree = 4F;
@@ -150,9 +150,10 @@ public class ModelBrownCrab extends AdvancedModelBase {
         this.swing(RightLegs3, walkSpeed, walkDegree * 0.2F, false, 2, -0.2F, f, f1);
         this.swing(LeftLegs4, walkSpeed, walkDegree * 0.2F, true, 3, 0.2F, f, f1);
         this.swing(RightLegs4, walkSpeed, walkDegree * 0.2F, false, 3, -0.2F, f, f1);
-        this.swing(LeftArm2, idleSpeed, idleDegree * 0.2F, false, 3, 0.2F, entity.ticksExisted, 1);
-        this.swing(RightArm2, idleSpeed, idleDegree * 0.2F, true, 3, 0.2F, entity.ticksExisted, 1);
-
+        this.swing(LeftArm2, idleSpeed, idleDegree * 0.2F, false, 3, 0.2F, f2, 1);
+        this.swing(RightArm2, idleSpeed, idleDegree * 0.2F, true, 3, 0.2F, f2, 1);
+        this.chainFlap(new AdvancedModelRenderer[] { LeftLegs1, LeftLegs2, LeftLegs3, LeftLegs4 }, idleSpeed, idleDegree * 0.1F, 2.0F, f2, 1.0F);
+        this.chainFlap(new AdvancedModelRenderer[] { RightLegs1, RightLegs2, RightLegs3, RightLegs4 }, idleSpeed, idleDegree * 0.1F, -2.0F, f2, 1.0F);
     }
 
     public void setRotateAngle(AdvancedModelRenderer AdvancedModelRenderer, float x, float y, float z) {

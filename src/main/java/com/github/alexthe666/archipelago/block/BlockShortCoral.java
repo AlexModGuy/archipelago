@@ -3,6 +3,7 @@ package com.github.alexthe666.archipelago.block;
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.util.PlantEntry;
 import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -124,7 +125,7 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
         RenderHelper.disableStandardItemLighting();
         MC.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        float sway = (MC.thePlayer.ticksExisted + (pos.hashCode() * 0.2F)) * 0.025F;
+        float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.hashCode() * 0.2F)) * 0.0125F;
         float swayX = (float) Math.sin(sway) / 4.0F;
         float swayZ = (float) Math.cos(sway) / 4.0F;
         if (sprite == null) {

@@ -36,7 +36,6 @@ public class BiomeGenTropical extends Biome {
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
-
     }
 
     public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, float r, float g, float b) {

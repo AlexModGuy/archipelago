@@ -26,7 +26,6 @@ public class GenLayerBiomesArchipelago extends GenLayer {
                 dest[(dx + dz * width)] = Biome.getIdForBiome(getBiome());
             }
         }
-
         return dest;
     }
 
@@ -36,7 +35,6 @@ public class GenLayerBiomesArchipelago extends GenLayer {
             return nextInt(6) == 0 ? volcanoBiomes[nextInt(volcanoBiomes.length)] : islandBiomes[nextInt(islandBiomes.length)];
         } else {
             return oceanBiomes[nextInt(oceanBiomes.length)];
-
         }
     }
 }
