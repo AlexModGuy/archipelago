@@ -14,7 +14,6 @@ public class WorldGenCalophyllum extends BasicTreeGen {
 
     @Override
     public boolean generateTree(World world, Random rand, BlockPos position) {
-        position = position.up();
         int trunkHeight = rand.nextInt(2) + 2;
         int rightBranchHeight = rand.nextInt(3) + 1;
         int leftBranchHeight = rand.nextInt(3) + 1;

@@ -3,16 +3,20 @@ package com.github.alexthe666.archipelago.world.tree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-public abstract class BasicTreeGen extends WorldGenerator {
-
+public abstract class BasicTreeGen extends WorldGenAbstractTree {
     public IBlockState logBlock;
     public IBlockState leavesBlock;
     public int rotation;
     private BlockPos center;
+
+    public BasicTreeGen() {
+        super(false);
+    }
 
     @Override
     public boolean generate(World world, Random rand, BlockPos position) {

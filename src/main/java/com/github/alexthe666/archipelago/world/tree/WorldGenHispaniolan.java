@@ -15,7 +15,6 @@ public class WorldGenHispaniolan extends BasicTreeGen {
 
     @Override
     public boolean generateTree(World world, Random rand, BlockPos position) {
-        position = position.up();
         int trunkHeight = rand.nextInt(7) + 10;
         for (int y = 0; y < trunkHeight + 2; y++) {
             BlockPos logPosition = position.up(y);

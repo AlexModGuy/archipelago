@@ -16,17 +16,17 @@ public class WorldGenMangrove extends BasicTreeGen {
 
     @Override
     public boolean generateTree(World world, Random rand, BlockPos position) {
-        this.setBlockState(world, position.up(), Blocks.AIR.getDefaultState());
+        this.setBlockState(world, position, Blocks.AIR.getDefaultState());
         position = position.up(4);
-        int trunkHeight = rand.nextInt(2) + 2;
+        int trunkHeight = rand.nextInt(2) + 3;
         for (int y = 0; y <= trunkHeight; y++) {
             this.setBlockState(world, position.up(y), this.logBlock);
         }
         this.setBlockState(world, position.up(trunkHeight).add(1, 0, 0), this.logBlock);
         BlockPos leafPosition = position.up(trunkHeight + 1);
-        this.generateLeafClump(world, leafPosition, 4);
-        for (int i = 0; i < rand.nextInt(2) + 2; i++) {
-            this.generateLeafClump(world, leafPosition.add(rand.nextBoolean() ? 1 : -1, 0, rand.nextBoolean() ? 1 : -1), 2);
+        this.generateLeafClump(world, leafPosition, 4.5);
+        for (int i = 0; i < rand.nextInt(2) + 4; i++) {
+            this.generateLeafClump(world, leafPosition.add(rand.nextInt(4) - 2, 0, rand.nextInt(4) - 2), 2);
         }
         for (int i = 0; i < 8; i++) {
             EnumFacing facing = EnumFacing.getHorizontal(i % 4);

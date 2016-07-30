@@ -15,7 +15,6 @@ public class WorldGenTambalocoque extends BasicTreeGen {
 
     @Override
     public boolean generateTree(World world, Random rand, BlockPos position) {
-        position = position.up();
         int trunkHeight = rand.nextInt(7) + 8;
         for (int y = 0; y < trunkHeight + 5; y++) {
             this.setBlockState(world, position.add(0, y, 0), this.logBlock);

@@ -1,7 +1,10 @@
 package com.github.alexthe666.archipelago.world;
 
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.core.ModBlocks;
+import com.github.alexthe666.archipelago.core.ModWorld;
+import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
+import com.github.alexthe666.archipelago.enums.EnumGrassColor;
+import com.google.common.base.Function;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
@@ -13,19 +16,19 @@ import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.github.alexthe666.archipelago.core.ModBlocks;
-import com.github.alexthe666.archipelago.core.ModWorld;
-import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
-import com.github.alexthe666.archipelago.enums.EnumGrassColor;
+import java.util.Random;
 
 public class BiomeGenTropical extends Biome {
     float r, g, b;
     private EnumGrassColor grassColor;
+    private TreeGenerator[] treeGenerators;
 
-    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment) {
+    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
@@ -36,9 +39,10 @@ public class BiomeGenTropical extends Biome {
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
+        this.treeGenerators = treeGenerators;
     }
 
-    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, float r, float g, float b) {
+    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, float r, float g, float b, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
@@ -52,6 +56,7 @@ public class BiomeGenTropical extends Biome {
         this.r = r;
         this.g = g;
         this.b = b;
+        this.treeGenerators = treeGenerators;
     }
 
     @Override
@@ -143,8 +148,37 @@ public class BiomeGenTropical extends Biome {
     @Override
     @SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        double d0 = MathHelper.clamp_float(grassColor.tempature, 0.0F, 1.0F);
-        double d1 = MathHelper.clamp_float(grassColor.humidity, 0.0F, 1.0F);
-        return getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(d0, d1));
+        double temperature = MathHelper.clamp_float(grassColor.tempature, 0.0F, 1.0F);
+        double humidity = MathHelper.clamp_float(grassColor.humidity, 0.0F, 1.0F);
+        return getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(temperature, humidity));
+    }
+
+    @Override
+    public WorldGenAbstractTree genBigTreeChance(Random rand) {
+        if (this.treeGenerators.length > 0) {
+            int chance = 0;
+            for (TreeGenerator generator : this.treeGenerators) {
+                chance += generator.chance;
+            }
+            int chosen = rand.nextInt(chance);
+            chance = 0;
+            for (TreeGenerator generator : this.treeGenerators) {
+                chance += generator.chance;
+                if (chance >= chosen) {
+                    return generator.generator.apply(rand);
+                }
+            }
+        }
+        return super.genBigTreeChance(rand);
+    }
+
+    public static class TreeGenerator {
+        private Function<Random, WorldGenAbstractTree> generator;
+        private int chance;
+
+        public TreeGenerator(Function<Random, WorldGenAbstractTree> generator, int chance) {
+            this.generator = generator;
+            this.chance = chance;
+        }
     }
 }

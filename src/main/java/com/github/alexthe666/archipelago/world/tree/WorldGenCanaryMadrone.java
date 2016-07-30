@@ -14,7 +14,6 @@ public class WorldGenCanaryMadrone extends BasicTreeGen {
 
     @Override
     public boolean generateTree(World world, Random rand, BlockPos position) {
-        position = position.up();
         int trunkHeight = rand.nextInt(2) + 2;
         for (int y = 0; y < trunkHeight; y++) {
             this.setBlockState(world, position.up(y), this.logBlock);

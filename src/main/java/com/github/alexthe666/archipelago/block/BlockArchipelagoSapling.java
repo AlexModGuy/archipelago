@@ -110,7 +110,7 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
             default:
                 break;
         }
-        gen.generate(world, rand, pos.down());
+        gen.generate(world, rand, gen instanceof WorldGenShrub ? pos.down() : pos);
     }
 
     @Override

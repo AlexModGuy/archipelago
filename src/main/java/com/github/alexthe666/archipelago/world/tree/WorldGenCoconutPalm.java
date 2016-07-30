@@ -19,8 +19,6 @@ public class WorldGenCoconutPalm extends BasicTreeGen {
 	@Override
 	public boolean generateTree(World world, Random rand, BlockPos position) {
 		int maxHeight = 7 + rand.nextInt(2);
-		rotation = rand.nextInt(3);
-		System.out.println(rotation);
 		int additiveheight = 0;
 		for (int height = 0; height < maxHeight; height++) {
 			if (additiveheight < 3) {
@@ -32,9 +30,9 @@ public class WorldGenCoconutPalm extends BasicTreeGen {
 					additiveheight++;
 				}
 			}
-			setBlockState(world, position.up(height + 1).north(additiveheight), logBlock);
+			setBlockState(world, position.up(height).north(additiveheight), logBlock);
 		}
-		BlockPos top = position.up(maxHeight + 1).north(additiveheight);
+		BlockPos top = position.up(maxHeight).north(additiveheight);
 		setBlockState(world, top, logBlock);
 		setBlockState(world, top.up(), leavesBlock);
 		setBlockState(world, top.add(1, 0, 0), leavesBlock);
