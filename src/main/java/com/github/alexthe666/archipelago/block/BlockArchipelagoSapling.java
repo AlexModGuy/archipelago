@@ -8,6 +8,8 @@ import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryIslandDatePalm
 import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryMadrone;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCoconutPalm;
 import com.github.alexthe666.archipelago.world.tree.WorldGenHispaniolan;
+import com.github.alexthe666.archipelago.world.tree.WorldGenMangrove;
+import com.github.alexthe666.archipelago.world.tree.WorldGenTambalocoque;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLog;
@@ -89,6 +91,12 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
                 break;
             case HISPANIOLAN_PINE:
                 gen = new WorldGenHispaniolan();
+                break;
+            case TAMBALACOQUE:
+                gen = new WorldGenTambalocoque();
+                break;
+            case MANGROVE:
+                gen = new WorldGenMangrove();
                 break;
             case CORRIOSA:
                 gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.CORRIOSA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
