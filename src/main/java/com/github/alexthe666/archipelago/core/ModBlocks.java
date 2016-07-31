@@ -11,7 +11,9 @@ public class ModBlocks {
 
     public static Block campfire_on;
     public static Block campfire_off;
+    public static Block black_sand;
     public static Block black_sandstone;
+    public static Block volcanic_rock;
 
     public static Block anthurium_andraeanum;
     public static Block bottle_palm;
@@ -132,7 +134,9 @@ public class ModBlocks {
     public static void init() {
         campfire_on = new BlockCampfire(true);
         campfire_off = new BlockCampfire(false);
+        black_sand = new BlockBlackSand();
         black_sandstone = new BlockBlackSandstone();
+        volcanic_rock = new BlockVolcanicStone();
         anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });
         bottle_palm = new BlockTallPlant("bottle_palm", 5, new Biome[] { ModWorld.tropicJungle });
         ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });

@@ -142,6 +142,10 @@ public class BiomeGenTropical extends Biome {
                             depth = rand.nextInt(4) + Math.max(0, y - 63);
                             fillerBlock = fillerBlock.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND ? RED_SANDSTONE : SANDSTONE;
                         }
+                        if (depth == 0 && fillerBlock.getBlock() == ModBlocks.black_sand && noise > 1) {
+                            depth = rand.nextInt(4) + Math.max(0, y - 63);
+                            fillerBlock = ModBlocks.black_sandstone.getDefaultState();
+                        }
                     }
                 }
             }
