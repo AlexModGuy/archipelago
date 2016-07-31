@@ -22,24 +22,24 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
     @Override
     public void render(float partialTicks, WorldClient world, Minecraft mc) {
         GlStateManager.disableTexture2D();
-        Vec3d vec3d = mc.theWorld.getSkyColor(mc.getRenderViewEntity(), partialTicks);
-        float f = (float) vec3d.xCoord;
-        float f1 = (float) vec3d.yCoord;
-        float f2 = (float) vec3d.zCoord;
+        Vec3d skyColour = mc.theWorld.getSkyColor(mc.getRenderViewEntity(), partialTicks);
+        float red = (float) skyColour.xCoord;
+        float green = (float) skyColour.yCoord;
+        float blue = (float) skyColour.zCoord;
         if (mc.gameSettings.anaglyph) {
-            float f3 = (f * 30.0F + f1 * 59.0F + f2 * 11.0F) / 100.0F;
-            float f4 = (f * 30.0F + f1 * 70.0F) / 100.0F;
-            float f5 = (f * 30.0F + f2 * 70.0F) / 100.0F;
-            f = f3;
-            f1 = f4;
-            f2 = f5;
+            float f3 = (red * 30.0F + green * 59.0F + blue * 11.0F) / 100.0F;
+            float f4 = (red * 30.0F + green * 70.0F) / 100.0F;
+            float f5 = (red * 30.0F + blue * 70.0F) / 100.0F;
+            red = f3;
+            green = f4;
+            blue = f5;
         }
-        GlStateManager.color(f, f1, f2);
+        GlStateManager.color(red, green, blue);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         GlStateManager.depthMask(false);
         GlStateManager.enableFog();
-        GlStateManager.color(f, f1, f2);
+        GlStateManager.color(red, green, blue);
 
         if (mc.gameSettings.useVbo && this.getSkyVBO() != null) {
             this.getSkyVBO().bindBuffer();
@@ -77,15 +77,15 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
                 f7 = f10;
                 f8 = f11;
             }
-            vertexbuffer.begin(6, DefaultVertexFormats.POSITION_COLOR);
-            vertexbuffer.pos(0.0D, 100.0D, 0.0D).color(f6, f7, f8, afloat[3]).endVertex();
+            buffer.begin(6, DefaultVertexFormats.POSITION_COLOR);
+            buffer.pos(0.0D, 100.0D, 0.0D).color(f6, f7, f8, afloat[3]).endVertex();
             int j = 16;
 
             for (int l = 0; l <= 16; ++l) {
                 float f21 = (float) l * ((float) Math.PI * 2F) / 16.0F;
                 float f12 = MathHelper.sin(f21);
                 float f13 = MathHelper.cos(f21);
-                vertexbuffer.pos((double) (f12 * 120.0F), (double) (f13 * 120.0F), (double) (-f13 * 40.0F * afloat[3])).color(afloat[0], afloat[1], afloat[2], 0.0F).endVertex();
+                buffer.pos((double) (f12 * 120.0F), (double) (f13 * 120.0F), (double) (-f13 * 40.0F * afloat[3])).color(afloat[0], afloat[1], afloat[2], 0.0F).endVertex();
             }
             tessellator.draw();
             GlStateManager.popMatrix();
@@ -101,11 +101,11 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
         GlStateManager.rotate(mc.theWorld.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
         float f17 = 30.0F;
         mc.renderEngine.bindTexture(SUN_TEXTURES);
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        vertexbuffer.pos((double) (-f17), 100.0D, (double) (-f17)).tex(0.0D, 0.0D).endVertex();
-        vertexbuffer.pos((double) f17, 100.0D, (double) (-f17)).tex(1.0D, 0.0D).endVertex();
-        vertexbuffer.pos((double) f17, 100.0D, (double) f17).tex(1.0D, 1.0D).endVertex();
-        vertexbuffer.pos((double) (-f17), 100.0D, (double) f17).tex(0.0D, 1.0D).endVertex();
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos((double) (-f17), 100.0D, (double) (-f17)).tex(0.0D, 0.0D).endVertex();
+        buffer.pos((double) f17, 100.0D, (double) (-f17)).tex(1.0D, 0.0D).endVertex();
+        buffer.pos((double) f17, 100.0D, (double) f17).tex(1.0D, 1.0D).endVertex();
+        buffer.pos((double) (-f17), 100.0D, (double) f17).tex(0.0D, 1.0D).endVertex();
         tessellator.draw();
         f17 = 30.0F;
         mc.renderEngine.bindTexture(MOON_PHASES_TEXTURES);
@@ -116,11 +116,11 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
         float f23 = (float) (i1) / 2.0F;
         float f24 = (float) (k + 1) / 4.0F;
         float f14 = (float) (i1 + 1) / 2.0F;
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        vertexbuffer.pos((double) (-f17), -100.0D, (double) f17).tex((double) f24, (double) f14).endVertex();
-        vertexbuffer.pos((double) f17, -100.0D, (double) f17).tex((double) f22, (double) f14).endVertex();
-        vertexbuffer.pos((double) f17, -100.0D, (double) (-f17)).tex((double) f22, (double) f23).endVertex();
-        vertexbuffer.pos((double) (-f17), -100.0D, (double) (-f17)).tex((double) f24, (double) f23).endVertex();
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos((double) (-f17), -100.0D, (double) f17).tex((double) f24, (double) f14).endVertex();
+        buffer.pos((double) f17, -100.0D, (double) f17).tex((double) f22, (double) f14).endVertex();
+        buffer.pos((double) f17, -100.0D, (double) (-f17)).tex((double) f22, (double) f23).endVertex();
+        buffer.pos((double) (-f17), -100.0D, (double) (-f17)).tex((double) f24, (double) f23).endVertex();
         tessellator.draw();
         GlStateManager.disableTexture2D();
         float f15 = mc.theWorld.getStarBrightness(partialTicks) * f16;
@@ -166,34 +166,34 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
             float f18 = 1.0F;
             float f19 = -((float) (d0 + 65.0D));
             float f20 = -1.0F;
-            vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-            vertexbuffer.pos(-1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            vertexbuffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+            buffer.pos(-1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
             tessellator.draw();
         }
 
         if (mc.theWorld.provider.isSkyColored()) {
-            GlStateManager.color(f * 0.2F + 0.04F, f1 * 0.2F + 0.04F, f2 * 0.6F + 0.1F);
+            GlStateManager.color(red * 0.2F + 0.04F, green * 0.2F + 0.04F, blue * 0.6F + 0.1F);
         } else {
-            GlStateManager.color(f, f1, f2);
+            GlStateManager.color(red, green, blue);
         }
 
         GlStateManager.pushMatrix();

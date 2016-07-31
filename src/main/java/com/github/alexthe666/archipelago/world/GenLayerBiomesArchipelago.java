@@ -28,7 +28,7 @@ public class GenLayerBiomesArchipelago extends GenLayer {
     }
 
     private Biome getBiome() {
-        if (this.nextInt(4) == 0) {
+        if (this.nextInt(3) == 0) {
             return this.nextInt(10) == 0 ? this.getRandomBiomeWeighted(volcanoBiomes) : this.getRandomBiomeWeighted(islandBiomes);
         } else {
             return this.getRandomBiomeWeighted(oceanBiomes);

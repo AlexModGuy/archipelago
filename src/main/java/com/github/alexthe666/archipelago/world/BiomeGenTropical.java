@@ -76,7 +76,7 @@ public class BiomeGenTropical extends Biome {
         if (this.r == 0 && this.g == 0 && this.b == 0) {
             currentTemperature = currentTemperature / 3.0F;
             currentTemperature = MathHelper.clamp_float(currentTemperature, -1.0F, 1.0F);
-            return MathHelper.hsvToRGB(0.62222224F - currentTemperature * 0.05F, 0.5F + currentTemperature * 0.1F, 1.0F);
+            return MathHelper.hsvToRGB(0.59F - currentTemperature * 0.05F, 0.9F, 1.0F);
         } else {
             return MathHelper.rgb(this.r, this.g, this.b);
         }
@@ -127,7 +127,7 @@ public class BiomeGenTropical extends Biome {
                             chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
                         } else if (y >= seaLevel - 1) {
                             chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
-                        } else {
+                        } else if (y >= seaLevel - 7 - noise) {
                             chunkPrimer.setBlockState(chunkX, y, chunkZ, fillerBlock);
                         }
                     } else if (j > 0) {

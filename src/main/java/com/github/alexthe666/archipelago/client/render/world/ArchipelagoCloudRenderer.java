@@ -21,63 +21,75 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
 
     @Override
     public void render(float partialTicks, WorldClient world, Minecraft mc) {
-        GL11.glPushMatrix();
-        //renderCloudSide(partialTicks, world, mc);
-        GL11.glPopMatrix();
+        GlStateManager.pushMatrix();
+        this.renderCloudSide(partialTicks, world, mc);
+        GlStateManager.popMatrix();
     }
 
     public void renderCloudSide(float partialTicks, WorldClient world, Minecraft mc) {
-        GL11.glEnable(GL11.GL_CULL_FACE);
         Entity entity = mc.getRenderViewEntity();
-        float f = (float) (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks);
-        int i = 32;
-        int j = 8;
+
+        double d2 = (this.getCloudTickCounter() + partialTicks) * 4.0F;
+
+        double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks + d2 * 0.029999999329447746D;
+        double d1 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks;
+        float f = (float) (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks);
+
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         mc.renderEngine.bindTexture(CLOUDS_TEXTURES);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        Vec3d vec3d = mc.theWorld.getCloudColour(partialTicks);
-        float f1 = (float) vec3d.xCoord;
-        float f2 = (float) vec3d.yCoord;
-        float f3 = (float) vec3d.zCoord;
+
+        Vec3d cloudColour = mc.theWorld.getCloudColour(partialTicks);
+        float red = (float) cloudColour.xCoord;
+        float green = (float) cloudColour.yCoord;
+        float blue = (float) cloudColour.zCoord;
+
+        GlStateManager.disableCull();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.alphaFunc(516, 0.1F);
 
         if (mc.gameSettings.anaglyph) {
-            float f4 = (f1 * 30.0F + f2 * 59.0F + f3 * 11.0F) / 100.0F;
-            float f5 = (f1 * 30.0F + f2 * 70.0F) / 100.0F;
-            float f6 = (f1 * 30.0F + f3 * 70.0F) / 100.0F;
-            f1 = f4;
-            f2 = f5;
-            f3 = f6;
+            float anaglyphRed = (red * 30.0F + green * 59.0F + blue * 11.0F) / 100.0F;
+            float anaglyphGreen = (red * 30.0F + green * 70.0F) / 100.0F;
+            float anaglyphBlue = (red * 30.0F + blue * 70.0F) / 100.0F;
+            red = anaglyphRed;
+            green = anaglyphGreen;
+            blue = anaglyphBlue;
         }
 
-        float f10 = 64.8828125E-4F;
-        double d2 = (double) ((float) this.getCloudTickCounter() + partialTicks) * 12;
-        double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * (double) partialTicks + d2 * 0.029999999329447746D;
-        double d1 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double) partialTicks;
+        float textureScale = 4.8828125E-4F * 4.0F;
+
         int k = MathHelper.floor_double(d0 / 2048.0D);
         int l = MathHelper.floor_double(d1 / 2048.0D);
-        d0 = d0 - (double) (k * 2048);
-        d1 = d1 - (double) (l * 2048);
-        float f7 = mc.theWorld.provider.getCloudHeight() - f + 0.33F;
-        float f8 = (float) (d0 * 64.8828125E-4D);
-        float f9 = (float) (d1 * 64.8828125E-4D);
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+        d0 = d0 - (k * 2048);
+        d1 = d1 - (l * 2048);
+        float renderY = f - (mc.theWorld.provider.getCloudHeight() + 0.33F);
+        float f8 = (float) (d0 * textureScale);
+        float f9 = (float) (d1 * textureScale);
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+
+        float alpha = 0.7F;
 
         for (int i1 = -256; i1 < 256; i1 += 32) {
             for (int j1 = -256; j1 < 256; j1 += 32) {
-                vertexbuffer.pos((double) (i1), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-                vertexbuffer.pos((double) (i1 + 32), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-                vertexbuffer.pos((double) (i1 + 32), (double) f7, (double) (j1)).tex((double) ((float) (i1 + 32) * 64.8828125E-4F + f8), (double) ((float) (j1) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
-                vertexbuffer.pos((double) (i1), (double) f7, (double) (j1)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();
+                buffer.pos(i1, renderY, j1 + 32).tex((i1 * textureScale + f8), (j1 + 32) * textureScale + f9).color(red, green, blue, alpha).endVertex();
+                buffer.pos(i1 + 32, renderY, j1 + 32).tex((i1 + 32) * textureScale + f8, (j1 + 32) * textureScale + f9).color(red, green, blue, alpha).endVertex();
+                buffer.pos(i1 + 32, renderY, j1).tex(((i1 + 32) * textureScale + f8), (j1 * textureScale + f9)).color(red, green, blue, alpha).endVertex();
+                buffer.pos(i1, renderY, j1).tex(((i1) * textureScale + f8), j1 * textureScale + f9).color(red, green, blue, alpha).endVertex();
             }
         }
+
         GL11.glScalef(1, -1, 1);
         tessellator.draw();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+        GlStateManager.alphaFunc(516, 0.5F);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.disableBlend();
         GlStateManager.depthMask(true);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_CULL_FACE);
+        GlStateManager.enableCull();
     }
 
     public float getHeightFromCoords(int x, int z, float f) {

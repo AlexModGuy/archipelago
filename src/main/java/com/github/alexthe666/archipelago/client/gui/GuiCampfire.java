@@ -47,6 +47,6 @@ public class GuiCampfire extends GuiContainer {
     }
 
     private int getBurnLeftScaled(int pixels) {
-        return (int) (this.tile.getField(0) / 200.0F * pixels);
+        return (int) (this.tile.getField(0) / 1000.0F * pixels);
     }
 }

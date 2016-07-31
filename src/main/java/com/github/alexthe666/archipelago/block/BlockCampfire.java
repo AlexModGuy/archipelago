@@ -76,7 +76,7 @@ public class BlockCampfire extends BlockContainer {
             TileEntity tile = world.getTileEntity(pos);
             if (tile != null) {
                 if (tile instanceof TileEntityCampfire) {
-                    ((TileEntityCampfire) tile).setField(0, active ? 200 : 0);
+                    ((TileEntityCampfire) tile).setField(0, active ? 1000 : 0);
                 }
                 tile.validate();
                 world.setTileEntity(pos, tile);

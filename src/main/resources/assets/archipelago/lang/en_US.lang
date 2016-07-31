@@ -1,5 +1,7 @@
 itemGroup.archipelago=Archipelago
 
+fluid.tropical_water=Tropical Water
+
 tile.archipelago.tropical_water.name=Water
 tile.archipelago.tropical_water_seafoam.name=Water
 
