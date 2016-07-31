@@ -6,7 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
@@ -40,10 +39,10 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
     private NoiseGeneratorOctaves field_185991_j;
     private NoiseGeneratorOctaves field_185992_k;
     private NoiseGeneratorOctaves field_185993_l;
-    private NoiseGeneratorPerlin field_185994_m;
+    private NoiseGeneratorPerlin surfaceNoise;
     private ChunkProviderSettings settings;
     private IBlockState oceanBlock = ModFluids.tropical_water.getDefaultState();
-    private double[] noise = new double[256];
+    private double[] depthBuffer = new double[256];
     private Biome[] biomesForGeneration;
     private MapGenBase caveGenerator = new MapGenBlueHoles();
 
@@ -54,7 +53,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         this.field_185991_j = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_185992_k = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_185993_l = new NoiseGeneratorOctaves(this.rand, 8);
-        this.field_185994_m = new NoiseGeneratorPerlin(this.rand, 4);
+        this.surfaceNoise = new NoiseGeneratorPerlin(this.rand, 4);
         this.field_185983_b = new NoiseGeneratorOctaves(this.rand, 10);
         this.field_185984_c = new NoiseGeneratorOctaves(this.rand, 16);
         this.field_185985_d = new NoiseGeneratorOctaves(this.rand, 8);
@@ -66,12 +65,12 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                 this.field_185999_r[i + 2 + (j + 2) * 5] = f;
             }
         }
-        net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld ctx = new net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld(this.field_185991_j, this.field_185992_k, this.field_185993_l, this.field_185994_m, this.field_185983_b, this.field_185984_c, this.field_185985_d);
+        net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld ctx = new net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld(this.field_185991_j, this.field_185992_k, this.field_185993_l, this.surfaceNoise, this.field_185983_b, this.field_185984_c, this.field_185985_d);
         ctx = net.minecraftforge.event.terraingen.TerrainGen.getModdedNoiseGenerators(worldIn, this.rand, ctx);
         this.field_185991_j = ctx.getLPerlin1();
         this.field_185992_k = ctx.getLPerlin2();
         this.field_185993_l = ctx.getPerlin();
-        this.field_185994_m = ctx.getHeight();
+        this.surfaceNoise = ctx.getHeight();
         this.field_185983_b = ctx.getScale();
         this.field_185984_c = ctx.getDepth();
         this.field_185985_d = ctx.getForest();
@@ -150,13 +149,11 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
     public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, Biome[] biomes) {
         if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj))
             return;
-        double d0 = 0.03125D;
-        this.noise = this.field_185994_m.getRegion(this.noise, x * 16, z * 16, 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
-
+        this.depthBuffer = this.surfaceNoise.getRegion(this.depthBuffer, x * 16, z * 16, 16, 16, 0.0625D, 0.0625D, 1.0D);
         for (int blockX = 0; blockX < 16; ++blockX) {
             for (int blockZ = 0; blockZ < 16; ++blockZ) {
                 Biome biome = biomes[blockZ + blockX * 16];
-                biome.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + blockX, z * 16 + blockZ, this.noise[blockZ + blockX * 16]);
+                biome.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + blockX, z * 16 + blockZ, this.depthBuffer[blockZ + blockX * 16]);
             }
         }
     }
@@ -164,14 +161,13 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
     @Override
     public Chunk provideChunk(int x, int z) {
         this.rand.setSeed(x * 341873128712L + z * 132897987541L);
-        ChunkPrimer chunkprimer = new ChunkPrimer();
-        this.setBlocksInChunk(x, z, chunkprimer);
+        ChunkPrimer primer = new ChunkPrimer();
+        this.setBlocksInChunk(x, z, primer);
         this.biomesForGeneration = this.worldObj.getBiomeProvider().loadBlockGeneratorData(this.biomesForGeneration, x * 16, z * 16, 16, 16);
-        this.replaceBiomeBlocks(x, z, chunkprimer, this.biomesForGeneration);
-        this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
-        Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
+        this.replaceBiomeBlocks(x, z, primer, this.biomesForGeneration);
+        this.caveGenerator.generate(this.worldObj, x, z, primer);
+        Chunk chunk = new Chunk(this.worldObj, primer, x, z);
         byte[] biomes = chunk.getBiomeArray();
-
         for (int i = 0; i < biomes.length; ++i) {
             biomes[i] = (byte) Biome.getIdForBiome(this.biomesForGeneration[i]);
         }

@@ -12,12 +12,12 @@ public abstract class GenLayerArchipelago extends GenLayer {
 
     public static GenLayer[] initializeAllBiomeGenerators(long seed) {
         GenLayer biomesIndex = new GenLayerBiomesArchipelago(1L);
-        biomesIndex = new GenLayerZoom(1000L, biomesIndex);
-        biomesIndex = new GenLayerZoom(1001L, biomesIndex);
+        biomesIndex = new GenLayerFuzzyZoom(1000L, biomesIndex);
+        biomesIndex = new GenLayerFuzzyZoom(1001L, biomesIndex);
         biomesIndex = new GenLayerFuzzyZoom(1002L, biomesIndex);
         biomesIndex = new GenLayerShoreArchipelago(50L, biomesIndex);
-        biomesIndex = new GenLayerFuzzyZoom(1003L, biomesIndex);
-        biomesIndex = new GenLayerFuzzyZoom(1004L, biomesIndex);
+        biomesIndex = new GenLayerZoom(1003L, biomesIndex);
+        biomesIndex = new GenLayerZoom(1004L, biomesIndex);
         GenLayer zoom = new GenLayerVoronoiZoom(45L, biomesIndex);
         biomesIndex.initWorldGenSeed(seed);
         zoom.initWorldGenSeed(seed);

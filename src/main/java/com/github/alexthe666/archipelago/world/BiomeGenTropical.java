@@ -93,55 +93,53 @@ public class BiomeGenTropical extends Biome {
     }
 
     @Override
-    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimer, int x, int z, double noiseVal) {
-        int seaLevel = worldIn.getSeaLevel();
+    public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimer, int chunkZ, int chunkX, double noiseVal) {
+        int seaLevel = world.getSeaLevel();
         IBlockState topBlock = this.topBlock;
         IBlockState fillerBlock = this.fillerBlock;
-        int j = -1;
+        int depth = -1;
         int noise = (int) (noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
-        int chunkX = x & 15;
-        int chunkZ = z & 15;
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-
+        int z = chunkZ & 15;
+        int x = chunkX & 15;
         for (int y = 255; y >= 0; --y) {
             if (y <= rand.nextInt(5)) {
-                chunkPrimer.setBlockState(chunkX, y, chunkZ, BEDROCK);
+                chunkPrimer.setBlockState(x, y, z, BEDROCK);
             } else {
-                IBlockState prevState = chunkPrimer.getBlockState(chunkX, y, chunkZ);
-
-                if (prevState.getMaterial() == Material.AIR || prevState.getMaterial() == Material.WATER) {
-                    j = -1;
-                } else if (prevState.getBlock() == Blocks.STONE) {
-                    if (j == -1) {
+                IBlockState state = chunkPrimer.getBlockState(x, y, z);
+                if (state.getMaterial() == Material.AIR) {
+                    depth = -1;
+                } else if (state.getBlock() == Blocks.STONE) {
+                    if (depth == -1) {
+                        if (noise <= 0) {
+                            topBlock = AIR;
+                            fillerBlock = STONE;
+                        } else if (y >= seaLevel - 4 && y <= seaLevel + 1) {
+                            topBlock = this.topBlock;
+                            fillerBlock = this.fillerBlock;
+                        }
                         if (y < seaLevel && (topBlock == null || topBlock.getMaterial() == Material.AIR)) {
-                            if (this.getFloatTemperature(pos.setPos(x, y, z)) < 0.15F) {
-                                topBlock = ICE;
-                            } else {
-                                topBlock = WATER;
-                            }
+                            topBlock = WATER;
                         }
-
-                        j = noise;
-
-                        if (y <= seaLevel - 1) {
-                            topBlock = Blocks.SAND.getDefaultState();
-                            fillerBlock = topBlock;
-                        }
+                        depth = noise;
                         if (y < seaLevel - 1 && this == ModWorld.tropicReef) {
                             topBlock = rand.nextInt(4) == 0 ? Blocks.SAND.getDefaultState() : ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9));
-                            chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
+                            chunkPrimer.setBlockState(x, y, z, topBlock);
+                        } else if (y <= seaLevel) {
+                            topBlock = Blocks.SAND.getDefaultState();
+                            fillerBlock = topBlock;
+                            chunkPrimer.setBlockState(x, y, z, topBlock);
                         } else if (y >= seaLevel - 1) {
-                            chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
-                        } else if (y >= seaLevel - 7 - noise) {
-                            chunkPrimer.setBlockState(chunkX, y, chunkZ, fillerBlock);
+                            chunkPrimer.setBlockState(x, y, z, topBlock);
+                        } else if (y < seaLevel - 7 - noise) {
+                            chunkPrimer.setBlockState(x, y, z, fillerBlock);
                         } else {
-                            chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
+                            chunkPrimer.setBlockState(x, y, z, fillerBlock);
                         }
-                    } else if (j > 0) {
-                        --j;
-                        chunkPrimer.setBlockState(chunkX, y, chunkZ, fillerBlock);
-                        if (j == 0 && fillerBlock.getBlock() == Blocks.SAND) {
-                            j = rand.nextInt(4) + Math.max(0, y - 63);
+                    } else if (depth > 0) {
+                        --depth;
+                        chunkPrimer.setBlockState(x, y, z, fillerBlock);
+                        if (depth == 0 && fillerBlock.getBlock() == Blocks.SAND && noise > 1) {
+                            depth = rand.nextInt(4) + Math.max(0, y - 63);
                             fillerBlock = fillerBlock.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND ? RED_SANDSTONE : SANDSTONE;
                         }
                     }
