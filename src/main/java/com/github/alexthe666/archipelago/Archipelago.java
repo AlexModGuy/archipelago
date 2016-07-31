@@ -8,6 +8,7 @@ import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.core.ModItems;
 import com.github.alexthe666.archipelago.core.ModRecipes;
 import com.github.alexthe666.archipelago.core.ModWorld;
+import com.github.alexthe666.archipelago.enums.TropicBiomeSediment;
 import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import com.github.alexthe666.archipelago.event.server.ServerEvents;
 import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
@@ -71,6 +72,7 @@ public class Archipelago {
         ModWorld.init();
         TropicTreeType.init();
         ModBlocks.init();
+        TropicBiomeSediment.init();
         ModRecipes.init();
         ModEntities.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
