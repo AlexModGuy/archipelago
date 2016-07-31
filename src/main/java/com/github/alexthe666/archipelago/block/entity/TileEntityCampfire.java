@@ -188,9 +188,9 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
         boolean dirty = false;
         if (!this.worldObj.isRemote) {
             if (this.burnTime > 0) {
-                --this.burnTime;
                 if (this.stacks[0] != null) {
                     if (this.canCook()) {
+                        --this.burnTime;
                         if (++this.cookTime >= 200) {
                             this.cookTime = 0;
                             this.cookItem();

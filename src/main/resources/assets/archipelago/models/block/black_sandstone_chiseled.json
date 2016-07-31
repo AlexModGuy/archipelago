@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "archipelago:blocks/black_sandstone_top",
+        "side": "archipelago:blocks/black_sandstone_side_chiseled"
+    }
+}
