@@ -1,14 +1,9 @@
 package com.github.alexthe666.archipelago.core;
 
-import com.github.alexthe666.archipelago.block.BlockCampfire;
-import com.github.alexthe666.archipelago.block.BlockCoralRock;
-import com.github.alexthe666.archipelago.block.BlockGlowingCoral;
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.block.BlockShortCoral;
-import com.github.alexthe666.archipelago.block.BlockShortPlant;
-import com.github.alexthe666.archipelago.block.BlockTallPlant;
+import com.github.alexthe666.archipelago.block.*;
 import com.github.alexthe666.archipelago.block.entity.TileEntityCampfire;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBanner;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -16,6 +11,7 @@ public class ModBlocks {
 
     public static Block campfire_on;
     public static Block campfire_off;
+    public static Block black_sandstone;
 
     public static Block anthurium_andraeanum;
     public static Block bottle_palm;
@@ -136,6 +132,7 @@ public class ModBlocks {
     public static void init() {
         campfire_on = new BlockCampfire(true);
         campfire_off = new BlockCampfire(false);
+        black_sandstone = new BlockBlackSandstone();
         anthurium_andraeanum = new BlockShortPlant("anthurium_andraeanum", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });
         bottle_palm = new BlockTallPlant("bottle_palm", 5, new Biome[] { ModWorld.tropicJungle });
         ceratozamia_mexicana = new BlockTallPlant("ceratozamia_mexicana", 5, new Biome[] { ModWorld.tropicJungle, ModWorld.tropicShrubland });

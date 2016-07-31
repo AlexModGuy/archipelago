@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "bottom": "blocks/black_sandstone_bottom",
+        "top": "blocks/black_sandstone_top",
+        "side": "blocks/black_sandstone_side"
+    }
+}
