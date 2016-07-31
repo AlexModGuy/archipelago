@@ -109,18 +109,10 @@ public class BiomeGenTropical extends Biome {
             } else {
                 IBlockState prevState = chunkPrimer.getBlockState(chunkX, y, chunkZ);
 
-                if (prevState.getMaterial() == Material.AIR) {
+                if (prevState.getMaterial() == Material.AIR || prevState.getMaterial() == Material.WATER) {
                     j = -1;
                 } else if (prevState.getBlock() == Blocks.STONE) {
                     if (j == -1) {
-                        if (noise <= 0) {
-                            topBlock = AIR;
-                            fillerBlock = STONE;
-                        } else if (y >= seaLevel - 13 && y <= seaLevel + 1) {
-                            topBlock = Blocks.SAND.getDefaultState();
-                            fillerBlock = Blocks.SAND.getDefaultState();
-                        }
-
                         if (y < seaLevel && (topBlock == null || topBlock.getMaterial() == Material.AIR)) {
                             if (this.getFloatTemperature(pos.setPos(x, y, z)) < 0.15F) {
                                 topBlock = ICE;
@@ -135,17 +127,12 @@ public class BiomeGenTropical extends Biome {
                             chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
                         } else if (y >= seaLevel - 1) {
                             chunkPrimer.setBlockState(chunkX, y, chunkZ, topBlock);
-                        } else if (y < seaLevel - 7 - noise) {
-                            topBlock = AIR;
-                            fillerBlock = STONE;
-                            chunkPrimer.setBlockState(chunkX, y, chunkZ, Blocks.SAND.getDefaultState());
                         } else {
                             chunkPrimer.setBlockState(chunkX, y, chunkZ, fillerBlock);
                         }
                     } else if (j > 0) {
                         --j;
                         chunkPrimer.setBlockState(chunkX, y, chunkZ, fillerBlock);
-
                         if (j == 0 && fillerBlock.getBlock() == Blocks.SAND) {
                             j = rand.nextInt(4) + Math.max(0, y - 63);
                             fillerBlock = fillerBlock.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND ? RED_SANDSTONE : SANDSTONE;

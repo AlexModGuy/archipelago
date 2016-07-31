@@ -16,8 +16,8 @@ public class TeleporterArchipelago extends Teleporter {
     }
 
     @Override
-    public boolean placeInExistingPortal(Entity entityIn, float rotationYaw) {
-        this.placeInPortal(entityIn, entityIn.posX, entityIn.posY, entityIn.posZ, entityIn.rotationYaw);
+    public boolean placeInExistingPortal(Entity entity, float rotationYaw) {
+        this.placeInPortal(entity, entity.posX, entity.posY, entity.posZ, entity.rotationYaw);
         return false;
     }
 

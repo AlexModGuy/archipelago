@@ -49,17 +49,21 @@ public class ArchipelagoHooks {
     }
 
     public static void rebuildChunk(CompiledChunk chunk, ChunkCache region, BlockPos pos1, BlockPos pos2) {
-        synchronized (SPECIAL_RENDERER_LOCK) {
-            if (!region.extendedLevelsInChunkCache()) {
-                List<BlockPos> blocks = new LinkedList<>();
-                for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
-                    IBlockState state = region.getBlockState(pos);
-                    Block block = state.getBlock();
-                    if (block instanceof SpecialRenderedBlock) {
-                        blocks.add(new BlockPos(pos));
-                    }
+        if (!region.extendedLevelsInChunkCache()) {
+            List<BlockPos> blocks = new LinkedList<>();
+            for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
+                IBlockState state = region.getBlockState(pos);
+                Block block = state.getBlock();
+                if (block instanceof SpecialRenderedBlock) {
+                    blocks.add(new BlockPos(pos));
                 }
-                SPECIAL_RENDERERS.put(chunk, blocks);
+            }
+            synchronized (SPECIAL_RENDERER_LOCK) {
+                if (blocks.size() == 0) {
+                    SPECIAL_RENDERERS.remove(chunk);
+                } else {
+                    SPECIAL_RENDERERS.put(chunk, blocks);
+                }
             }
         }
     }
@@ -72,14 +76,14 @@ public class ArchipelagoHooks {
 
     public static void drawSpecialRenderers(ICamera camera) {
         if (MinecraftForgeClient.getRenderPass() == 0) {
+            World world = MC.theWorld;
+            EntityPlayerSP player = MC.thePlayer;
             synchronized (SPECIAL_RENDERER_LOCK) {
-                World world = MC.theWorld;
-                EntityPlayerSP player = MC.thePlayer;
                 for (Map.Entry<CompiledChunk, List<BlockPos>> entry : SPECIAL_RENDERERS.entrySet()) {
                     for (BlockPos pos : entry.getValue()) {
-                        IBlockState state = world.getBlockState(pos);
-                        if (camera.isBoundingBoxInFrustum(state.getBlock() instanceof BlockGrowingSeaweed ? BLOCK_BOUNDS_KELP.offset(pos) : BLOCK_BOUNDS.offset(pos))) {
-                            if (player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < 16384) {
+                        if (player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < 16384) {
+                            IBlockState state = world.getBlockState(pos);
+                            if (camera.isBoundingBoxInFrustum(state.getBlock() instanceof BlockGrowingSeaweed ? BLOCK_BOUNDS_KELP.offset(pos) : BLOCK_BOUNDS.offset(pos))) {
                                 Block block = state.getBlock();
                                 if (block instanceof SpecialRenderedBlock) {
                                     SpecialRenderedBlock specialRenderedBlock = (SpecialRenderedBlock) block;

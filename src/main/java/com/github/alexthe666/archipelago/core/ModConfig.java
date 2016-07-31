@@ -3,7 +3,6 @@ package com.github.alexthe666.archipelago.core;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModConfig {
-
     public static int ARCHIPELAGO_DIMENSION_ID;
     public static int tropicOceanId;
     public static int tropicShallowsId;
@@ -20,6 +19,8 @@ public class ModConfig {
     public static int tropicBlueHolesId;
     public static int tropicTrenchId;
     public static int tropicKelpForestId;
+    public static int tropicRiverId;
+    public static int blackSandBeachId;
 
     public static void load(Configuration config) {
         ARCHIPELAGO_DIMENSION_ID = config.get("ID's", "Archipelago Dimension ID", 137).getInt();
@@ -38,5 +39,7 @@ public class ModConfig {
         tropicBlueHolesId = config.get("ID's", "Tropic Blue Holes Biome ID", 180).getInt();
         tropicTrenchId = config.get("ID's", "Tropic Trench Biome ID", 181).getInt();
         tropicKelpForestId = config.get("ID's", "Tropic Kelp Forest Biome ID", 182).getInt();
+        tropicRiverId = config.get("ID's", "Tropic River Biome ID", 183).getInt();
+        blackSandBeachId = config.get("ID's", "Black Sand Beach Biome ID", 184).getInt();
     }
 }

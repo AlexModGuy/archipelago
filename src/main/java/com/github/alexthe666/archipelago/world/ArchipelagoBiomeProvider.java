@@ -20,14 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WorldChunkManagerArchipelago extends BiomeProvider {
-
+public class ArchipelagoBiomeProvider extends BiomeProvider {
     private GenLayer genBiomes;
     private GenLayer biomeIndexLayer;
     private BiomeCache biomeCache;
     private List<Biome> biomesToSpawnIn;
 
-    public WorldChunkManagerArchipelago() {
+    public ArchipelagoBiomeProvider() {
         this.biomeCache = new BiomeCache(this);
         this.biomesToSpawnIn = new ArrayList<>();
         this.biomesToSpawnIn.add(ModWorld.tropicGrassland);
@@ -36,12 +35,12 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
         this.biomesToSpawnIn.add(ModWorld.dryPeaks);
         this.biomesToSpawnIn.add(ModWorld.dryScrubland);
         this.biomesToSpawnIn.add(ModWorld.ashField);
-        this.biomesToSpawnIn.add(ModWorld.volcano);
+        this.biomesToSpawnIn.add(ModWorld.tropicBeach);
     }
 
-    public WorldChunkManagerArchipelago(long seed, WorldType worldtype) {
+    public ArchipelagoBiomeProvider(long seed, WorldType worldtype) {
         this();
-        GenLayer[] layers = GenLayerArchipelago.initializeAllBiomeGenerators(seed, worldtype, null);
+        GenLayer[] layers = GenLayerArchipelago.initializeAllBiomeGenerators(seed);
         this.genBiomes = layers[0];
         this.biomeIndexLayer = layers[1];
     }

@@ -15,6 +15,7 @@ import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenMegaJungle;
 import net.minecraft.world.gen.feature.WorldGenSavannaTree;
 import net.minecraft.world.gen.feature.WorldGenShrub;
@@ -39,10 +40,14 @@ public class ModWorld {
     public static BiomeGenTropical dryScrubland;
     public static BiomeGenTropical ashField;
     public static BiomeGenTropical volcano;
+    public static BiomeGenTropical tropicRiver;
+    public static BiomeGenTropical tropicBeach;
+    public static BiomeGenTropical blackSandBeach;
 
     public static void init() {
         tropicOcean = new BiomeGenTropical("Tropic Ocean", ModConfig.tropicOceanId, -1.9F, 0.1F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY).setGenerationChance(5);
         tropicShallows = new BiomeGenTropical("Tropic Shallows", ModConfig.tropicShallowsId, -0.5F, -0.015F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
+        tropicRiver = new BiomeGenTropical("Tropic River", ModConfig.tropicRiverId, -0.5F, -0.001F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicReef = new BiomeGenTropical("Tropic Reef", ModConfig.tropicReefId, -1.0F, 0.4F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicSeaGrassBed = new BiomeGenTropical("Tropic Sea Grass Bed", ModConfig.tropicSeaGrassBedId, -0.5F, -0.025F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicBlueHoles = new BiomeGenTropical("Tropic Bule Holes", ModConfig.tropicBlueHolesId, -0.5F, -0.015F, 0x479AFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
@@ -55,6 +60,8 @@ public class ModWorld {
         dryScrubland = new BiomeGenTropical("Dry Scrublands", ModConfig.dryScrublandId, 0.175F, 0.05F, 0x46FFFF, TropicGrassColor.DRY, TropicBiomeSediment.GRASSY, new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenSavannaTree(false), 10), new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenCanaryIslandDatePalm(), 5)).setTreesPerChunk(1).setGenerationChance(5);
         ashField = new BiomeGenTropical("Ash Field", ModConfig.ashFieldId, 0.175F, 0.05F, 0x46FFFF, TropicGrassColor.BURNT, TropicBiomeSediment.GRASSY);
         volcano = new BiomeGenTropical("Volcano", ModConfig.volcanoId, 0.1F, 0.05F, 0x46FFFF, TropicGrassColor.BURNT, TropicBiomeSediment.GRASSY);
+        tropicBeach = new BiomeGenTropical("Tropic Beach", ModConfig.tropicBeachId, 0.1F, 0.05F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
+        blackSandBeach = new BiomeGenTropical("Black Sand Beach", ModConfig.blackSandBeachId, 0.1F, 0.05F, 0x46FFFF, TropicGrassColor.BURNT, TropicBiomeSediment.SANDY);
 
         BiomeManager.oceanBiomes.add(tropicOcean);
         BiomeManager.oceanBiomes.add(tropicShallows);

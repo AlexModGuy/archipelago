@@ -20,7 +20,7 @@ public class WorldProviderArchipelago extends WorldProvider {
 
     @Override
     public void createBiomeProvider() {
-        this.biomeProvider = new WorldChunkManagerArchipelago(this.worldObj.getSeed(), this.worldObj.getWorldType());
+        this.biomeProvider = new ArchipelagoBiomeProvider(this.worldObj.getSeed(), this.worldObj.getWorldType());
     }
 
     @Override

@@ -44,7 +44,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
     private NoiseGeneratorPerlin field_185994_m;
     private ChunkProviderSettings settings;
     private IBlockState oceanBlock = ModFluids.tropical_water.getDefaultState();
-    private double[] field_186002_u = new double[256];
+    private double[] noise = new double[256];
     private Biome[] biomesForGeneration;
     private MapGenBase caveGenerator = new MapGenBlueHoles();
 
@@ -152,12 +152,12 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj))
             return;
         double d0 = 0.03125D;
-        this.field_186002_u = this.field_185994_m.getRegion(this.field_186002_u, x * 16, z * 16, 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+        this.noise = this.field_185994_m.getRegion(this.noise, x * 16, z * 16, 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
-        for (int i = 0; i < 16; ++i) {
-            for (int j = 0; j < 16; ++j) {
-                Biome biome = biomes[j + i * 16];
-                biome.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + i, z * 16 + j, this.field_186002_u[j + i * 16]);
+        for (int blockX = 0; blockX < 16; ++blockX) {
+            for (int blockZ = 0; blockZ < 16; ++blockZ) {
+                Biome biome = biomes[blockZ + blockX * 16];
+                biome.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + blockX, z * 16 + blockZ, this.noise[blockZ + blockX * 16]);
             }
         }
     }
