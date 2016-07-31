@@ -1,8 +1,7 @@
 package com.github.alexthe666.archipelago.block;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.enums.EnumTrees;
-import com.github.alexthe666.archipelago.world.tree.BasicTreeGen;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCalophyllum;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryIslandDatePalm;
 import com.github.alexthe666.archipelago.world.tree.WorldGenCanaryMadrone;
@@ -35,9 +34,9 @@ import java.util.Random;
 public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
     protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
-    private EnumTrees treeType;
+    private TropicTreeType treeType;
 
-    public BlockArchipelagoSapling(EnumTrees tree) {
+    public BlockArchipelagoSapling(TropicTreeType tree) {
         this.setSoundType(SoundType.PLANT);
         this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
         this.setCreativeTab(Archipelago.tab);
@@ -76,7 +75,7 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
 
         if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, pos))
             return;
-        switch (treeType) {
+        switch (this.treeType) {
             case CANARY_ISLAND_DATE_PALM:
                 gen = new WorldGenCanaryIslandDatePalm();
                 break;
@@ -99,13 +98,13 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
                 gen = new WorldGenMangrove();
                 break;
             case CORRIOSA:
-                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.CORRIOSA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
+                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), TropicTreeType.CORRIOSA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
                 break;
             case GALAPAGOS_MICONIA:
-                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.GALAPAGOS_MICONIA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
+                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), TropicTreeType.GALAPAGOS_MICONIA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
                 break;
             case TABERNAEMONTANA_CERIFERA:
-                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), EnumTrees.TABERNAEMONTANA_CERIFERA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
+                gen = new WorldGenShrub(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE), TropicTreeType.TABERNAEMONTANA_CERIFERA.leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
                 break;
             default:
                 break;

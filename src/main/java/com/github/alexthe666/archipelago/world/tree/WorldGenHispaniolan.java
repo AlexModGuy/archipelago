@@ -1,6 +1,6 @@
 package com.github.alexthe666.archipelago.world.tree;
 
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class WorldGenHispaniolan extends BasicTreeGen {
     public WorldGenHispaniolan() {
-        this.leavesBlock = EnumTrees.HISPANIOLAN_PINE.leaves.getDefaultState();
-        this.logBlock = EnumTrees.HISPANIOLAN_PINE.log.getDefaultState();
+        this.leavesBlock = TropicTreeType.HISPANIOLAN_PINE.leaves.getDefaultState();
+        this.logBlock = TropicTreeType.HISPANIOLAN_PINE.log.getDefaultState();
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.github.alexthe666.archipelago.world;
 
-import java.util.List;
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.core.ModFluids;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
@@ -23,7 +21,8 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.common.BiomeManager;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
+import java.util.List;
+import java.util.Random;
 
 public class ChunkGeneratorArchipelago implements IChunkGenerator {
     protected static final IBlockState stone = Blocks.STONE.getDefaultState();
@@ -68,7 +67,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
                 this.field_185999_r[i + 2 + (j + 2) * 5] = f;
             }
         }
-        net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld ctx = new net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld(field_185991_j, field_185992_k, field_185993_l, field_185994_m, field_185983_b, field_185984_c, field_185985_d);
+        net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld ctx = new net.minecraftforge.event.terraingen.InitNoiseGensEvent.ContextOverworld(this.field_185991_j, this.field_185992_k, this.field_185993_l, this.field_185994_m, this.field_185983_b, this.field_185984_c, this.field_185985_d);
         ctx = net.minecraftforge.event.terraingen.TerrainGen.getModdedNoiseGenerators(worldIn, this.rand, ctx);
         this.field_185991_j = ctx.getLPerlin1();
         this.field_185992_k = ctx.getLPerlin2();
@@ -93,7 +92,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         fact.seaLevel = 63;
         fact.biomeSize = 6;
         this.settings = fact.build();
-        caveGenerator = net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(caveGenerator, net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE);
+        this.caveGenerator = net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(this.caveGenerator, net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE);
     }
 
     public void setBlocksInChunk(int x, int z, ChunkPrimer primer) {
@@ -283,7 +282,7 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         this.rand.setSeed(x * k + z * l ^ this.worldObj.getSeed());
         boolean flag = false;
         ChunkPos chunkcoordintpair = new ChunkPos(x, z);
-        if (this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0 && !BiomeManager.oceanBiomes.contains(Biome)){
+        if (this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0 && !BiomeManager.oceanBiomes.contains(Biome)) {
             if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE)) {
                 int i1 = this.rand.nextInt(16) + 8;
                 int j1 = this.rand.nextInt(256);

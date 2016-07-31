@@ -12,7 +12,11 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -30,7 +34,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -39,7 +42,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Random;
 
-public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBlock {
+public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlock {
     public static final PropertyEnum<Part> PART = PropertyEnum.create("part", Part.class);
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
@@ -99,7 +102,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 
     @Override
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
-        return canGrow(worldIn, pos);
+        return this.canGrow(worldIn, pos);
     }
 
     public boolean canGrow(World world, BlockPos pos) {
@@ -123,7 +126,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
         IBlockState blockstate = world.getBlockState(pos);
         IBlockState blockstate1 = world.getBlockState(pos.down());
         if (rand.nextInt(3) == 0) {
-            if (canGrow(world, pos) && world.getBlockState(pos.up()).getBlock() != this) {
+            if (this.canGrow(world, pos) && world.getBlockState(pos.up()).getBlock() != this) {
                 world.setBlockState(pos.up(), blockstate.withProperty(PART, Part.UPPER), 2);
             }
         }
@@ -213,7 +216,7 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < this.height; y++) {
             if (state.getBlock() == this && state.getValue(PART) != Part.LOWER && world.getBlockState(pos.up(y)).getBlock() == this)
                 world.setBlockToAir(pos.up(y));
         }
@@ -224,8 +227,8 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
         if (state.getBlock() == this && state.getValue(PART) == Part.LOWER) {
             if (!worldIn.isRemote && !worldIn.restoringBlockSnapshots) {
-                java.util.List<ItemStack> items = getDrops(worldIn, pos, state, fortune);
-                chance = net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, fortune, chance, false, harvesters.get());
+                java.util.List<ItemStack> items = this.getDrops(worldIn, pos, state, fortune);
+                chance = net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, fortune, chance, false, this.harvesters.get());
 
                 for (ItemStack item : items) {
                     if (worldIn.rand.nextFloat() <= chance) {
@@ -271,13 +274,13 @@ public class BlockGrowingSeaweed extends BlockBush implements ISpecialRenderedBl
             while (state.getBlock() instanceof BlockGrowingSeaweed) {
                 Part part = state.getValue(PART);
                 int ordinal = part.ordinal();
-                if (sprite[ordinal] == null) {
-                    TextureAtlasSprite sprite = MC.getTextureMapBlocks().getTextureExtry(Archipelago.MODID + ":blocks/" + name + "_" + (2 - ordinal));
+                if (this.sprite[ordinal] == null) {
+                    TextureAtlasSprite sprite = MC.getTextureMapBlocks().getTextureExtry(Archipelago.MODID + ":blocks/" + this.name + "_" + (2 - ordinal));
                     this.sprite[ordinal] = sprite;
-                    minU[ordinal] = sprite.getMinU();
-                    minV[ordinal] = sprite.getMinV();
-                    maxU[ordinal] = sprite.getMaxU();
-                    maxV[ordinal] = sprite.getMaxV();
+                    this.minU[ordinal] = sprite.getMinU();
+                    this.minV[ordinal] = sprite.getMinV();
+                    this.maxU[ordinal] = sprite.getMaxU();
+                    this.maxV[ordinal] = sprite.getMaxV();
                 }
                 float minU = this.minU[ordinal];
                 float minV = this.minV[ordinal];

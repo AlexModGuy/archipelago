@@ -2,17 +2,13 @@ package com.github.alexthe666.archipelago.entity.living;
 
 import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
 import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWaterTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableList;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class EntityClownfish extends EntityAquaticAnimal {
@@ -40,10 +36,12 @@ public class EntityClownfish extends EntityAquaticAnimal {
         return 0.025;
     }
 
-    public void onSpawn(){
+    @Override
+    public void onSpawn() {
         this.setVariant(new Random().nextInt(3));
     }
 
+    @Override
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
         this.entityDropItem(new ItemStack(Items.FISH, 1, 2), 0);
     }

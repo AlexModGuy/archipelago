@@ -1,9 +1,8 @@
 package com.github.alexthe666.archipelago.core;
 
-import net.minecraft.item.Item;
-
 import com.github.alexthe666.archipelago.item.ItemBasic;
 import com.github.alexthe666.archipelago.item.ItemSunstoneStaff;
+import net.minecraft.item.Item;
 
 public class ModItems {
 
@@ -17,5 +16,4 @@ public class ModItems {
         sunstone_staff_broken = new ItemSunstoneStaff(true);
         // FluidRegistry.addBucketForFluid(ModFluids.fluid_tropical_water);
     }
-
 }

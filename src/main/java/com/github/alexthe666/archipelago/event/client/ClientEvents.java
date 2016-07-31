@@ -1,5 +1,9 @@
 package com.github.alexthe666.archipelago.event.client;
 
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.block.BlockShortCoral;
+import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -14,13 +18,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import org.lwjgl.opengl.GL11;
-
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.block.BlockShortCoral;
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
 
 public class ClientEvents {
 

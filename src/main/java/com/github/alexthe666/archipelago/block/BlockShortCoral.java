@@ -10,7 +10,11 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -33,7 +37,7 @@ import org.lwjgl.opengl.GL11;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock {
+public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
     private String name;
@@ -97,7 +101,7 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return checkCanStay(world.getBlockState(pos.down()), world.getBlockState(pos.up())) && world.getBlockState(pos).getMaterial() == Material.WATER;
+        return this.checkCanStay(world.getBlockState(pos.down()), world.getBlockState(pos.up())) && world.getBlockState(pos).getMaterial() == Material.WATER;
     }
 
     @Override
@@ -128,12 +132,12 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
         float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.hashCode() * 0.2F)) * 0.0125F;
         float swayX = (float) Math.sin(sway) / 4.0F;
         float swayZ = (float) Math.cos(sway) / 4.0F;
-        if (sprite == null) {
-            sprite = MC.getTextureMapBlocks().getTextureExtry(Archipelago.MODID + ":blocks/" + name);
-            minU = sprite.getMinU();
-            minV = sprite.getMinV();
-            maxU = sprite.getMaxU();
-            maxV = sprite.getMaxV();
+        if (this.sprite == null) {
+            this.sprite = MC.getTextureMapBlocks().getTextureExtry(Archipelago.MODID + ":blocks/" + this.name);
+            this.minU = this.sprite.getMinU();
+            this.minV = this.sprite.getMinV();
+            this.maxU = this.sprite.getMaxU();
+            this.maxV = this.sprite.getMaxV();
         }
         double x = (pos.getX() + 0.5) - TileEntityRendererDispatcher.staticPlayerX;
         double y = pos.getY() - TileEntityRendererDispatcher.staticPlayerY;
@@ -142,16 +146,16 @@ public class BlockShortCoral extends BlockBush implements ISpecialRenderedBlock 
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer buffer = tessellator.getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos(-0.5F, 0.0F, -0.5F).tex(minU, maxV).endVertex();
-        buffer.pos(0.5F, 0.0F, 0.5F).tex(maxU, maxV).endVertex();
-        buffer.pos(0.5F + swayX, 1.0F, 0.5F + swayZ).tex(maxU, minV).endVertex();
-        buffer.pos(-0.5F + swayX, 1.0F, -0.5F + swayZ).tex(minU, minV).endVertex();
+        buffer.pos(-0.5F, 0.0F, -0.5F).tex(this.minU, this.maxV).endVertex();
+        buffer.pos(0.5F, 0.0F, 0.5F).tex(this.maxU, this.maxV).endVertex();
+        buffer.pos(0.5F + swayX, 1.0F, 0.5F + swayZ).tex(this.maxU, this.minV).endVertex();
+        buffer.pos(-0.5F + swayX, 1.0F, -0.5F + swayZ).tex(this.minU, this.minV).endVertex();
         tessellator.draw();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos(-0.5F, 0.0F, 0.5F).tex(minU, maxV).endVertex();
-        buffer.pos(0.5F, 0.0F, -0.5F).tex(maxU, maxV).endVertex();
-        buffer.pos(0.5F + swayX, 1.0F, -0.5F + swayZ).tex(maxU, minV).endVertex();
-        buffer.pos(-0.5F + swayX, 1.0F, 0.5F + swayZ).tex(minU, minV).endVertex();
+        buffer.pos(-0.5F, 0.0F, 0.5F).tex(this.minU, this.maxV).endVertex();
+        buffer.pos(0.5F, 0.0F, -0.5F).tex(this.maxU, this.maxV).endVertex();
+        buffer.pos(0.5F + swayX, 1.0F, -0.5F + swayZ).tex(this.maxU, this.minV).endVertex();
+        buffer.pos(-0.5F + swayX, 1.0F, 0.5F + swayZ).tex(this.minU, this.minV).endVertex();
         tessellator.draw();
         GlStateManager.popMatrix();
     }

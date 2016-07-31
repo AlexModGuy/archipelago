@@ -1,13 +1,12 @@
 package com.github.alexthe666.archipelago.world;
 
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.util.PlantEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.util.PlantEntry;
+import java.util.Random;
 
 public class WorldGenArchipelagoKelp extends WorldGenerator {
     public PlantEntry plantType;
@@ -19,20 +18,20 @@ public class WorldGenArchipelagoKelp extends WorldGenerator {
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
         boolean flag = false;
-        if (worldIn != null && plantType != null && plantType.block != null) {
+        if (worldIn != null && this.plantType != null && this.plantType.block != null) {
             for (int i = 0; i < 64; ++i) {
                 BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-                if (worldIn.isBlockLoaded(blockpos) && plantType.canSpawnIn(worldIn.getBiomeGenForCoords(blockpos)) && plantType.block.canPlaceBlockAt(worldIn, blockpos) && blockpos.getY() < 57) {
-                    if (worldIn.getBlockState(blockpos.up()).getBlock().equals(plantType.block))
+                if (worldIn.isBlockLoaded(blockpos) && this.plantType.canSpawnIn(worldIn.getBiomeGenForCoords(blockpos)) && this.plantType.block.canPlaceBlockAt(worldIn, blockpos) && blockpos.getY() < 57) {
+                    if (worldIn.getBlockState(blockpos.up()).getBlock().equals(this.plantType.block))
                         return false;
                     int length = Math.abs(61 - blockpos.getY() - rand.nextInt(3));
                     if (length > 6)
                         return false;
-                    worldIn.setBlockState(blockpos, plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.LOWER), 2);
+                    worldIn.setBlockState(blockpos, this.plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.LOWER), 2);
                     for (int y = 1; y < length; y++) {
-                        worldIn.setBlockState(blockpos.up(y), plantType.block.getDefaultState(), 2);
+                        worldIn.setBlockState(blockpos.up(y), this.plantType.block.getDefaultState(), 2);
                     }
-                    worldIn.setBlockState(blockpos.up(length), plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.UPPER), 2);
+                    worldIn.setBlockState(blockpos.up(length), this.plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.UPPER), 2);
                     flag = true;
                 }
             }

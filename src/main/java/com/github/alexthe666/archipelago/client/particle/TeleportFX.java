@@ -12,5 +12,4 @@ public class TeleportFX extends ParticleSmokeNormal {
         this.particleGreen = 0.8439F - sub;
         this.particleBlue = 0.3135F - sub;
     }
-
 }

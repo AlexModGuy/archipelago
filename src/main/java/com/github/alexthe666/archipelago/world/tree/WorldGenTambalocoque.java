@@ -1,6 +1,6 @@
 package com.github.alexthe666.archipelago.world.tree;
 
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class WorldGenTambalocoque extends BasicTreeGen {
     public WorldGenTambalocoque() {
-        this.leavesBlock = EnumTrees.TAMBALACOQUE.leaves.getDefaultState();
-        this.logBlock = EnumTrees.TAMBALACOQUE.log.getDefaultState();
+        this.leavesBlock = TropicTreeType.TAMBALACOQUE.leaves.getDefaultState();
+        this.logBlock = TropicTreeType.TAMBALACOQUE.log.getDefaultState();
     }
 
     @Override

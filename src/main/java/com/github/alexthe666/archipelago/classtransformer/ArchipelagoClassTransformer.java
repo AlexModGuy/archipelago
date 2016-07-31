@@ -1,13 +1,6 @@
 package com.github.alexthe666.archipelago.classtransformer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.launchwrapper.IClassTransformer;
-
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -20,6 +13,12 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArchipelagoClassTransformer implements IClassTransformer {
     @Override
@@ -34,7 +33,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             for (MethodNode methodNode : classNode.methods) {
                 if (setupFogName.equals(methodNode.name) && setupFogDesc.equals(methodNode.desc)) {
                     InsnList inject = new InsnList();
-                    List<AbstractInsnNode> nodesInLine = new ArrayList<AbstractInsnNode>();
+                    List<AbstractInsnNode> nodesInLine = new ArrayList<>();
                     for (AbstractInsnNode node : methodNode.instructions.toArray()) {
                         boolean target = false;
                         if (node instanceof LabelNode) {
@@ -76,7 +75,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             }
             ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
             classNode.accept(classWriter);
-            saveBytecode(name, classWriter);
+            this.saveBytecode(name, classWriter);
             return classWriter.toByteArray();
         } else if ((obf = "bqy".equals(name)) || "net.minecraft.client.renderer.chunk.RenderChunk".equals(name)) {
             ClassReader classReader = new ClassReader(classBytes);
@@ -116,7 +115,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             }
             ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
             classNode.accept(classWriter);
-            saveBytecode(name, classWriter);
+            this.saveBytecode(name, classWriter);
             return classWriter.toByteArray();
         } else if ((obf = "bno".equals(name)) || "net.minecraft.client.renderer.RenderGlobal".equals(name)) {
             ClassReader classReader = new ClassReader(classBytes);
@@ -142,7 +141,7 @@ public class ArchipelagoClassTransformer implements IClassTransformer {
             }
             ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
             classNode.accept(classWriter);
-            saveBytecode(name, classWriter);
+            this.saveBytecode(name, classWriter);
             return classWriter.toByteArray();
         }
         return classBytes;

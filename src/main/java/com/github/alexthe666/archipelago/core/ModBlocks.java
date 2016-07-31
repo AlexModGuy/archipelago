@@ -1,8 +1,16 @@
 package com.github.alexthe666.archipelago.core;
 
-import com.github.alexthe666.archipelago.block.*;
+import com.github.alexthe666.archipelago.block.BlockCampfire;
+import com.github.alexthe666.archipelago.block.BlockCoralRock;
+import com.github.alexthe666.archipelago.block.BlockGlowingCoral;
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.block.BlockShortCoral;
+import com.github.alexthe666.archipelago.block.BlockShortPlant;
+import com.github.alexthe666.archipelago.block.BlockTallPlant;
+import com.github.alexthe666.archipelago.block.entity.TileEntityCampfire;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 
@@ -124,6 +132,7 @@ public class ModBlocks {
     public static Block turtlegrass;
     public static Block zostera_tasmanica;
     public static Block coral_rock;
+
     public static void init() {
         campfire_on = new BlockCampfire(true);
         campfire_off = new BlockCampfire(false);
@@ -242,5 +251,6 @@ public class ModBlocks {
         sea_nymph = new BlockShortCoral("sea_nymph", 5, new Biome[] { ModWorld.tropicSeaGrassBed });
         turtlegrass = new BlockShortCoral("turtlegrass", 5, new Biome[] { ModWorld.tropicSeaGrassBed });
         zostera_tasmanica = new BlockShortCoral("zostera_tasmanica", 5, new Biome[] { ModWorld.tropicSeaGrassBed });
+        GameRegistry.registerTileEntity(TileEntityCampfire.class, "archipelago:campfire");
     }
 }

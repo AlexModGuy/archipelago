@@ -1,19 +1,22 @@
 package com.github.alexthe666.archipelago;
 
-import javax.annotation.Nullable;
-
+import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 import com.github.alexthe666.archipelago.client.model.entity.ModelBrownCrab;
 import com.github.alexthe666.archipelago.client.model.entity.ModelButterflyfish;
 import com.github.alexthe666.archipelago.client.model.entity.ModelClownfish;
+import com.github.alexthe666.archipelago.client.particle.TeleportFX;
 import com.github.alexthe666.archipelago.client.render.entity.RenderArchipelagoAnimal;
+import com.github.alexthe666.archipelago.core.ModFluids;
 import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
 import com.github.alexthe666.archipelago.entity.living.EntityButterflyfish;
 import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
+import com.github.alexthe666.archipelago.enums.TropicParticle;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
+import com.github.alexthe666.archipelago.event.client.ClientEvents;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelSheep1;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -31,20 +34,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-
-import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
-import com.github.alexthe666.archipelago.client.particle.TeleportFX;
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.enums.EnumParticle;
-import com.github.alexthe666.archipelago.enums.EnumTrees;
-import com.github.alexthe666.archipelago.event.client.ClientEvents;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+
+import javax.annotation.Nullable;
 
 public class ClientProxy extends CommonProxy {
     @Override
     public void init() {
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
-        for (EnumTrees tree : EnumTrees.values()) {
+        for (TropicTreeType tree : TropicTreeType.values()) {
             Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.leaves, (new StateMap.Builder()).ignore(new IProperty[] { BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE }).build());
             Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().registerBlockWithStateMapper(tree.sapling, (new StateMap.Builder()).ignore(new IProperty[] { BlockArchipelagoSapling.STAGE }).build());
         }
@@ -53,14 +51,14 @@ public class ClientProxy extends CommonProxy {
             public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
                 return worldIn != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(worldIn, pos) : ColorizerFoliage.getFoliageColorBasic();
             }
-        }, EnumTrees.HISPANIOLAN_PINE.leaves);
+        }, TropicTreeType.HISPANIOLAN_PINE.leaves);
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex) {
                 IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
                 return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, null, null, tintIndex);
             }
-        }, EnumTrees.HISPANIOLAN_PINE.leaves);
+        }, TropicTreeType.HISPANIOLAN_PINE.leaves);
         RenderingRegistry.registerEntityRenderingHandler(EntityClownfish.class, new RenderArchipelagoAnimal(new ModelClownfish(), 0.3F));
         RenderingRegistry.registerEntityRenderingHandler(EntityBrownCrab.class, new RenderArchipelagoAnimal(new ModelBrownCrab(), 0.4F));
         RenderingRegistry.registerEntityRenderingHandler(EntityButterflyfish.class, new RenderArchipelagoAnimal(new ModelButterflyfish(), 0.4F));
@@ -82,7 +80,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void spawnParticle(EnumParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ) {
+    public void spawnParticle(TropicParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ) {
         switch (particle) {
             case TELEPORT:
                 Minecraft.getMinecraft().effectRenderer.addEffect(new TeleportFX(world, x, y, z, motionX, motionY, motionZ));

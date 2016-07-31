@@ -2,8 +2,8 @@ package com.github.alexthe666.archipelago.world;
 
 import com.github.alexthe666.archipelago.core.ModBlocks;
 import com.github.alexthe666.archipelago.core.ModWorld;
-import com.github.alexthe666.archipelago.enums.EnumBiomeSediment;
-import com.github.alexthe666.archipelago.enums.EnumGrassColor;
+import com.github.alexthe666.archipelago.enums.TropicBiomeSediment;
+import com.github.alexthe666.archipelago.enums.TropicGrassColor;
 import com.google.common.base.Function;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
@@ -18,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -26,11 +25,11 @@ import java.util.Random;
 
 public class BiomeGenTropical extends Biome {
     float r, g, b;
-    private EnumGrassColor grassColor;
+    private TropicGrassColor grassColor;
     private TreeGenerator[] treeGenerators;
     private int generationChance = 10;
 
-    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, TreeGenerator... treeGenerators) {
+    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, TropicGrassColor grassColor, TropicBiomeSediment biomeSediment, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
@@ -44,7 +43,7 @@ public class BiomeGenTropical extends Biome {
         this.treeGenerators = treeGenerators;
     }
 
-    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, EnumGrassColor grassColor, EnumBiomeSediment biomeSediment, float r, float g, float b, TreeGenerator... treeGenerators) {
+    public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, TropicGrassColor grassColor, TropicBiomeSediment biomeSediment, float r, float g, float b, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
@@ -74,12 +73,12 @@ public class BiomeGenTropical extends Biome {
     @Override
     @SideOnly(Side.CLIENT)
     public int getSkyColorByTemp(float currentTemperature) {
-        if (r == 0 && g == 0 && b == 0) {
+        if (this.r == 0 && this.g == 0 && this.b == 0) {
             currentTemperature = currentTemperature / 3.0F;
             currentTemperature = MathHelper.clamp_float(currentTemperature, -1.0F, 1.0F);
             return MathHelper.hsvToRGB(0.62222224F - currentTemperature * 0.05F, 0.5F + currentTemperature * 0.1F, 1.0F);
         } else {
-            return MathHelper.rgb(r, g, b);
+            return MathHelper.rgb(this.r, this.g, this.b);
         }
     }
 
@@ -160,17 +159,17 @@ public class BiomeGenTropical extends Biome {
     @Override
     @SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        double temperature = MathHelper.clamp_float(grassColor.tempature, 0.0F, 1.0F);
-        double humidity = MathHelper.clamp_float(grassColor.humidity, 0.0F, 1.0F);
-        return this.grassColor == EnumGrassColor.BURNT ? 0X303030 : getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(temperature, humidity));
+        double temperature = MathHelper.clamp_float(this.grassColor.temperature, 0.0F, 1.0F);
+        double humidity = MathHelper.clamp_float(this.grassColor.humidity, 0.0F, 1.0F);
+        return this.grassColor == TropicGrassColor.BURNT ? 0X303030 : this.getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(temperature, humidity));
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public int getFoliageColorAtPos(BlockPos pos)
-    {
-        double d0 = (double)MathHelper.clamp_float(this.getFloatTemperature(pos), 0.0F, 1.0F);
-        double d1 = (double)MathHelper.clamp_float(this.getRainfall() * 2, 0.0F, 1.0F);
-        return getModdedBiomeFoliageColor(ColorizerFoliage.getFoliageColor(d0, d1));
+    public int getFoliageColorAtPos(BlockPos pos) {
+        double d0 = (double) MathHelper.clamp_float(this.getFloatTemperature(pos), 0.0F, 1.0F);
+        double d1 = (double) MathHelper.clamp_float(this.getRainfall() * 2, 0.0F, 1.0F);
+        return this.getModdedBiomeFoliageColor(ColorizerFoliage.getFoliageColor(d0, d1));
     }
 
     @Override
@@ -193,7 +192,7 @@ public class BiomeGenTropical extends Biome {
     }
 
     public int getGenerationChance() {
-        return generationChance;
+        return this.generationChance;
     }
 
     public static class TreeGenerator {

@@ -1,10 +1,9 @@
 package com.github.alexthe666.archipelago.world;
 
+import com.github.alexthe666.archipelago.core.ModWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
-
-import com.github.alexthe666.archipelago.core.ModWorld;
 
 public class GenLayerBiomesArchipelago extends GenLayer {
     public static BiomeGenTropical[] volcanoBiomes = { ModWorld.ashField, ModWorld.volcano };
@@ -22,15 +21,15 @@ public class GenLayerBiomesArchipelago extends GenLayer {
         for (int deltaZ = 0; deltaZ < height; deltaZ++) {
             for (int deltaX = 0; deltaX < width; deltaX++) {
                 this.initChunkSeed(deltaX + x, deltaZ + z);
-                ints[(deltaX + deltaZ * width)] = Biome.getIdForBiome(getBiome());
+                ints[(deltaX + deltaZ * width)] = Biome.getIdForBiome(this.getBiome());
             }
         }
         return ints;
     }
 
     private Biome getBiome() {
-        if (nextInt(3) == 0) {
-            return nextInt(10) == 0 ? this.getRandomBiomeWeighted(volcanoBiomes) : this.getRandomBiomeWeighted(islandBiomes);
+        if (this.nextInt(3) == 0) {
+            return this.nextInt(10) == 0 ? this.getRandomBiomeWeighted(volcanoBiomes) : this.getRandomBiomeWeighted(islandBiomes);
         } else {
             return this.getRandomBiomeWeighted(oceanBiomes);
         }
@@ -41,7 +40,7 @@ public class GenLayerBiomesArchipelago extends GenLayer {
         for (BiomeGenTropical biome : biomes) {
             chance += biome.getGenerationChance();
         }
-        int chosen = nextInt(chance);
+        int chosen = this.nextInt(chance);
         chance = 0;
         for (BiomeGenTropical biome : biomes) {
             chance += biome.getGenerationChance();

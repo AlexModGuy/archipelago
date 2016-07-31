@@ -1,7 +1,18 @@
 package com.github.alexthe666.archipelago;
 
 import com.github.alexthe666.archipelago.client.GuiHandler;
-import com.github.alexthe666.archipelago.core.*;
+import com.github.alexthe666.archipelago.core.ModBlocks;
+import com.github.alexthe666.archipelago.core.ModConfig;
+import com.github.alexthe666.archipelago.core.ModEntities;
+import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.core.ModItems;
+import com.github.alexthe666.archipelago.core.ModRecipes;
+import com.github.alexthe666.archipelago.core.ModWorld;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
+import com.github.alexthe666.archipelago.event.server.ServerEvents;
+import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
+import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+import com.github.alexthe666.archipelago.world.WorldProviderArchipelago;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -17,12 +28,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import com.github.alexthe666.archipelago.enums.EnumTrees;
-import com.github.alexthe666.archipelago.event.server.ServerEvents;
-import com.github.alexthe666.archipelago.properties.ArchipelagoEntityProperties;
-import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
-import com.github.alexthe666.archipelago.world.WorldProviderArchipelago;
 
 @Mod(modid = Archipelago.MODID, name = Archipelago.NAME, version = Archipelago.VERSION)
 public class Archipelago {
@@ -59,7 +64,7 @@ public class Archipelago {
         };
         ModItems.init();
         ModWorld.init();
-        EnumTrees.init();
+        TropicTreeType.init();
         ModBlocks.init();
         ModRecipes.init();
         ModEntities.init();

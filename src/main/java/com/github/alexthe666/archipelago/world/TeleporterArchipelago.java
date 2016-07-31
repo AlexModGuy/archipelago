@@ -17,12 +17,12 @@ public class TeleporterArchipelago extends Teleporter {
 
     @Override
     public boolean placeInExistingPortal(Entity entityIn, float rotationYaw) {
-        placeInPortal(entityIn, entityIn.posX, entityIn.posY, entityIn.posZ, entityIn.rotationYaw);
+        this.placeInPortal(entityIn, entityIn.posX, entityIn.posY, entityIn.posZ, entityIn.rotationYaw);
         return false;
     }
 
     public void placeInPortal(Entity entity, double x, double y, double z, float yaw) {
-        BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z)));
+        BlockPos pos = this.world.getTopSolidOrLiquidBlock(new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z)));
         entity.setLocationAndAngles(0.5F, 90.5F, 0.5F, yaw, 0);
         entity.motionX = entity.motionY = entity.motionZ = 0.0D;
     }
@@ -31,5 +31,4 @@ public class TeleporterArchipelago extends Teleporter {
     public boolean makePortal(Entity entityIn) {
         return false;
     }
-
 }

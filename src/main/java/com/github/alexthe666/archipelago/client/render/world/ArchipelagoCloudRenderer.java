@@ -24,7 +24,6 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
         GL11.glPushMatrix();
         //renderCloudSide(partialTicks, world, mc);
         GL11.glPopMatrix();
-
     }
 
     public void renderCloudSide(float partialTicks, WorldClient world, Minecraft mc) {
@@ -53,7 +52,7 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
         }
 
         float f10 = 64.8828125E-4F;
-        double d2 = (double) ((float) getCloudTickCounter() + partialTicks) * 12;
+        double d2 = (double) ((float) this.getCloudTickCounter() + partialTicks) * 12;
         double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * (double) partialTicks + d2 * 0.029999999329447746D;
         double d1 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double) partialTicks;
         int k = MathHelper.floor_double(d0 / 2048.0D);
@@ -64,7 +63,7 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
         float f8 = (float) (d0 * 64.8828125E-4D);
         float f9 = (float) (d1 * 64.8828125E-4D);
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        
+
         for (int i1 = -256; i1 < 256; i1 += 32) {
             for (int j1 = -256; j1 < 256; j1 += 32) {
                 vertexbuffer.pos((double) (i1), (double) f7, (double) (j1 + 32)).tex((double) ((float) (i1) * 64.8828125E-4F + f8), (double) ((float) (j1 + 32) * 64.8828125E-4F + f9)).color(f1, f2, f3, 0.8F).endVertex();

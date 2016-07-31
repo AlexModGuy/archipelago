@@ -37,8 +37,8 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
     protected double maximumHealth;
     protected double minimumSpeed;
     protected double maximumSpeed;
-    private static final DataParameter<Integer> AGE_TICKS = EntityDataManager.<Integer>createKey(EntityArchipelagoAnimal.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> VARIANT = EntityDataManager.<Integer>createKey(EntityArchipelagoAnimal.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> AGE_TICKS = EntityDataManager.createKey(EntityArchipelagoAnimal.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> VARIANT = EntityDataManager.createKey(EntityArchipelagoAnimal.class, DataSerializers.VARINT);
 
     public EntityArchipelagoAnimal(World world, int adultAge, float minimumSize, float maximumSize, double minimumDamage, double maximumDamage, double minimumHealth, double maximumHealth, double minimumSpeed, double maximumSpeed) {
         super(world);
@@ -52,7 +52,7 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
         this.minimumSpeed = minimumSpeed;
         this.maximumSpeed = maximumSpeed;
         if (FMLCommonHandler.instance().getSide().isClient()) {
-            tail_buffer = new ChainBuffer();
+            this.tail_buffer = new ChainBuffer();
         }
         this.updateAttributes();
     }
@@ -102,9 +102,9 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
         this.dataManager.set(VARIANT, variant);
     }
 
-    public void onUpdtate(){
-        if(worldObj.isRemote){
-            calculateBuffer();
+    public void onUpdtate() {
+        if (this.worldObj.isRemote) {
+            this.calculateBuffer();
         }
         AnimationHandler.INSTANCE.updateAnimations(this);
         this.setAgeInTicks(this.getAgeInTicks() + 1);
@@ -116,33 +116,35 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
 
     @Override
     public void setScaleForAge(boolean par1) {
-        this.setScale(Math.min(this.getRenderSize(), maximumSize));
+        this.setScale(Math.min(this.getRenderSize(), this.maximumSize));
     }
 
     public boolean isAdult() {
-        return this.getAgeInTicks() >= adultAge * 24000;
+        return this.getAgeInTicks() >= this.adultAge * 24000;
     }
 
+    @Override
     public boolean isChild() {
-        return this.getAgeInTicks() < adultAge * 24000;
+        return this.getAgeInTicks() < this.adultAge * 24000;
     }
 
     public float getRenderSize() {
-        float step = (this.maximumSize - this.minimumSize) / ((adultAge * 24000));
+        float step = (this.maximumSize - this.minimumSize) / ((this.adultAge * 24000));
 
-        if (this.getAgeInTicks() > adultAge * 24000) {
-            return this.minimumSize + ((step) * adultAge * 24000);
+        if (this.getAgeInTicks() > this.adultAge * 24000) {
+            return this.minimumSize + ((step) * this.adultAge * 24000);
         }
         return this.minimumSize + ((step * this.getAgeInTicks()));
     }
 
+    @Override
     protected boolean canDropLoot() {
         return true;
     }
 
     @SideOnly(Side.CLIENT)
-    public void calculateBuffer(){
-        tail_buffer.calculateChainSwingBuffer(50, 10, 4, this);
+    public void calculateBuffer() {
+        this.tail_buffer.calculateChainSwingBuffer(50, 10, 4, this);
     }
 
     @Override
@@ -150,14 +152,14 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
-
     }
 
+    @Override
     public boolean attackEntityAsMob(Entity entityIn) {
-        return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() );
+        return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
     }
 
     @Override
@@ -166,14 +168,13 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
     }
 
     private void updateAttributes() {
-        double healthStep = (maximumHealth - minimumHealth) / (adultAge);
-        double attackStep = (maximumDamage - minimumDamage) / (adultAge);
-        double speedStep = (maximumSpeed - minimumSpeed) / (adultAge);
+        double healthStep = (this.maximumHealth - this.minimumHealth) / (this.adultAge);
+        double attackStep = (this.maximumDamage - this.minimumDamage) / (this.adultAge);
+        double speedStep = (this.maximumSpeed - this.minimumSpeed) / (this.adultAge);
         if (!this.isAdult()) {
-            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(Math.round(minimumHealth + (healthStep * this.getAgeInDays())));
-            this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(Math.round(minimumDamage + (attackStep * this.getAgeInDays())));
-            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(minimumSpeed + (speedStep * this.getAgeInDays()));
-
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(Math.round(this.minimumHealth + (healthStep * this.getAgeInDays())));
+            this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(Math.round(this.minimumDamage + (attackStep * this.getAgeInDays())));
+            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.minimumSpeed + (speedStep * this.getAgeInDays()));
         }
     }
 
@@ -193,7 +194,7 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
         return livingdata;
     }
 
-    public void onSpawn(){
+    public void onSpawn() {
 
     }
 
@@ -204,27 +205,27 @@ public abstract class EntityArchipelagoAnimal extends EntityTameable implements 
 
     @Override
     public int getAnimationTick() {
-        return animationTick;
+        return this.animationTick;
     }
 
     @Override
     public void setAnimationTick(int tick) {
-        animationTick = tick;
+        this.animationTick = tick;
     }
 
     @Override
     public Animation getAnimation() {
-        return currentAnimation;
+        return this.currentAnimation;
     }
 
     @Override
     public void setAnimation(Animation animation) {
-        currentAnimation = animation;
+        this.currentAnimation = animation;
     }
 
     @Override
     public Animation[] getAnimations() {
-        return new Animation[]{};
+        return new Animation[] {};
     }
 
     public abstract String getTexture();

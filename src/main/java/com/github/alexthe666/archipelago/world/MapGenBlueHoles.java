@@ -1,7 +1,8 @@
 package com.github.alexthe666.archipelago.world;
 
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.core.ModFluids;
+import com.github.alexthe666.archipelago.core.ModWorld;
+import com.google.common.base.Objects;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,9 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenBase;
 
-import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.core.ModWorld;
-import com.google.common.base.Objects;
+import java.util.Random;
 
 public class MapGenBlueHoles extends MapGenBase {
     protected static final IBlockState BLK_LAVA = Blocks.LAVA.getDefaultState();
@@ -124,7 +123,7 @@ public class MapGenBlueHoles extends MapGenBase {
                         for (int k1 = i3; !flag3 && k1 < i1; ++k1) {
                             for (int l1 = l + 1; !flag3 && l1 >= l2 - 1; --l1) {
                                 if (l1 >= 0 && l1 < 256) {
-                                    if (isOceanBlock(chunkPrimer, j1, l1, k1, width, height)) {
+                                    if (this.isOceanBlock(chunkPrimer, j1, l1, k1, width, height)) {
                                         flag3 = true;
                                     }
 
@@ -154,11 +153,11 @@ public class MapGenBlueHoles extends MapGenBase {
                                             IBlockState iblockstate1 = chunkPrimer.getBlockState(j3, j2, i2);
                                             IBlockState iblockstate2 = Objects.firstNonNull(chunkPrimer.getBlockState(j3, j2 + 1, i2), BLK_AIR);
 
-                                            if (isTopBlock(chunkPrimer, j3, j2, i2, width, height)) {
+                                            if (this.isTopBlock(chunkPrimer, j3, j2, i2, width, height)) {
                                                 flag1 = true;
                                             }
 
-                                            digBlock(chunkPrimer, j3, j2, i2, width, height, flag1, iblockstate1, iblockstate2);
+                                            this.digBlock(chunkPrimer, j3, j2, i2, width, height, flag1, iblockstate1, iblockstate2);
                                         }
                                     }
                                 }
@@ -196,19 +195,17 @@ public class MapGenBlueHoles extends MapGenBase {
     }
 
     private boolean isExceptionBiome(net.minecraft.world.biome.Biome biome) {
-        if (biome == net.minecraft.init.Biomes.BEACH)
-            return true;
-        return biome == net.minecraft.init.Biomes.DESERT;
+        return biome == net.minecraft.init.Biomes.BEACH || biome == net.minecraft.init.Biomes.DESERT;
     }
 
     private boolean isTopBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ) {
-        net.minecraft.world.biome.Biome biome = worldObj.getBiomeGenForCoords(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
+        net.minecraft.world.biome.Biome biome = this.worldObj.getBiomeGenForCoords(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
         IBlockState state = data.getBlockState(x, y, z);
-        return (isExceptionBiome(biome) ? state.getBlock() == Blocks.GRASS : state.getBlock() == biome.topBlock);
+        return (this.isExceptionBiome(biome) ? state.getBlock() == Blocks.GRASS : state.getBlock() == biome.topBlock);
     }
 
     protected void digBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ, boolean foundTop, IBlockState state, IBlockState up) {
-        net.minecraft.world.biome.Biome biome = worldObj.getBiomeGenForCoords(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
+        net.minecraft.world.biome.Biome biome = this.worldObj.getBiomeGenForCoords(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
         IBlockState top = biome.topBlock;
         IBlockState filler = biome.fillerBlock;
         if (y > 61) {

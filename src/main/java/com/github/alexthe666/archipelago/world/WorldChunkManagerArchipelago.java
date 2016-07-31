@@ -1,9 +1,6 @@
 package com.github.alexthe666.archipelago.world;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.core.ModWorld;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.ReportedException;
@@ -19,7 +16,9 @@ import net.minecraftforge.event.terraingen.WorldTypeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.github.alexthe666.archipelago.core.ModWorld;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class WorldChunkManagerArchipelago extends BiomeProvider {
 
@@ -175,10 +174,10 @@ public class WorldChunkManagerArchipelago extends BiomeProvider {
         this.biomeCache.cleanupCache();
     }
 
+    @Override
     public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
         WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldType, seed, original);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.getNewBiomeGens();
     }
-
 }

@@ -1,13 +1,12 @@
 package com.github.alexthe666.archipelago.enums;
 
-import net.minecraft.block.Block;
-
 import com.github.alexthe666.archipelago.block.BlockArchipelagoLeaves;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoLog;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoPlanks;
 import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
+import net.minecraft.block.Block;
 
-public enum EnumTrees {
+public enum TropicTreeType {
     CANARY_ISLAND_DATE_PALM(false),
     COCONUT_PALM(false),
     CALOPHYLLUM(false),
@@ -26,12 +25,12 @@ public enum EnumTrees {
     public Block sapling;
     public boolean isShrub;
 
-    EnumTrees(boolean isShrub) {
+    TropicTreeType(boolean isShrub) {
         this.isShrub = isShrub;
     }
 
     public static void init() {
-        for (EnumTrees tree : EnumTrees.values()) {
+        for (TropicTreeType tree : TropicTreeType.values()) {
             tree.leaves = new BlockArchipelagoLeaves(tree);
             if (!tree.isShrub) {
                 tree.log = new BlockArchipelagoLog(tree);

@@ -5,8 +5,6 @@ import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWater
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -36,10 +34,12 @@ public class EntityButterflyfish extends EntityAquaticAnimal {
         return 0.025;
     }
 
-    public void onSpawn(){
+    @Override
+    public void onSpawn() {
         this.setVariant(new Random().nextInt(3));
     }
 
+    @Override
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
         //this.entityDropItem(new ItemStack(Items.FISH, 1, 2), 0);
     }

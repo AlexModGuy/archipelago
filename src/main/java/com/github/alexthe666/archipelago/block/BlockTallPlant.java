@@ -1,7 +1,8 @@
 package com.github.alexthe666.archipelago.block;
 
-import java.util.Random;
-
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.util.PlantEntry;
+import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -25,9 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.util.PlantEntry;
-import com.github.alexthe666.archipelago.world.WorldGeneratorArchipelago;
+import java.util.Random;
 
 public class BlockTallPlant extends BlockBush implements IGrowable {
     public static final PropertyEnum<BlockTallPlant.EnumBlockHalf> HALF = PropertyEnum.create("half", BlockTallPlant.EnumBlockHalf.class);

@@ -13,6 +13,5 @@ public class ModRecipes {
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.sunstone_staff, "Y  ", " X ", "  X", 'X', "stickWood", 'Y', ModItems.sunstone));
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.sunstone_staff, "  Y", " X ", "X  ", 'X', "stickWood", 'Y', ModItems.sunstone));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.sunstone_staff), ModItems.sunstone_staff_broken, ModItems.sunstone);
-
     }
 }

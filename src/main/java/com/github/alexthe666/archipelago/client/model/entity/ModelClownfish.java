@@ -33,7 +33,7 @@ public class ModelClownfish extends AdvancedModelBase {
         this.LeftPectoralFin = new AdvancedModelRenderer(this, 0, 0);
         this.LeftPectoralFin.setRotationPoint(0.9F, 1.0F, -1.0F);
         this.LeftPectoralFin.addBox(0.0F, -2.0F, 0.0F, 0, 2, 2, 0.0F);
-        this.setRotateAngle(LeftPectoralFin, -0.7285004297824331F, 0.31869712141416456F, 0.0F);
+        this.setRotateAngle(this.LeftPectoralFin, -0.7285004297824331F, 0.31869712141416456F, 0.0F);
         this.UpperJaw = new AdvancedModelRenderer(this, 9, 10);
         this.UpperJaw.setRotationPoint(0.0F, -0.3F, -2.0F);
         this.UpperJaw.addBox(-1.0F, -1.0F, -1.0F, 2, 2, 1, 0.0F);
@@ -52,7 +52,7 @@ public class ModelClownfish extends AdvancedModelBase {
         this.PelvicFins = new AdvancedModelRenderer(this, 19, 11);
         this.PelvicFins.setRotationPoint(0.0F, 2.0F, -2.0F);
         this.PelvicFins.addBox(-0.5F, 0.0F, 0.0F, 1, 2, 2, 0.0F);
-        this.setRotateAngle(PelvicFins, 0.22759093446006054F, 0.0F, 0.0F);
+        this.setRotateAngle(this.PelvicFins, 0.22759093446006054F, 0.0F, 0.0F);
         this.Head = new AdvancedModelRenderer(this, 0, 10);
         this.Head.setRotationPoint(0.0F, 0.0F, -2.0F);
         this.Head.addBox(-1.0F, -2.0F, -2.0F, 2, 4, 2, 0.0F);
@@ -62,7 +62,7 @@ public class ModelClownfish extends AdvancedModelBase {
         this.RightPectoralFin = new AdvancedModelRenderer(this, 0, 0);
         this.RightPectoralFin.setRotationPoint(-0.9F, 1.0F, -1.0F);
         this.RightPectoralFin.addBox(0.0F, -2.0F, 0.0F, 0, 2, 2, 0.0F);
-        this.setRotateAngle(RightPectoralFin, -0.7285004297824331F, -0.31869712141416456F, 0.0F);
+        this.setRotateAngle(this.RightPectoralFin, -0.7285004297824331F, -0.31869712141416456F, 0.0F);
         this.Tail1.addChild(this.ThatFin);
         this.Body.addChild(this.LeftPectoralFin);
         this.Head.addChild(this.UpperJaw);
@@ -80,36 +80,36 @@ public class ModelClownfish extends AdvancedModelBase {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
+        this.animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
         this.Body.render(f5);
     }
 
     private void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        animator.update(entity);
+        this.animator.update(entity);
         this.resetToDefaultPose();
-        setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
     }
 
     @Override
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[]{this.Tail1, this.Tail2};
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { this.Tail1, this.Tail2 };
         float idleSpeed = 0.3F;
         float idleDegree = 1F;
         float walkSpeed = 1F;
         float walkDegree = 2F;
         this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, f2, 1);
-        this.swing(RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
-        this.swing(LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
+        this.swing(this.RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
+        this.swing(this.LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
         this.chainSwing(tail, walkSpeed, walkDegree * 0.3F, -3, f, f1);
-        this.walk(DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, f2, 1);
-        this.walk(PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
+        this.walk(this.DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, f2, 1);
+        this.walk(this.PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
         if (!entity.isInWater()) {
             this.Body.rotateAngleZ = (float) Math.toRadians(90);
-            this.bob(Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
-            this.swing(Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
+            this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
+            this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
         } else {
-            this.bob(Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
+            this.bob(this.Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
         }
     }
 

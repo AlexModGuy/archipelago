@@ -6,7 +6,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
@@ -26,9 +25,9 @@ public abstract class BasicTreeGen extends WorldGenAbstractTree {
         BlockPos down = position.down();
         IBlockState state = world.getBlockState(down);
         if (state.getBlock().canSustainPlant(state, world, down, EnumFacing.UP, (IPlantable) Blocks.SAPLING)) {
-            center = position;
-            rotation = rand.nextInt(4);
-            return generateTree(world, rand, position);
+            this.center = position;
+            this.rotation = rand.nextInt(4);
+            return this.generateTree(world, rand, position);
         }
         return false;
     }
@@ -40,11 +39,11 @@ public abstract class BasicTreeGen extends WorldGenAbstractTree {
     }
 
     protected BlockPos getRotatedPosition(BlockPos position) {
-        BlockPos offset = position.subtract(center);
+        BlockPos offset = position.subtract(this.center);
         if (offset.getX() == 0 && offset.getZ() == 0) {
             return position;
         }
-        switch (rotation) {
+        switch (this.rotation) {
             case 0:
                 break;
             case 1:
@@ -57,7 +56,7 @@ public abstract class BasicTreeGen extends WorldGenAbstractTree {
                 offset = new BlockPos(-offset.getZ(), offset.getY(), -offset.getX());
                 break;
         }
-        return center.add(offset);
+        return this.center.add(offset);
     }
 
     protected void generateLeafClump(World world, BlockPos pos, double size) {

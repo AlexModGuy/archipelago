@@ -62,18 +62,18 @@ public class ModelButterflyfish extends AdvancedModelBase {
         this.RightPectoralFin = new AdvancedModelRenderer(this, 0, -1);
         this.RightPectoralFin.setRotationPoint(-0.9F, 1.0F, -2.0F);
         this.RightPectoralFin.addBox(0.0F, -2.0F, 0.0F, 0, 2, 2, 0.0F);
-        this.setRotateAngle(RightPectoralFin, -0.7285004297824331F, -0.31869712141416456F, 0.0F);
+        this.setRotateAngle(this.RightPectoralFin, -0.7285004297824331F, -0.31869712141416456F, 0.0F);
         this.LeftPectoralFin = new AdvancedModelRenderer(this, 0, -1);
         this.LeftPectoralFin.setRotationPoint(0.9F, 1.0F, -2.0F);
         this.LeftPectoralFin.addBox(0.0F, -2.0F, 0.0F, 0, 2, 2, 0.0F);
-        this.setRotateAngle(LeftPectoralFin, -0.7285004297824331F, 0.31869712141416456F, 0.0F);
+        this.setRotateAngle(this.LeftPectoralFin, -0.7285004297824331F, 0.31869712141416456F, 0.0F);
         this.DorsalFin3 = new AdvancedModelRenderer(this, 26, -3);
         this.DorsalFin3.setRotationPoint(0.0F, -1.0F, -3.0F);
         this.DorsalFin3.addBox(0.0F, -5.0F, 0.0F, 0, 5, 3, 0.0F);
         this.PelvicFins = new AdvancedModelRenderer(this, 25, 21);
         this.PelvicFins.setRotationPoint(0.0F, 2.5F, -2.0F);
         this.PelvicFins.addBox(-0.5F, 0.0F, 0.0F, 1, 3, 2, 0.0F);
-        this.setRotateAngle(PelvicFins, 0.22759093446006054F, 0.0F, 0.0F);
+        this.setRotateAngle(this.PelvicFins, 0.22759093446006054F, 0.0F, 0.0F);
         this.Head3 = new AdvancedModelRenderer(this, 20, 13);
         this.Head3.setRotationPoint(0.0F, -1.3F, -3.0F);
         this.Head3.addBox(-0.9F, 0.0F, 0.0F, 2, 3, 4, 0.0F);
@@ -83,7 +83,7 @@ public class ModelButterflyfish extends AdvancedModelBase {
         this.Head2 = new AdvancedModelRenderer(this, 9, 13);
         this.Head2.setRotationPoint(0.0F, -1.4F, -1.6F);
         this.Head2.addBox(-1.1F, -1.3F, -3.0F, 1, 3, 4, 0.0F);
-        this.setRotateAngle(Head2, 0.9105382707654417F, 0.0F, 0.0F);
+        this.setRotateAngle(this.Head2, 0.9105382707654417F, 0.0F, 0.0F);
         this.Body.addChild(this.ThatFin1);
         this.Mouth2.addChild(this.Mouth3);
         this.Body.addChild(this.Head);
@@ -103,38 +103,39 @@ public class ModelButterflyfish extends AdvancedModelBase {
         this.updateDefaultPose();
         this.animator = ModelAnimator.create();
     }
+
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
+        this.animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
         this.Body.render(f5);
     }
 
     private void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        animator.update(entity);
+        this.animator.update(entity);
         this.resetToDefaultPose();
-        setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
     }
 
     @Override
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[]{this.Tail1, this.Tail2};
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { this.Tail1, this.Tail2 };
         float idleSpeed = 0.3F;
         float idleDegree = 1F;
         float walkSpeed = 1F;
         float walkDegree = 2F;
         this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, f2, 1);
-        this.swing(RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
-        this.swing(LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
+        this.swing(this.RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
+        this.swing(this.LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
         this.chainSwing(tail, walkSpeed, walkDegree * 0.3F, -3, f, f1);
-        this.walk(DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, f2, 1);
-        this.walk(PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
+        this.walk(this.DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, f2, 1);
+        this.walk(this.PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
         if (!entity.isInWater()) {
             this.Body.rotateAngleZ = (float) Math.toRadians(90);
-            this.bob(Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
-            this.swing(Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
+            this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
+            this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
         } else {
-            this.bob(Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
+            this.bob(this.Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
         }
     }
 

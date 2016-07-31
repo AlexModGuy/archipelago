@@ -1,14 +1,14 @@
 package com.github.alexthe666.archipelago.enums;
 
-public enum EnumGrassColor {
+public enum TropicGrassColor {
 
     CLASSIC_TROPICAL(0.95F, 0.9F), DRY(3F, 0.0F), BURNT(5F, 0.0F);
 
-    public float tempature;
+    public float temperature;
     public float humidity;
 
-    EnumGrassColor(float tempature, float humidity) {
-        this.tempature = tempature;
+    TropicGrassColor(float temperature, float humidity) {
+        this.temperature = temperature;
         this.humidity = humidity;
     }
 }

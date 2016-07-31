@@ -1,14 +1,13 @@
 package com.github.alexthe666.archipelago.core;
 
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.block.BlockTropicalWater;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.block.BlockTropicalWater;
 
 public class ModFluids {
 

@@ -1,6 +1,6 @@
 package com.github.alexthe666.archipelago.world.tree;
 
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class WorldGenMangrove extends BasicTreeGen {
     public WorldGenMangrove() {
-        this.leavesBlock = EnumTrees.MANGROVE.leaves.getDefaultState();
-        this.logBlock = EnumTrees.MANGROVE.log.getDefaultState();
+        this.leavesBlock = TropicTreeType.MANGROVE.leaves.getDefaultState();
+        this.logBlock = TropicTreeType.MANGROVE.log.getDefaultState();
     }
 
     @Override

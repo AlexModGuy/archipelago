@@ -1,6 +1,6 @@
 package com.github.alexthe666.archipelago.world.tree;
 
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class WorldGenCalophyllum extends BasicTreeGen {
     public WorldGenCalophyllum() {
-        this.leavesBlock = EnumTrees.CALOPHYLLUM.leaves.getDefaultState();
-        this.logBlock = EnumTrees.CALOPHYLLUM.log.getDefaultState();
+        this.leavesBlock = TropicTreeType.CALOPHYLLUM.leaves.getDefaultState();
+        this.logBlock = TropicTreeType.CALOPHYLLUM.log.getDefaultState();
     }
 
     @Override

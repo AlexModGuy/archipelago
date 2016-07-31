@@ -2,7 +2,11 @@ package com.github.alexthe666.archipelago.entity.living;
 
 import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
 import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWaterTarget;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -22,7 +26,7 @@ public class EntityBrownCrab extends EntityAquaticAnimal {
         this.tasks.addTask(1, new EntityAIAttackMelee(this, 1D, false));
         this.tasks.addTask(2, new EntityAILookIdle(this));
         this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
     }
 
     @Override
@@ -35,7 +39,8 @@ public class EntityBrownCrab extends EntityAquaticAnimal {
         return 0.015;
     }
 
-    public void onSpawn(){
+    @Override
+    public void onSpawn() {
         this.setVariant(new Random().nextInt(2));
     }
 

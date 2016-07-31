@@ -1,9 +1,8 @@
 package com.github.alexthe666.archipelago;
 
+import com.github.alexthe666.archipelago.enums.TropicParticle;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
-
-import com.github.alexthe666.archipelago.enums.EnumParticle;
 
 public class CommonProxy {
 
@@ -16,7 +15,7 @@ public class CommonProxy {
     public void addItemRenderWithMeta(Item item, String name, int meta) {
     }
 
-    public void spawnParticle(EnumParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ) {
+    public void spawnParticle(TropicParticle particle, World world, float x, float y, float z, double motionX, double motionY, double motionZ) {
     }
 
     public boolean areLeavesFancy() {
@@ -25,5 +24,4 @@ public class CommonProxy {
 
     public void renderFluids() {
     }
-
 }

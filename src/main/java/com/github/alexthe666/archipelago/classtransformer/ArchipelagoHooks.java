@@ -1,14 +1,14 @@
 package com.github.alexthe666.archipelago.classtransformer;
 
-import java.util.*;
-
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.block.SpecialRenderedBlock;
+import com.github.alexthe666.archipelago.core.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.culling.ICamera;
@@ -23,13 +23,14 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
-import com.github.alexthe666.archipelago.block.ISpecialRenderedBlock;
-import com.github.alexthe666.archipelago.core.ModConfig;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class ArchipelagoHooks {
     @SideOnly(Side.CLIENT)
-    private static final Map<CompiledChunk, List<BlockPos>> SPECIAL_RENDERERS = new WeakHashMap<CompiledChunk, List<BlockPos>>();
+    private static final Map<CompiledChunk, List<BlockPos>> SPECIAL_RENDERERS = new WeakHashMap<>();
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
     private static final Object SPECIAL_RENDERER_LOCK = new Object();
@@ -54,7 +55,7 @@ public class ArchipelagoHooks {
                 for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(pos1, pos2)) {
                     IBlockState state = region.getBlockState(pos);
                     Block block = state.getBlock();
-                    if (block instanceof ISpecialRenderedBlock) {
+                    if (block instanceof SpecialRenderedBlock) {
                         blocks.add(new BlockPos(pos));
                     }
                 }
@@ -80,8 +81,8 @@ public class ArchipelagoHooks {
                         if (camera.isBoundingBoxInFrustum(state.getBlock() instanceof BlockGrowingSeaweed ? BLOCK_BOUNDS_KELP.offset(pos) : BLOCK_BOUNDS.offset(pos))) {
                             if (player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < 16384) {
                                 Block block = state.getBlock();
-                                if (block instanceof ISpecialRenderedBlock) {
-                                    ISpecialRenderedBlock specialRenderedBlock = (ISpecialRenderedBlock) block;
+                                if (block instanceof SpecialRenderedBlock) {
+                                    SpecialRenderedBlock specialRenderedBlock = (SpecialRenderedBlock) block;
                                     specialRenderedBlock.render(world, pos);
                                 }
                             }

@@ -10,7 +10,7 @@ public class ArchipelagoEntityProperties extends EntityProperties {
 
     @Override
     public void saveNBTData(NBTTagCompound compound) {
-        compound.setInteger("TeleportTime", teleportTime);
+        compound.setInteger("TeleportTime", this.teleportTime);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class ArchipelagoEntityProperties extends EntityProperties {
 
     @Override
     public void init() {
-        teleportTime = 300;
+        this.teleportTime = 300;
     }
 
     @Override
@@ -32,5 +32,4 @@ public class ArchipelagoEntityProperties extends EntityProperties {
     public Class getEntityClass() {
         return EntityPlayer.class;
     }
-
 }

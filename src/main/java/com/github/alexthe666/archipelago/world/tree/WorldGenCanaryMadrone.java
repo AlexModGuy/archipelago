@@ -1,6 +1,6 @@
 package com.github.alexthe666.archipelago.world.tree;
 
-import com.github.alexthe666.archipelago.enums.EnumTrees;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class WorldGenCanaryMadrone extends BasicTreeGen {
     public WorldGenCanaryMadrone() {
-        this.leavesBlock = EnumTrees.CANARY_MADRONE.leaves.getDefaultState();
-        this.logBlock = EnumTrees.CANARY_MADRONE.log.getDefaultState();
+        this.leavesBlock = TropicTreeType.CANARY_MADRONE.leaves.getDefaultState();
+        this.logBlock = TropicTreeType.CANARY_MADRONE.log.getDefaultState();
     }
 
     @Override

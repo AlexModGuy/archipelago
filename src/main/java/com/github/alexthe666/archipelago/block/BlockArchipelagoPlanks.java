@@ -1,17 +1,16 @@
 package com.github.alexthe666.archipelago.block;
 
+import com.github.alexthe666.archipelago.Archipelago;
+import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.enums.EnumTrees;
-
 public class BlockArchipelagoPlanks extends Block {
 
-    public BlockArchipelagoPlanks(EnumTrees tree) {
+    public BlockArchipelagoPlanks(TropicTreeType tree) {
         super(Material.WOOD);
         this.setSoundType(SoundType.WOOD);
         this.setHardness(2.0F);
@@ -22,5 +21,4 @@ public class BlockArchipelagoPlanks extends Block {
         GameRegistry.registerBlock(this, tree.name().toLowerCase() + "_planks");
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), tree.name().toLowerCase() + "_planks");
     }
-
 }

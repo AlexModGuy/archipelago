@@ -24,14 +24,16 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
         return false;
     }
 
-
     public abstract boolean isFreeSwimmer();
+
     public abstract double swimSpeed();
 
-    public boolean canBreatheUnderwater(){
+    @Override
+    public boolean canBreatheUnderwater() {
         return true;
     }
 
+    @Override
     public void onEntityUpdate() {
         int i = this.getAir();
         super.onEntityUpdate();
@@ -50,54 +52,54 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
         }
     }
 
-    public void onLivingUpdate(){
+    @Override
+    public void onLivingUpdate() {
         super.onLivingUpdate();
         this.renderYawOffset = this.rotationYaw;
-        swimAround();
+        this.swimAround();
     }
 
-
-    public boolean isDirectPathBetweenPoints(Vec3d vec1, Vec3d vec2)  {
-        RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec1, new Vec3d(vec2.xCoord, vec2.yCoord + (double)this.height * 0.5D, vec2.zCoord), false, true, false);
+    public boolean isDirectPathBetweenPoints(Vec3d vec1, Vec3d vec2) {
+        RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec1, new Vec3d(vec2.xCoord, vec2.yCoord + (double) this.height * 0.5D, vec2.zCoord), false, true, false);
         return movingobjectposition == null || movingobjectposition.typeOfHit != RayTraceResult.Type.BLOCK;
     }
 
     private void swimAround() {
 
-        if (currentTarget != null){
-            if(!isDirectPathBetweenPoints(this.getPositionVector(), new Vec3d(currentTarget.getX(), currentTarget.getY(), currentTarget.getZ()))){
-                currentTarget = null;
+        if (this.currentTarget != null) {
+            if (!this.isDirectPathBetweenPoints(this.getPositionVector(), new Vec3d(this.currentTarget.getX(), this.currentTarget.getY(), this.currentTarget.getZ()))) {
+                this.currentTarget = null;
             }
-            if (!isTargetInWater() || this.getDistance(currentTarget.getX(), currentTarget.getY(), currentTarget.getZ()) < 1.78F){
-                currentTarget = null;
+            if (!this.isTargetInWater() || this.getDistance(this.currentTarget.getX(), this.currentTarget.getY(), this.currentTarget.getZ()) < 1.78F) {
+                this.currentTarget = null;
             }
-            swimTowardsTarget();
+            this.swimTowardsTarget();
         }
     }
 
-    public boolean isInWater(){
+    @Override
+    public boolean isInWater() {
         return super.isInWater() || this.isInsideOfMaterial(Material.WATER) || this.isInsideOfMaterial(Material.CORAL);
     }
 
-    protected boolean isTargetInWater(){
-        return currentTarget == null ? false : worldObj.getBlockState(currentTarget).getMaterial() == Material.WATER && worldObj.getBlockState(currentTarget.up()).getMaterial() == Material.WATER;
+    protected boolean isTargetInWater() {
+        return this.currentTarget != null && (this.worldObj.getBlockState(this.currentTarget).getMaterial() == Material.WATER && this.worldObj.getBlockState(this.currentTarget.up()).getMaterial() == Material.WATER);
     }
 
-    public void swimTowardsTarget()
-    {
-        if (currentTarget != null && isTargetInWater() && this.inWater) {
-            double targetX = currentTarget.getX() + 0.5D - posX;
-            double targetY = currentTarget.getY() + 1D - posY;
-            double targetZ = currentTarget.getZ() + 0.5D - posZ;
-            motionX += (Math.signum(targetX) * 0.5D - motionX) * swimSpeed();
-            if(isFreeSwimmer()){
-                motionY += (Math.signum(targetY) * 0.5D - motionY) * swimSpeed();
+    public void swimTowardsTarget() {
+        if (this.currentTarget != null && this.isTargetInWater() && this.inWater) {
+            double targetX = this.currentTarget.getX() + 0.5D - this.posX;
+            double targetY = this.currentTarget.getY() + 1D - this.posY;
+            double targetZ = this.currentTarget.getZ() + 0.5D - this.posZ;
+            this.motionX += (Math.signum(targetX) * 0.5D - this.motionX) * this.swimSpeed();
+            if (this.isFreeSwimmer()) {
+                this.motionY += (Math.signum(targetY) * 0.5D - this.motionY) * this.swimSpeed();
             }
-            motionZ += (Math.signum(targetZ) * 0.5D - motionZ) * swimSpeed();
-            float angle = (float) (Math.atan2(motionZ, motionX) * 180.0D / Math.PI) - 90.0F;
-            float rotation = MathHelper.wrapDegrees(angle - rotationYaw);
-            moveForward = 0.5F;
-            rotationYaw += rotation;
+            this.motionZ += (Math.signum(targetZ) * 0.5D - this.motionZ) * this.swimSpeed();
+            float angle = (float) (Math.atan2(this.motionZ, this.motionX) * 180.0D / Math.PI) - 90.0F;
+            float rotation = MathHelper.wrapDegrees(angle - this.rotationYaw);
+            this.moveForward = 0.5F;
+            this.rotationYaw += rotation;
         }
     }
 
@@ -106,54 +108,47 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
         return false;
     }
 
-    public void moveEntityWithHeading(float x, float z)
-    {
+    @Override
+    public void moveEntityWithHeading(float x, float z) {
         double d0;
         float f6;
 
-        if (this.isServerWorld())
-        {
+        if (this.isServerWorld()) {
             float f4;
             float f5;
 
-            if (this.isInWater())
-            {
+            if (this.isInWater()) {
                 d0 = this.posY;
                 f4 = 0.8F;
                 f5 = 0.02F;
                 f6 = (float) EnchantmentHelper.getDepthStriderModifier(this);
 
-                if (f6 > 3.0F)
-                {
+                if (f6 > 3.0F) {
                     f6 = 3.0F;
                 }
 
-                if (!this.onGround)
-                {
+                if (!this.onGround) {
                     f6 *= 0.5F;
                 }
 
-                if (f6 > 0.0F)
-                {
+                if (f6 > 0.0F) {
                     f4 += (0.54600006F - f4) * f6 / 3.0F;
                     f5 += (this.getAIMoveSpeed() * 1.0F - f5) * f6 / 3.0F;
                 }
 
                 this.moveEntity(this.motionX, this.motionY, this.motionZ);
-                this.motionX *= (double)f4;
-                if(this.isFreeSwimmer()){
+                this.motionX *= (double) f4;
+                if (this.isFreeSwimmer()) {
                     this.motionX *= 0.900000011920929D;
                     this.motionY *= 0.900000011920929D;
                     this.motionZ *= 0.900000011920929D;
-                }else{
+                } else {
                     this.motionX *= 0.900000011920929D;
                     this.motionZ *= 0.900000011920929D;
                     this.motionY = -0.1D;
-
                 }
-                this.motionZ *= (double)f4;
-            }
-            else {
+                this.motionZ *= (double) f4;
+            } else {
                 if (this.suffocates) {
                     float f2 = 0.91F;
 
@@ -208,7 +203,7 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
                     this.motionY *= 0.9800000190734863D;
                     this.motionX *= (double) f2;
                     this.motionZ *= (double) f2;
-                }else{
+                } else {
                     super.moveEntityWithHeading(x, z);
                 }
             }
@@ -219,8 +214,7 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
         double d1 = this.posZ - this.prevPosZ;
         f6 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
 
-        if (f6 > 1.0F)
-        {
+        if (f6 > 1.0F) {
             f6 = 1.0F;
         }
 
