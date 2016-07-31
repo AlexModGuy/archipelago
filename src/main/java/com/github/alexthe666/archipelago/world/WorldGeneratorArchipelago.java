@@ -23,9 +23,9 @@ public class WorldGeneratorArchipelago implements IWorldGenerator {
     public static BlockPos getCoralHeight(World world, BlockPos pos) {
         for (int y = 0; y < 256; y++) {
             if (y > 2) {
-                BlockPos pos1 = pos.add(0, y + 1, 0);
-                if (world.getBlockState(pos1.up()).getBlock() == ModFluids.tropical_water && world.getBlockState(pos1).getMaterial() == Material.SAND) {
-                    return pos1;
+                BlockPos currentPosition = pos.add(0, y + 1, 0);
+                if (world.getBlockState(currentPosition.up()).getBlock() == ModFluids.tropical_water && world.getBlockState(currentPosition).getMaterial() == Material.SAND) {
+                    return currentPosition;
                 }
             }
         }
@@ -50,6 +50,9 @@ public class WorldGeneratorArchipelago implements IWorldGenerator {
                 int z = (chunkZ * 16) + random.nextInt(16);
                 new WorldGenArchipelagoKelp(kelpEntries.get(random.nextInt(kelpEntries.size()))).generate(world, random, getCoralHeight(world, new BlockPos(x, 0, z)));
             }
+            int x = (chunkX * 16) + random.nextInt(16);
+            int z = (chunkZ * 16) + random.nextInt(16);
+            new WorldGenArchipelagoMangrove().generate(world, random, getCoralHeight(world, new BlockPos(x, 0, z)));
         }
     }
 }

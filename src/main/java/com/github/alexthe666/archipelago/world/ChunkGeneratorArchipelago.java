@@ -19,7 +19,6 @@ import net.minecraft.world.gen.ChunkProviderSettings;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraftforge.common.BiomeManager;
 
 import java.util.List;
 import java.util.Random;
@@ -274,43 +273,34 @@ public class ChunkGeneratorArchipelago implements IChunkGenerator {
         BlockFalling.fallInstantly = true;
         int i = x * 16;
         int j = z * 16;
-        BlockPos blockpos = new BlockPos(i, 0, j);
-        Biome Biome = this.worldObj.getBiomeGenForCoords(blockpos.add(16, 0, 16));
+        BlockPos pos = new BlockPos(i, 0, j);
+        Biome biome = this.worldObj.getBiomeGenForCoords(pos.add(16, 0, 16));
         this.rand.setSeed(this.worldObj.getSeed());
         long k = this.rand.nextLong() / 2L * 2L + 1L;
         long l = this.rand.nextLong() / 2L * 2L + 1L;
         this.rand.setSeed(x * k + z * l ^ this.worldObj.getSeed());
-        boolean flag = false;
-        ChunkPos chunkcoordintpair = new ChunkPos(x, z);
-        if (this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0 && !BiomeManager.oceanBiomes.contains(Biome)) {
-            if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE)) {
-                int i1 = this.rand.nextInt(16) + 8;
-                int j1 = this.rand.nextInt(256);
-                int k1 = this.rand.nextInt(16) + 8;
-                (new WorldGenArchipelagoLakes(ModFluids.tropical_water)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
-            }
-        }
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, flag);
-        Biome.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
-            WorldEntitySpawner.performWorldGenSpawning(this.worldObj, Biome, i + 8, j + 8, 16, 16, this.rand);
-        blockpos = blockpos.add(8, 0, 8);
+        boolean hasVillageGenerated = false;
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.worldObj, x, z, hasVillageGenerated);
+        biome.decorate(this.worldObj, this.rand, new BlockPos(i, 0, j));
+        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, hasVillageGenerated, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS))
+            WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, i + 8, j + 8, 16, 16, this.rand);
+        pos = pos.add(8, 0, 8);
 
-        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE)) {
+        if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, hasVillageGenerated, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE)) {
             for (int k2 = 0; k2 < 16; ++k2) {
                 for (int j3 = 0; j3 < 16; ++j3) {
-                    BlockPos blockpos1 = this.worldObj.getPrecipitationHeight(blockpos.add(k2, 0, j3));
-                    BlockPos blockpos2 = blockpos1.down();
-                    if (this.worldObj.canBlockFreezeWater(blockpos2)) {
-                        this.worldObj.setBlockState(blockpos2, Blocks.ICE.getDefaultState(), 2);
+                    BlockPos precipitationHeight = this.worldObj.getPrecipitationHeight(pos.add(k2, 0, j3));
+                    BlockPos freezePos = precipitationHeight.down();
+                    if (this.worldObj.canBlockFreezeWater(freezePos)) {
+                        this.worldObj.setBlockState(freezePos, Blocks.ICE.getDefaultState(), 2);
                     }
-                    if (this.worldObj.canSnowAt(blockpos1, true)) {
-                        this.worldObj.setBlockState(blockpos1, Blocks.SNOW_LAYER.getDefaultState(), 2);
+                    if (this.worldObj.canSnowAt(precipitationHeight, true)) {
+                        this.worldObj.setBlockState(precipitationHeight, Blocks.SNOW_LAYER.getDefaultState(), 2);
                     }
                 }
             }
         }
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.worldObj, x, z, flag);
+        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.worldObj, x, z, hasVillageGenerated);
         BlockFalling.fallInstantly = false;
     }
 

@@ -1,5 +1,6 @@
 package com.github.alexthe666.archipelago.world.tree;
 
+import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -16,7 +17,9 @@ public class WorldGenMangrove extends BasicTreeGen {
 
     @Override
     public boolean generateTree(World world, Random rand, BlockPos position) {
-        this.setBlockState(world, position, Blocks.AIR.getDefaultState());
+        if (world.getBlockState(position).getBlock() instanceof BlockArchipelagoSapling) {
+            this.setBlockState(world, position, Blocks.AIR.getDefaultState());
+        }
         position = position.up(4);
         int trunkHeight = rand.nextInt(2) + 3;
         for (int y = 0; y <= trunkHeight; y++) {

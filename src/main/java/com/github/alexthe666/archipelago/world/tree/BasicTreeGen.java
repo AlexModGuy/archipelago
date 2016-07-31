@@ -1,5 +1,9 @@
 package com.github.alexthe666.archipelago.world.tree;
 
+import net.minecraft.block.BlockClay;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockGrass;
+import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +28,7 @@ public abstract class BasicTreeGen extends WorldGenAbstractTree {
     public boolean generate(World world, Random rand, BlockPos position) {
         BlockPos down = position.down();
         IBlockState state = world.getBlockState(down);
-        if (state.getBlock().canSustainPlant(state, world, down, EnumFacing.UP, (IPlantable) Blocks.SAPLING)) {
+        if (state.getBlock() instanceof BlockDirt || state.getBlock() instanceof BlockGrass || state.getBlock() instanceof BlockClay || state.getBlock() instanceof BlockSand) {
             this.center = position;
             this.rotation = rand.nextInt(4);
             return this.generateTree(world, rand, position);

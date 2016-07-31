@@ -58,23 +58,23 @@ public class BlockTallPlant extends BlockBush implements IGrowable {
     }
 
     @Override
-    protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (state.getBlock() == this && !this.canBlockStay(worldIn, pos, state)) {
+    protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state) {
+        if (state.getBlock() == this && !this.canBlockStay(world, pos, state)) {
             boolean flag = state.getValue(HALF) == BlockTallPlant.EnumBlockHalf.UPPER;
             BlockPos blockpos = flag ? pos : pos.up();
             BlockPos blockpos1 = flag ? pos.down() : pos;
-            Block block = flag ? this : worldIn.getBlockState(blockpos).getBlock();
-            Block block1 = flag ? worldIn.getBlockState(blockpos1).getBlock() : this;
+            Block block = flag ? this : world.getBlockState(blockpos).getBlock();
+            Block block1 = flag ? world.getBlockState(blockpos1).getBlock() : this;
 
             if (!flag)
-                this.dropBlockAsItem(worldIn, pos, state, 0);
+                this.dropBlockAsItem(world, pos, state, 0);
 
             if (block == this) {
-                worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
+                world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
             }
 
             if (block1 == this) {
-                worldIn.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 3);
+                world.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 3);
             }
         }
     }

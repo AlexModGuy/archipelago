@@ -16,22 +16,22 @@ public class WorldGenArchipelagoKelp extends WorldGenerator {
     }
 
     @Override
-    public boolean generate(World worldIn, Random rand, BlockPos position) {
+    public boolean generate(World world, Random rand, BlockPos position) {
         boolean flag = false;
-        if (worldIn != null && this.plantType != null && this.plantType.block != null) {
+        if (world != null && this.plantType != null && this.plantType.block != null) {
             for (int i = 0; i < 64; ++i) {
                 BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-                if (worldIn.isBlockLoaded(blockpos) && this.plantType.canSpawnIn(worldIn.getBiomeGenForCoords(blockpos)) && this.plantType.block.canPlaceBlockAt(worldIn, blockpos) && blockpos.getY() < 57) {
-                    if (worldIn.getBlockState(blockpos.up()).getBlock().equals(this.plantType.block))
+                if (world.isBlockLoaded(blockpos) && this.plantType.canSpawnIn(world.getBiomeGenForCoords(blockpos)) && this.plantType.block.canPlaceBlockAt(world, blockpos) && blockpos.getY() < 57) {
+                    if (world.getBlockState(blockpos.up()).getBlock().equals(this.plantType.block))
                         return false;
                     int length = Math.abs(61 - blockpos.getY() - rand.nextInt(3));
                     if (length > 6)
                         return false;
-                    worldIn.setBlockState(blockpos, this.plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.LOWER), 2);
+                    world.setBlockState(blockpos, this.plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.LOWER), 2);
                     for (int y = 1; y < length; y++) {
-                        worldIn.setBlockState(blockpos.up(y), this.plantType.block.getDefaultState(), 2);
+                        world.setBlockState(blockpos.up(y), this.plantType.block.getDefaultState(), 2);
                     }
-                    worldIn.setBlockState(blockpos.up(length), this.plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.UPPER), 2);
+                    world.setBlockState(blockpos.up(length), this.plantType.block.getDefaultState().withProperty(BlockGrowingSeaweed.PART, BlockGrowingSeaweed.Part.UPPER), 2);
                     flag = true;
                 }
             }

@@ -7,7 +7,7 @@ import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayerBiomesArchipelago extends GenLayer {
     public static BiomeGenTropical[] volcanoBiomes = { ModWorld.ashField, ModWorld.volcano };
-    public static BiomeGenTropical[] islandBiomes = { ModWorld.tropicGrassland, ModWorld.tropicShrubland, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland };
+    public static BiomeGenTropical[] islandBiomes = { ModWorld.tropicGrassland, ModWorld.tropicLakes, ModWorld.tropicShrubland, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland, ModWorld.mangroveSwamp };
     public static BiomeGenTropical[] oceanBiomes = { ModWorld.tropicOcean, ModWorld.tropicShallows, ModWorld.tropicReef, ModWorld.tropicSeaGrassBed, ModWorld.tropicBlueHoles, ModWorld.tropicTrench, ModWorld.tropicKelpForest };
     private boolean isIsland;
 
@@ -17,14 +17,14 @@ public class GenLayerBiomesArchipelago extends GenLayer {
 
     @Override
     public int[] getInts(int x, int z, int width, int height) {
-        int[] ints = IntCache.getIntCache(width * height);
+        int[] biomes = IntCache.getIntCache(width * height);
         for (int deltaZ = 0; deltaZ < height; deltaZ++) {
             for (int deltaX = 0; deltaX < width; deltaX++) {
                 this.initChunkSeed(deltaX + x, deltaZ + z);
-                ints[(deltaX + deltaZ * width)] = Biome.getIdForBiome(this.getBiome());
+                biomes[(deltaX + deltaZ * width)] = Biome.getIdForBiome(this.getBiome());
             }
         }
-        return ints;
+        return biomes;
     }
 
     private Biome getBiome() {
