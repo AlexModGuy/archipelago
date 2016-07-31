@@ -29,11 +29,11 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
     public void renderCloudSide(float partialTicks, WorldClient world, Minecraft mc) {
         Entity entity = mc.getRenderViewEntity();
 
-        double d2 = (this.getCloudTickCounter() + partialTicks) * 4.0F;
+        double cloudMovement = (this.getCloudTickCounter() + partialTicks) * 4.0F;
 
-        double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks + d2 * 0.029999999329447746D;
-        double d1 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks;
-        float f = (float) (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks);
+        double deltaX = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks + cloudMovement * 0.029999999329447746D;
+        double deltaZ = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks;
+        float playerY = (float) (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks);
 
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer buffer = tessellator.getBuffer();
@@ -48,7 +48,7 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
         GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.alphaFunc(516, 0.1F);
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 
         if (mc.gameSettings.anaglyph) {
             float anaglyphRed = (red * 30.0F + green * 59.0F + blue * 11.0F) / 100.0F;
@@ -59,33 +59,33 @@ public class ArchipelagoCloudRenderer extends IRenderHandler {
             blue = anaglyphBlue;
         }
 
-        float textureScale = 4.8828125E-4F * 4.0F;
+        float textureScale = 0.00048828125F * 4.0F;
 
-        int k = MathHelper.floor_double(d0 / 2048.0D);
-        int l = MathHelper.floor_double(d1 / 2048.0D);
-        d0 = d0 - (k * 2048);
-        d1 = d1 - (l * 2048);
-        float renderY = f - (mc.theWorld.provider.getCloudHeight() + 0.33F);
-        float f8 = (float) (d0 * textureScale);
-        float f9 = (float) (d1 * textureScale);
+        deltaX = deltaX - (MathHelper.floor_double(deltaX / 512.0D) * 512.0);
+        deltaZ = deltaZ - (MathHelper.floor_double(deltaZ / 512.0D) * 512.0);
+
+        float renderY = playerY - (mc.theWorld.provider.getCloudHeight() + 0.33F);
+        float textureX = (float) (deltaX * textureScale);
+        float textureY = (float) (deltaZ * textureScale);
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
         float alpha = 0.7F;
 
-        for (int i1 = -256; i1 < 256; i1 += 32) {
-            for (int j1 = -256; j1 < 256; j1 += 32) {
-                buffer.pos(i1, renderY, j1 + 32).tex((i1 * textureScale + f8), (j1 + 32) * textureScale + f9).color(red, green, blue, alpha).endVertex();
-                buffer.pos(i1 + 32, renderY, j1 + 32).tex((i1 + 32) * textureScale + f8, (j1 + 32) * textureScale + f9).color(red, green, blue, alpha).endVertex();
-                buffer.pos(i1 + 32, renderY, j1).tex(((i1 + 32) * textureScale + f8), (j1 * textureScale + f9)).color(red, green, blue, alpha).endVertex();
-                buffer.pos(i1, renderY, j1).tex(((i1) * textureScale + f8), j1 * textureScale + f9).color(red, green, blue, alpha).endVertex();
+        int sectionSize = 32;
+        for (int sectionX = -256; sectionX < 256; sectionX += sectionSize) {
+            for (int sectionZ = -256; sectionZ < 256; sectionZ += sectionSize) {
+                buffer.pos(sectionX, renderY, sectionZ + sectionSize).tex(sectionX * textureScale + textureX, (sectionZ + sectionSize) * textureScale + textureY).color(red, green, blue, alpha).endVertex();
+                buffer.pos(sectionX + sectionSize, renderY, sectionZ + sectionSize).tex((sectionX + sectionSize) * textureScale + textureX, (sectionZ + sectionSize) * textureScale + textureY).color(red, green, blue, alpha).endVertex();
+                buffer.pos(sectionX + sectionSize, renderY, sectionZ).tex((sectionX + sectionSize) * textureScale + textureX, sectionZ * textureScale + textureY).color(red, green, blue, alpha).endVertex();
+                buffer.pos(sectionX, renderY, sectionZ).tex(sectionX * textureScale + textureX, sectionZ * textureScale + textureY).color(red, green, blue, alpha).endVertex();
             }
         }
 
-        GL11.glScalef(1, -1, 1);
+        GL11.glScalef(1.0F, -1.0F, 1.0F);
         tessellator.draw();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        GlStateManager.alphaFunc(516, 0.5F);
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.5F);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.disableBlend();
         GlStateManager.depthMask(true);

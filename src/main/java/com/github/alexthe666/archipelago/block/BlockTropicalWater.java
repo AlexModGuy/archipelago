@@ -46,7 +46,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
             if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
                 EntityLivingBase living = (EntityLivingBase) entity;
                 try {
-                    ReflectionHelper.findMethod(Entity.class, entity, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(living, 7, true);
+                    BlockShortCoral.SET_FLAG.invoke(living, 7, true);
                 } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
                     e.printStackTrace();
                 }
@@ -55,7 +55,7 @@ public class BlockTropicalWater extends BlockFluidClassic {
                 EntityPlayer player = (EntityPlayer) entity;
                 if (!player.capabilities.isFlying) {
                     try {
-                        ReflectionHelper.findMethod(Entity.class, entity, new String[] { "setFlag", "func_70052_a" }, int.class, boolean.class).invoke(player, 7, true);
+                        BlockShortCoral.SET_FLAG.invoke(player, 7, true);
                     } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
                         e.printStackTrace();
                     }

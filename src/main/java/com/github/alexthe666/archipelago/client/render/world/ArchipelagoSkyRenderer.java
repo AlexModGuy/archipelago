@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import org.lwjgl.opengl.GL11;
 
 public class ArchipelagoSkyRenderer extends IRenderHandler {
     private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
@@ -27,12 +28,12 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
         float green = (float) skyColour.yCoord;
         float blue = (float) skyColour.zCoord;
         if (mc.gameSettings.anaglyph) {
-            float f3 = (red * 30.0F + green * 59.0F + blue * 11.0F) / 100.0F;
-            float f4 = (red * 30.0F + green * 70.0F) / 100.0F;
-            float f5 = (red * 30.0F + blue * 70.0F) / 100.0F;
-            red = f3;
-            green = f4;
-            blue = f5;
+            float anaglyphRed = (red * 30.0F + green * 59.0F + blue * 11.0F) / 100.0F;
+            float anaglyphGreen = (red * 30.0F + green * 70.0F) / 100.0F;
+            float anaglypBlue = (red * 30.0F + blue * 70.0F) / 100.0F;
+            red = anaglyphRed;
+            green = anaglyphGreen;
+            blue = anaglypBlue;
         }
         GlStateManager.color(red, green, blue);
         Tessellator tessellator = Tessellator.getInstance();
@@ -40,101 +41,93 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
         GlStateManager.depthMask(false);
         GlStateManager.enableFog();
         GlStateManager.color(red, green, blue);
-
         if (mc.gameSettings.useVbo && this.getSkyVBO() != null) {
             this.getSkyVBO().bindBuffer();
-            GlStateManager.glEnableClientState(32884);
-            GlStateManager.glVertexPointer(3, 5126, 12, 0);
-            this.getSkyVBO().drawArrays(7);
+            GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+            GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, 12, 0);
+            this.getSkyVBO().drawArrays(GL11.GL_QUADS);
             this.getSkyVBO().unbindBuffer();
-            GlStateManager.glDisableClientState(32884);
+            GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
         } else {
             GlStateManager.callList(this.getSkyCallist());
         }
-
         GlStateManager.disableFog();
         GlStateManager.disableAlpha();
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.disableStandardItemLighting();
-        float[] afloat = mc.theWorld.provider.calcSunriseSunsetColors(mc.theWorld.getCelestialAngle(partialTicks), partialTicks);
-
-        if (afloat != null) {
+        float[] sunriseColor = mc.theWorld.provider.calcSunriseSunsetColors(mc.theWorld.getCelestialAngle(partialTicks), partialTicks);
+        if (sunriseColor != null) {
             GlStateManager.disableTexture2D();
-            GlStateManager.shadeModel(7425);
+            GlStateManager.shadeModel(GL11.GL_SMOOTH);
             GlStateManager.pushMatrix();
             GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotate(MathHelper.sin(mc.theWorld.getCelestialAngleRadians(partialTicks)) < 0.0F ? 180.0F : 0.0F, 0.0F, 0.0F, 1.0F);
             GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
-            float f6 = afloat[0];
-            float f7 = afloat[1];
-            float f8 = afloat[2];
+            float sunriseRed = sunriseColor[0];
+            float sunriseGreen = sunriseColor[1];
+            float sunriseBlue = sunriseColor[2];
             if (mc.gameSettings.anaglyph) {
-                float f9 = (f6 * 30.0F + f7 * 59.0F + f8 * 11.0F) / 100.0F;
-                float f10 = (f6 * 30.0F + f7 * 70.0F) / 100.0F;
-                float f11 = (f6 * 30.0F + f8 * 70.0F) / 100.0F;
-                f6 = f9;
-                f7 = f10;
-                f8 = f11;
+                float anaglyphRed = (sunriseRed * 30.0F + sunriseGreen * 59.0F + sunriseBlue * 11.0F) / 100.0F;
+                float anaglyphGreen = (sunriseRed * 30.0F + sunriseGreen * 70.0F) / 100.0F;
+                float anaglyphBlue = (sunriseRed * 30.0F + sunriseBlue * 70.0F) / 100.0F;
+                sunriseRed = anaglyphRed;
+                sunriseGreen = anaglyphGreen;
+                sunriseBlue = anaglyphBlue;
             }
-            buffer.begin(6, DefaultVertexFormats.POSITION_COLOR);
-            buffer.pos(0.0D, 100.0D, 0.0D).color(f6, f7, f8, afloat[3]).endVertex();
-            int j = 16;
-
-            for (int l = 0; l <= 16; ++l) {
-                float f21 = (float) l * ((float) Math.PI * 2F) / 16.0F;
-                float f12 = MathHelper.sin(f21);
-                float f13 = MathHelper.cos(f21);
-                buffer.pos((double) (f12 * 120.0F), (double) (f13 * 120.0F), (double) (-f13 * 40.0F * afloat[3])).color(afloat[0], afloat[1], afloat[2], 0.0F).endVertex();
+            buffer.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
+            buffer.pos(0.0D, 100.0D, 0.0D).color(sunriseRed, sunriseGreen, sunriseBlue, sunriseColor[3]).endVertex();
+            for (int section = 0; section <= 16; ++section) {
+                float angle = (float) (section * (Math.PI * 6.0F) / 16.0F);
+                float sin = MathHelper.sin(angle);
+                float cos = MathHelper.cos(angle);
+                buffer.pos(sin * 120.0F, cos * 120.0F, -cos * 100.0F * sunriseColor[3]).color(sunriseColor[0], sunriseColor[1], sunriseColor[2], 0.0F).endVertex();
             }
             tessellator.draw();
             GlStateManager.popMatrix();
-            GlStateManager.shadeModel(7424);
+            GlStateManager.shadeModel(GL11.GL_FLAT);
         }
-
         GlStateManager.enableTexture2D();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.pushMatrix();
-        float f16 = 3.0F - mc.theWorld.getRainStrength(partialTicks);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, f16);
+        float alpha = 3.0F - mc.theWorld.getRainStrength(partialTicks);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
         GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(mc.theWorld.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
-        float f17 = 30.0F;
+        float size = 35.0F;
         mc.renderEngine.bindTexture(SUN_TEXTURES);
-        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos((double) (-f17), 100.0D, (double) (-f17)).tex(0.0D, 0.0D).endVertex();
-        buffer.pos((double) f17, 100.0D, (double) (-f17)).tex(1.0D, 0.0D).endVertex();
-        buffer.pos((double) f17, 100.0D, (double) f17).tex(1.0D, 1.0D).endVertex();
-        buffer.pos((double) (-f17), 100.0D, (double) f17).tex(0.0D, 1.0D).endVertex();
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos(-size, 100.0D, -size).tex(0.0D, 0.0D).endVertex();
+        buffer.pos(size, 100.0D, -size).tex(1.0D, 0.0D).endVertex();
+        buffer.pos(size, 100.0D, size).tex(1.0D, 1.0D).endVertex();
+        buffer.pos(-size, 100.0D, size).tex(0.0D, 1.0D).endVertex();
         tessellator.draw();
-        f17 = 30.0F;
+        size = 35.0F;
         mc.renderEngine.bindTexture(MOON_PHASES_TEXTURES);
-        int i = mc.theWorld.getMoonPhase();
-        int k = i % 4;
-        int i1 = i / 4 % 2;
-        float f22 = (float) (k) / 4.0F;
-        float f23 = (float) (i1) / 2.0F;
-        float f24 = (float) (k + 1) / 4.0F;
-        float f14 = (float) (i1 + 1) / 2.0F;
-        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos((double) (-f17), -100.0D, (double) f17).tex((double) f24, (double) f14).endVertex();
-        buffer.pos((double) f17, -100.0D, (double) f17).tex((double) f22, (double) f14).endVertex();
-        buffer.pos((double) f17, -100.0D, (double) (-f17)).tex((double) f22, (double) f23).endVertex();
-        buffer.pos((double) (-f17), -100.0D, (double) (-f17)).tex((double) f24, (double) f23).endVertex();
+        int moonPhase = mc.theWorld.getMoonPhase();
+        int phaseX = moonPhase % 4;
+        int phaseY = moonPhase / 4 % 2;
+        float moonTextureRight = phaseX / 4.0F;
+        float moonTextureDown = phaseY / 2.0F;
+        float moonTextureLeft = (phaseX + 1) / 4.0F;
+        float moonTextureUp = (phaseY + 1) / 2.0F;
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos(-size, -100.0D, size).tex(moonTextureLeft, moonTextureUp).endVertex();
+        buffer.pos(size, -100.0D, size).tex(moonTextureRight, moonTextureUp).endVertex();
+        buffer.pos(size, -100.0D, -size).tex(moonTextureRight, moonTextureDown).endVertex();
+        buffer.pos(-size, -100.0D, -size).tex(moonTextureLeft, moonTextureDown).endVertex();
         tessellator.draw();
         GlStateManager.disableTexture2D();
-        float f15 = mc.theWorld.getStarBrightness(partialTicks) * f16;
-
-        if (f15 > 0.0F) {
-            GlStateManager.color(f15, f15, f15, f15);
-
+        float starBrightness = mc.theWorld.getStarBrightness(partialTicks) * alpha;
+        if (starBrightness > 0.0F) {
+            GlStateManager.color(starBrightness, starBrightness, starBrightness, starBrightness);
             if (mc.gameSettings.useVbo && this.getStarVBO() != null) {
                 this.getStarVBO().bindBuffer();
-                GlStateManager.glEnableClientState(32884);
-                GlStateManager.glVertexPointer(3, 5126, 12, 0);
-                this.getStarVBO().drawArrays(7);
+                GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+                GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, 12, 0);
+                this.getStarVBO().drawArrays(GL11.GL_QUADS);
                 this.getStarVBO().unbindBuffer();
-                GlStateManager.glDisableClientState(32884);
+                GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
             } else {
                 GlStateManager.callList(this.getStarCallist());
             }
@@ -146,41 +139,37 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
         GlStateManager.popMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.color(0.0F, 0.0F, 0.0F);
-        double d0 = mc.thePlayer.getPositionEyes(partialTicks).yCoord - mc.theWorld.getHorizon();
-        if (d0 < 0.0D) {
+        double horizonDelta = mc.thePlayer.getPositionEyes(partialTicks).yCoord - mc.theWorld.getHorizon();
+        if (horizonDelta < 0.0D) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 12.0F, 0.0F);
-
             if (mc.gameSettings.useVbo && this.getSky2VBO() != null) {
                 this.getSky2VBO().bindBuffer();
-                GlStateManager.glEnableClientState(32884);
-                GlStateManager.glVertexPointer(3, 5126, 12, 0);
-                this.getSky2VBO().drawArrays(7);
+                GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+                GlStateManager.glVertexPointer(3, GL11.GL_FLOAT, 12, 0);
+                this.getSky2VBO().drawArrays(GL11.GL_QUADS);
                 this.getSky2VBO().unbindBuffer();
-                GlStateManager.glDisableClientState(32884);
+                GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
             } else {
                 GlStateManager.callList(this.getSky2Callist());
             }
-
             GlStateManager.popMatrix();
-            float f18 = 1.0F;
-            float f19 = -((float) (d0 + 65.0D));
-            float f20 = -1.0F;
-            buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-            buffer.pos(-1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
+            float horizonRenderY = (float) -(horizonDelta + 65.0F);
+            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+            buffer.pos(-1.0D, horizonRenderY, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, horizonRenderY, 1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(-1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, horizonRenderY, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, horizonRenderY, -1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(-1.0D, (double) f19, -1.0D).color(0, 0, 0, 255).endVertex();
-            buffer.pos(-1.0D, (double) f19, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, horizonRenderY, 1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(1.0D, horizonRenderY, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, horizonRenderY, -1.0D).color(0, 0, 0, 255).endVertex();
+            buffer.pos(-1.0D, horizonRenderY, 1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(-1.0D, -1.0D, 1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
             buffer.pos(-1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
@@ -189,15 +178,13 @@ public class ArchipelagoSkyRenderer extends IRenderHandler {
             buffer.pos(1.0D, -1.0D, -1.0D).color(0, 0, 0, 255).endVertex();
             tessellator.draw();
         }
-
         if (mc.theWorld.provider.isSkyColored()) {
             GlStateManager.color(red * 0.2F + 0.04F, green * 0.2F + 0.04F, blue * 0.6F + 0.1F);
         } else {
             GlStateManager.color(red, green, blue);
         }
-
         GlStateManager.pushMatrix();
-        GlStateManager.translate(0.0F, -((float) (d0 - 16.0D)), 0.0F);
+        GlStateManager.translate(0.0F, -(horizonDelta - 16.0D), 0.0F);
         GlStateManager.callList(this.getSky2Callist());
         GlStateManager.popMatrix();
         GlStateManager.enableTexture2D();
