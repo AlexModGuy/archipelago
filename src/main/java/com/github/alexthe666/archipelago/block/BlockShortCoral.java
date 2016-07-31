@@ -121,17 +121,15 @@ public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void render(IBlockAccess world, BlockPos pos) {
+    public void render(IBlockAccess world, BlockPos pos, IBlockState state) {
         GlStateManager.pushMatrix();
         GlStateManager.enableLighting();
         int light = MC.theWorld.getCombinedLight(pos, 0);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, light / 65536.0F);
         RenderHelper.disableStandardItemLighting();
-        MC.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.hashCode() * 0.2F)) * 0.0125F;
-        float swayX = (float) Math.sin(sway) / 4.0F;
-        float swayZ = (float) Math.cos(sway) / 4.0F;
+        float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.getX() * pos.getZ() * 0.1F)) * 0.0125F;
+        float swayX = (float) Math.sin(sway) * 0.25F;
+        float swayZ = (float) Math.cos(sway) * 0.25F;
         if (this.sprite == null) {
             this.sprite = MC.getTextureMapBlocks().getTextureExtry(Archipelago.MODID + ":blocks/" + this.name);
             this.minU = this.sprite.getMinU();
@@ -150,8 +148,6 @@ public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
         buffer.pos(0.5F, 0.0F, 0.5F).tex(this.maxU, this.maxV).endVertex();
         buffer.pos(0.5F + swayX, 1.0F, 0.5F + swayZ).tex(this.maxU, this.minV).endVertex();
         buffer.pos(-0.5F + swayX, 1.0F, -0.5F + swayZ).tex(this.minU, this.minV).endVertex();
-        tessellator.draw();
-        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
         buffer.pos(-0.5F, 0.0F, 0.5F).tex(this.minU, this.maxV).endVertex();
         buffer.pos(0.5F, 0.0F, -0.5F).tex(this.maxU, this.maxV).endVertex();
         buffer.pos(0.5F + swayX, 1.0F, -0.5F + swayZ).tex(this.maxU, this.minV).endVertex();

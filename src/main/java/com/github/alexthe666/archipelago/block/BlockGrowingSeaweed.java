@@ -252,25 +252,19 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void render(IBlockAccess world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+    public void render(IBlockAccess world, BlockPos pos, IBlockState state) {
         if (state.getValue(PART) == Part.LOWER) {
-            float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.hashCode() * 0.2F)) * 0.0125F;
-            float swayX = (float) Math.sin(sway) / 8.0F;
-            float swayZ = (float) Math.cos(sway) / 8.0F;
+            float sway = ((MC.thePlayer.ticksExisted + LLibrary.PROXY.getPartialTicks()) + (pos.getX() * pos.getZ() * 0.1F)) * 0.0125F;
+            float swayX = (float) Math.sin(sway) * 0.125F;
+            float swayZ = (float) Math.cos(sway) * 0.125F;
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer buffer = tessellator.getBuffer();
             GlStateManager.pushMatrix();
             GlStateManager.enableLighting();
-            MC.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             int light = MC.theWorld.getCombinedLight(pos, 0);
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) light % 65536, light / 65536.0F);
             RenderHelper.disableStandardItemLighting();
-            double x = (pos.getX() + 0.5) - TileEntityRendererDispatcher.staticPlayerX;
-            double y = pos.getY() - TileEntityRendererDispatcher.staticPlayerY;
-            double z = (pos.getZ() + 0.5) - TileEntityRendererDispatcher.staticPlayerZ;
-            GlStateManager.translate(x, y, z);
+            GlStateManager.translate((pos.getX() + 0.5) - TileEntityRendererDispatcher.staticPlayerX, pos.getY() - TileEntityRendererDispatcher.staticPlayerY, (pos.getZ() + 0.5) - TileEntityRendererDispatcher.staticPlayerZ);
             while (state.getBlock() instanceof BlockGrowingSeaweed) {
                 Part part = state.getValue(PART);
                 int ordinal = part.ordinal();
@@ -291,14 +285,12 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
                 buffer.pos(0.5F, 0.0F, 0.5F).tex(maxU, maxV).endVertex();
                 buffer.pos(0.5F + swayX, 1.0F, 0.5F + swayZ).tex(maxU, minV).endVertex();
                 buffer.pos(-0.5F + swayX, 1.0F, -0.5F + swayZ).tex(minU, minV).endVertex();
-                tessellator.draw();
-                buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
                 buffer.pos(-0.5F, 0.0F, 0.5F).tex(minU, maxV).endVertex();
                 buffer.pos(0.5F, 0.0F, -0.5F).tex(maxU, maxV).endVertex();
                 buffer.pos(0.5F + swayX, 1.0F, -0.5F + swayZ).tex(maxU, minV).endVertex();
                 buffer.pos(-0.5F + swayX, 1.0F, 0.5F + swayZ).tex(minU, minV).endVertex();
                 tessellator.draw();
-                state = world.getBlockState(pos = pos.up());
+                state = world.getBlockState(pos = pos.add(0, 1, 0));
                 GlStateManager.translate(swayX, 1.0F, swayZ);
             }
             GlStateManager.popMatrix();

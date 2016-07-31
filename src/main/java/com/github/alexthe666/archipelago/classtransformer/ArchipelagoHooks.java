@@ -87,7 +87,7 @@ public class ArchipelagoHooks {
                                 Block block = state.getBlock();
                                 if (block instanceof SpecialRenderedBlock) {
                                     SpecialRenderedBlock specialRenderedBlock = (SpecialRenderedBlock) block;
-                                    specialRenderedBlock.render(world, pos);
+                                    specialRenderedBlock.render(world, pos, state);
                                 }
                             }
                         }
