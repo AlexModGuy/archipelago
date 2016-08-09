@@ -15,7 +15,7 @@ import java.util.Random;
 public class EntityBrownCrab extends EntityAquaticAnimal {
 
     public EntityBrownCrab(World world) {
-        super(world, 4, 0.4F, 1, 1, 1, 4, 16, 0.1, 0.1);
+        super(world, 4, 0.3F, 1, 1, 1, 4, 16, 0.1, 0.1);
         this.setSize(0.8F, 0.5F);
     }
 

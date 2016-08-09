@@ -5,16 +5,14 @@ import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWater
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class EntityClownfish extends EntityAquaticAnimal {
+public class EntityCoralGrouper extends EntityAquaticAnimal {
 
-    public EntityClownfish(World world) {
-        super(world, 3, 0.2F, 0.5F, 1, 1, 2, 4, 0, 0);
+    public EntityCoralGrouper(World world) {
+        super(world, 3, 0.5F, 0.7F, 1, 1, 2, 4, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }
@@ -38,16 +36,17 @@ public class EntityClownfish extends EntityAquaticAnimal {
 
     @Override
     public void onSpawn() {
-        this.setVariant(new Random().nextInt(3));
+        this.setVariant(0);
     }
+
 
     @Override
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
-        this.entityDropItem(new ItemStack(Items.FISH, 1, 2), 0);
+        //this.entityDropItem(new ItemStack(Items.FISH, 1, 2), 0);
     }
 
     @Override
     public String getTexture() {
-        return "archipelago:textures/models/clownfish/clownfish_" + this.getVariant();
+        return "archipelago:textures/models/coral_grouper/coral_grouper_" + this.getVariant();
     }
 }

@@ -1,6 +1,5 @@
 package com.github.alexthe666.archipelago.world;
 
-import com.github.alexthe666.archipelago.block.BlockBlackSand;
 import com.github.alexthe666.archipelago.core.ModBlocks;
 import com.github.alexthe666.archipelago.core.ModWorld;
 import com.github.alexthe666.archipelago.enums.TropicBiomeSediment;
@@ -29,7 +28,6 @@ public class BiomeGenTropical extends Biome {
     private TropicGrassColor grassColor;
     private TreeGenerator[] treeGenerators;
     private int generationChance = 10;
-    private TropicBiomeSediment sediment;
 
     public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, TropicGrassColor grassColor, TropicBiomeSediment biomeSediment, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
@@ -37,10 +35,11 @@ public class BiomeGenTropical extends Biome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.grassColor = grassColor;
+        this.topBlock = biomeSediment.topBlock.getDefaultState();
+        this.fillerBlock = biomeSediment.bottomBlock.getDefaultState();
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
-        this.sediment = biomeSediment;
         this.treeGenerators = treeGenerators;
     }
 
@@ -50,13 +49,14 @@ public class BiomeGenTropical extends Biome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.grassColor = grassColor;
+        this.topBlock = biomeSediment.topBlock.getDefaultState();
+        this.fillerBlock = biomeSediment.bottomBlock.getDefaultState();
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
         this.r = r;
         this.g = g;
         this.b = b;
-        this.sediment = biomeSediment;
         this.treeGenerators = treeGenerators;
     }
 
@@ -95,8 +95,6 @@ public class BiomeGenTropical extends Biome {
     @Override
     public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimer, int chunkZ, int chunkX, double noiseVal) {
         int seaLevel = world.getSeaLevel();
-        this.topBlock = this.sediment.topBlock.getDefaultState();
-        this.fillerBlock = this.sediment.bottomBlock.getDefaultState();
         IBlockState topBlock = this.topBlock;
         IBlockState fillerBlock = this.fillerBlock;
         int depth = -1;
@@ -127,10 +125,8 @@ public class BiomeGenTropical extends Biome {
                             topBlock = rand.nextInt(4) == 0 ? Blocks.SAND.getDefaultState() : ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9));
                             chunkPrimer.setBlockState(x, y, z, topBlock);
                         } else if (y <= seaLevel - 1) {
-                            if (!(topBlock.getBlock() instanceof BlockSand || topBlock.getBlock() instanceof BlockBlackSand)) {
-                                topBlock = Blocks.SAND.getDefaultState();
-                                fillerBlock = topBlock;
-                            }
+                            topBlock = Blocks.SAND.getDefaultState();
+                            fillerBlock = topBlock;
                             chunkPrimer.setBlockState(x, y, z, topBlock);
                         } else if (y >= seaLevel - 1) {
                             chunkPrimer.setBlockState(x, y, z, topBlock);

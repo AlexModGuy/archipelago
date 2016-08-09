@@ -20,7 +20,7 @@ public class GenLayerShoreArchipelago extends GenLayer {
             for (int deltaX = 0; deltaX < areaWidth; ++deltaX) {
                 this.initChunkSeed((long) (deltaX + areaX), (long) (deltaZ + areaY));
                 int biomeIndex = parentBiomes[deltaX + 1 + (deltaZ + 1) * (areaWidth + 2)];
-                this.replaceIfNeighbourOcean(parentBiomes, newBiomes, deltaX, deltaZ, areaWidth, biomeIndex, Biome.getIdForBiome(biomeIndex != Biome.getIdForBiome(ModWorld.volcano) && biomeIndex != Biome.getIdForBiome(ModWorld.ashField) ? ModWorld.tropicBeach : ModWorld.blackSandBeach));
+                this.replaceIfNeighbourOcean(parentBiomes, newBiomes, deltaX, deltaZ, areaWidth, biomeIndex, Biome.getIdForBiome(biomeIndex != Biome.getIdForBiome(ModWorld.volcano) ? ModWorld.tropicBeach : ModWorld.blackSandBeach));
             }
         }
         return newBiomes;

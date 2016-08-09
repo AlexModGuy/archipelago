@@ -91,25 +91,25 @@ public class ModelClownfish extends AdvancedModelBase {
     }
 
     @Override
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float age, float yaw, float pitch, float scale, Entity entity) {
+        super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { this.Tail1, this.Tail2 };
         float idleSpeed = 0.3F;
         float idleDegree = 1F;
         float walkSpeed = 1F;
         float walkDegree = 2F;
-        this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, f2, 1);
-        this.swing(this.RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
-        this.swing(this.LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
-        this.chainSwing(tail, walkSpeed, walkDegree * 0.3F, -3, f, f1);
-        this.walk(this.DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, f2, 1);
-        this.walk(this.PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
+        this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, age, 1);
+        this.swing(this.RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, age, 1);
+        this.swing(this.LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, age, 1);
+        this.chainSwing(tail, walkSpeed, walkDegree * 0.3F, -3, limbSwing, limbSwingAmount);
+        this.walk(this.DorsalFin1, idleSpeed, idleDegree * 0.1F, true, 2, 0.2F, age, 1);
+        this.walk(this.PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, age, 1);
         if (!entity.isInWater()) {
             this.Body.rotateAngleZ = (float) Math.toRadians(90);
-            this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
-            this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
+            this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, age, 1);
+            this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, age, 1);
         } else {
-            this.bob(this.Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
+            this.bob(this.Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, age, 1.0F);
         }
     }
 

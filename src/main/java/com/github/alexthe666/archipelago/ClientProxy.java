@@ -2,21 +2,16 @@ package com.github.alexthe666.archipelago;
 
 import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 import com.github.alexthe666.archipelago.block.BlockBlackSandstone;
-import com.github.alexthe666.archipelago.client.model.entity.ModelBrownCrab;
-import com.github.alexthe666.archipelago.client.model.entity.ModelButterflyfish;
-import com.github.alexthe666.archipelago.client.model.entity.ModelClownfish;
+import com.github.alexthe666.archipelago.client.model.entity.*;
 import com.github.alexthe666.archipelago.client.particle.TeleportFX;
 import com.github.alexthe666.archipelago.client.render.entity.RenderArchipelagoAnimal;
 import com.github.alexthe666.archipelago.core.ModBlocks;
 import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
-import com.github.alexthe666.archipelago.entity.living.EntityButterflyfish;
-import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
+import com.github.alexthe666.archipelago.entity.living.*;
 import com.github.alexthe666.archipelago.enums.TropicParticle;
 import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import com.github.alexthe666.archipelago.event.client.ClientEvents;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -27,7 +22,6 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -73,7 +67,17 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityClownfish.class, new RenderArchipelagoAnimal(new ModelClownfish(), 0.3F));
         RenderingRegistry.registerEntityRenderingHandler(EntityBrownCrab.class, new RenderArchipelagoAnimal(new ModelBrownCrab(), 0.4F));
         RenderingRegistry.registerEntityRenderingHandler(EntityButterflyfish.class, new RenderArchipelagoAnimal(new ModelButterflyfish(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBannerfish.class, new RenderArchipelagoAnimal(new ModelBannerfish(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityStingray.class, new RenderArchipelagoAnimal(new ModelStingray(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityNurseShark.class, new RenderArchipelagoAnimal(new ModelNurseShark(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySurgeonfish .class, new RenderArchipelagoAnimal(new ModelSurgeonfish(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityWhitetipReefShark.class, new RenderArchipelagoAnimal(new ModelWhitetipReefShark(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBlacktipReefShark.class, new RenderArchipelagoAnimal(new ModelBlacktipReefShark(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityCoralGrouper.class, new RenderArchipelagoAnimal(new ModelCoralGrouper(), 0.4F));
+
+
     }
+
 
     @Override
     public void addItemRender(Item item, String name) {
