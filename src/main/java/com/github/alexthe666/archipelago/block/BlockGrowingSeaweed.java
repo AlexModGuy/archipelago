@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -154,8 +153,9 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (state.getBlock() == this && !this.canBlockStay(worldIn, pos, state)) {
             boolean flag = state.getValue(PART) == Part.LOWER;
-            if (flag)
+            if (flag) {
                 this.dropBlockAsItem(worldIn, pos, state, 0);
+            }
             for (int y = 0; y < worldIn.getHeight(pos).getY() - pos.getY(); y++) {
                 if (worldIn.getBlockState(pos.up(y)).getBlock() == this) {
                     worldIn.destroyBlock(pos.up(y), false);
@@ -217,8 +217,9 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
         for (int y = 0; y < this.height; y++) {
-            if (state.getBlock() == this && state.getValue(PART) != Part.LOWER && world.getBlockState(pos.up(y)).getBlock() == this)
+            if (state.getBlock() == this && state.getValue(PART) != Part.LOWER && world.getBlockState(pos.up(y)).getBlock() == this) {
                 world.setBlockToAir(pos.up(y));
+            }
         }
         return world.setBlockToAir(pos);
     }

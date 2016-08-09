@@ -1,7 +1,5 @@
 package com.github.alexthe666.archipelago.block;
 
-import java.util.List;
-
 import com.github.alexthe666.archipelago.Archipelago;
 import com.github.alexthe666.archipelago.item.block.ItemBlockBlackSandstone;
 import net.minecraft.block.Block;
@@ -20,8 +18,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockBlackSandstone extends Block
-{
+import java.util.List;
+
+public class BlockBlackSandstone extends Block {
     public static final PropertyEnum<BlockBlackSandstone.EnumType> TYPE = PropertyEnum.<BlockBlackSandstone.EnumType>create("type", BlockBlackSandstone.EnumType.class);
 
     public BlockBlackSandstone() {
@@ -33,11 +32,10 @@ public class BlockBlackSandstone extends Block
         this.setSoundType(SoundType.STONE);
         this.setUnlocalizedName("archipelago.black_sandstone");
         GameRegistry.registerBlock(this, ItemBlockBlackSandstone.class, "black_sandstone");
-
     }
 
     public int damageDropped(IBlockState state) {
-        return ((BlockBlackSandstone.EnumType)state.getValue(TYPE)).getMetadata();
+        return ((BlockBlackSandstone.EnumType) state.getValue(TYPE)).getMetadata();
     }
 
     @SideOnly(Side.CLIENT)
@@ -56,16 +54,14 @@ public class BlockBlackSandstone extends Block
     }
 
     public int getMetaFromState(IBlockState state) {
-        return ((BlockBlackSandstone.EnumType)state.getValue(TYPE)).getMetadata();
+        return ((BlockBlackSandstone.EnumType) state.getValue(TYPE)).getMetadata();
     }
 
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {TYPE});
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[] { TYPE });
     }
 
-    public static enum EnumType implements IStringSerializable
-    {
+    public static enum EnumType implements IStringSerializable {
         DEFAULT(0, "black_sandstone", "default"),
         CHISELED(1, "black_chiseled_sandstone", "chiseled"),
         SMOOTH(2, "black_smooth_sandstone", "smooth");

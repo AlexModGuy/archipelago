@@ -11,7 +11,7 @@ public class ItemBlockBlackSandstone extends ItemBlock {
     }
 
     public String getUnlocalizedName(ItemStack stack) {
-        switch(stack.getMetadata()){
+        switch (stack.getMetadata()) {
             case 1:
                 return "tile.archipelago.black_sandstone_chiseled";
             case 2:
@@ -19,5 +19,4 @@ public class ItemBlockBlackSandstone extends ItemBlock {
         }
         return this.block.getUnlocalizedName();
     }
-
 }

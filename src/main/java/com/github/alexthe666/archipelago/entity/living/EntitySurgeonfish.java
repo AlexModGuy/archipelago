@@ -9,9 +9,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-
-public class EntitySurgeonfish extends EntityAquaticAnimal{
-
+public class EntitySurgeonfish extends EntityAquaticAnimal {
 
     public EntitySurgeonfish(World world) {
         super(world, 3, 0.4F, 0.7F, 1, 1, 2, 4, 0, 0);

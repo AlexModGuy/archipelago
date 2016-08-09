@@ -66,8 +66,9 @@ public class BlockTallPlant extends BlockBush implements IGrowable {
             Block block = flag ? this : world.getBlockState(blockpos).getBlock();
             Block block1 = flag ? world.getBlockState(blockpos1).getBlock() : this;
 
-            if (!flag)
+            if (!flag) {
                 this.dropBlockAsItem(world, pos, state, 0);
+            }
 
             if (block == this) {
                 world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
@@ -147,8 +148,9 @@ public class BlockTallPlant extends BlockBush implements IGrowable {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if (state.getBlock() == this && state.getValue(HALF) == EnumBlockHalf.LOWER && world.getBlockState(pos.up()).getBlock() == this)
+        if (state.getBlock() == this && state.getValue(HALF) == EnumBlockHalf.LOWER && world.getBlockState(pos.up()).getBlock() == this) {
             world.setBlockToAir(pos.up());
+        }
         return world.setBlockToAir(pos);
     }
 

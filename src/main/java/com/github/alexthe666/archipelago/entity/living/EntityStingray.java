@@ -7,8 +7,6 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class EntityStingray extends EntityAquaticAnimal {
 
     public EntityStingray(World world) {

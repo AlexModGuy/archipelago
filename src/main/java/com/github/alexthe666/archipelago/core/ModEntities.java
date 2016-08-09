@@ -1,7 +1,16 @@
 package com.github.alexthe666.archipelago.core;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.entity.living.*;
+import com.github.alexthe666.archipelago.entity.living.EntityBannerfish;
+import com.github.alexthe666.archipelago.entity.living.EntityBlacktipReefShark;
+import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
+import com.github.alexthe666.archipelago.entity.living.EntityButterflyfish;
+import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
+import com.github.alexthe666.archipelago.entity.living.EntityCoralGrouper;
+import com.github.alexthe666.archipelago.entity.living.EntityNurseShark;
+import com.github.alexthe666.archipelago.entity.living.EntityStingray;
+import com.github.alexthe666.archipelago.entity.living.EntitySurgeonfish;
+import com.github.alexthe666.archipelago.entity.living.EntityWhitetipReefShark;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities {
@@ -13,11 +22,9 @@ public class ModEntities {
         registerSpawnable(EntityStingray.class, "stingray", 4, 0XB69878, 0XFFFFFF);
         registerSpawnable(EntityNurseShark.class, "nurse_shark", 5, 0X847D68, 0XDAE2D7);
         registerSpawnable(EntitySurgeonfish.class, "surgeonfish", 6, 0X173ABA, 0XFFD800);
-        registerSpawnable(EntityWhitetipReefShark.class, "whitetip_reef_shark", 7, 0X5A5A5A,0XDEDEDE);
+        registerSpawnable(EntityWhitetipReefShark.class, "whitetip_reef_shark", 7, 0X5A5A5A, 0XDEDEDE);
         registerSpawnable(EntityBlacktipReefShark.class, "blacktip_reef_shark", 8, 0X877968, 0X222222);
         registerSpawnable(EntityCoralGrouper.class, "coral_grouper", 9, 0XE61C00, 0X00BAFF);
-
-
     }
 
     public static void registerSpawnable(Class entityClass, String name, int id, int mainColor, int subColor) {

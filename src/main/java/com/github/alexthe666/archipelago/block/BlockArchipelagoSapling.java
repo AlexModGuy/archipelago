@@ -73,8 +73,9 @@ public class BlockArchipelagoSapling extends BlockBush implements IGrowable {
     public void generateTree(World world, BlockPos pos, Random rand) {
         WorldGenerator gen = new WorldGenTrees(true);
 
-        if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, pos))
+        if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, pos)) {
             return;
+        }
         switch (this.treeType) {
             case CANARY_ISLAND_DATE_PALM:
                 gen = new WorldGenCanaryIslandDatePalm();

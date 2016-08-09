@@ -1,9 +1,17 @@
 package com.github.alexthe666.archipelago.core;
 
-import com.github.alexthe666.archipelago.block.*;
+import com.github.alexthe666.archipelago.block.BlockBlackSand;
+import com.github.alexthe666.archipelago.block.BlockBlackSandstone;
+import com.github.alexthe666.archipelago.block.BlockCampfire;
+import com.github.alexthe666.archipelago.block.BlockCoralRock;
+import com.github.alexthe666.archipelago.block.BlockGlowingCoral;
+import com.github.alexthe666.archipelago.block.BlockGrowingSeaweed;
+import com.github.alexthe666.archipelago.block.BlockShortCoral;
+import com.github.alexthe666.archipelago.block.BlockShortPlant;
+import com.github.alexthe666.archipelago.block.BlockTallPlant;
+import com.github.alexthe666.archipelago.block.BlockVolcanicStone;
 import com.github.alexthe666.archipelago.block.entity.TileEntityCampfire;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBanner;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 

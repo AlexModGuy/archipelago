@@ -7,8 +7,6 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class EntityCoralGrouper extends EntityAquaticAnimal {
 
     public EntityCoralGrouper(World world) {
@@ -38,7 +36,6 @@ public class EntityCoralGrouper extends EntityAquaticAnimal {
     public void onSpawn() {
         this.setVariant(0);
     }
-
 
     @Override
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {

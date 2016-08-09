@@ -7,7 +7,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class EntityNurseShark extends EntityAquaticAnimal{
+public class EntityNurseShark extends EntityAquaticAnimal {
 
     public EntityNurseShark(World world) {
         super(world, 3, 0.8F, 1.4F, 1, 1, 2, 4, 0, 0);
@@ -44,7 +44,8 @@ public class EntityNurseShark extends EntityAquaticAnimal{
 
     @Override
     public String getTexture() {
-        return "archipelago:textures/models/nurse_shark/nurse_shark_" + this.getVariant();}
+        return "archipelago:textures/models/nurse_shark/nurse_shark_" + this.getVariant();
+    }
 }
 
 

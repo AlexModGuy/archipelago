@@ -1,13 +1,9 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
-
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.minecraft.client.model.ModelBase;
-        import net.minecraft.client.model.ModelRenderer;
-        import net.minecraft.entity.Entity;
-
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 
 public class ModelSurgeonfish extends AdvancedModelBase {
     public AdvancedModelRenderer Body;
@@ -87,7 +83,6 @@ public class ModelSurgeonfish extends AdvancedModelBase {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.Body.render(f5);
     }
-
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;

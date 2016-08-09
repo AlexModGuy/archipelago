@@ -9,12 +9,10 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-
-public class EntityBlacktipReefShark extends EntityAquaticAnimal{
-
+public class EntityBlacktipReefShark extends EntityAquaticAnimal {
 
     public EntityBlacktipReefShark(World world) {
-        super(world, 3, 0.5F,0.7F, 1, 1, 2, 4, 0, 0);
+        super(world, 3, 0.5F, 0.7F, 1, 1, 2, 4, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }

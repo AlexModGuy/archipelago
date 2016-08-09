@@ -100,7 +100,7 @@ public class ServerEvents {
         Material material = iblockstate.getMaterial();
         boolean flag = !material.isSolid();
         boolean flag1 = iblockstate.getBlock().isReplaceable(pos, blockPos);
-        if (stack != null && stack.getItem() != null && stack.getItem() == Items.WATER_BUCKET)
+        if (stack != null && stack.getItem() != null && stack.getItem() == Items.WATER_BUCKET) {
             if (!pos.isAirBlock(blockPos) && !flag && !flag1) {
                 return false;
             } else {
@@ -126,6 +126,7 @@ public class ServerEvents {
 
                 return true;
             }
+        }
         return false;
     }
 
@@ -160,8 +161,9 @@ public class ServerEvents {
                             flag = true;
                             vec3d = block.modifyAcceleration(entityIn.worldObj, blockpos$pooledmutableblockpos, entityIn, vec3d);
                             continue;
-                        } else if (result != null && !result)
+                        } else if (result != null && !result) {
                             continue;
+                        }
 
                         if (iblockstate.getMaterial() == materialIn) {
                             double d0 = (float) (l1 + 1) - 8;

@@ -71,11 +71,21 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
             return false;
         } else {
             ItemStack result = FurnaceRecipes.instance().getSmeltingResult(this.stacks[0]);
-            if (result == null) return false;
-            if (result.getItem() == null) return false;
-            if (!(result.getItem() instanceof ItemFood)) return false;
-            if (this.stacks[1] == null) return true;
-            if (!this.stacks[1].isItemEqual(result)) return false;
+            if (result == null) {
+                return false;
+            }
+            if (result.getItem() == null) {
+                return false;
+            }
+            if (!(result.getItem() instanceof ItemFood)) {
+                return false;
+            }
+            if (this.stacks[1] == null) {
+                return true;
+            }
+            if (!this.stacks[1].isItemEqual(result)) {
+                return false;
+            }
             int resultSize = this.stacks[1].stackSize + result.stackSize;
             return resultSize <= this.getInventoryStackLimit() && resultSize <= this.stacks[1].getMaxStackSize();
         }
@@ -173,13 +183,15 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, net.minecraft.util.EnumFacing facing) {
-        if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            if (facing == EnumFacing.DOWN)
+        if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (facing == EnumFacing.DOWN) {
                 return (T) this.handlerBottom;
-            else if (facing == EnumFacing.UP)
+            } else if (facing == EnumFacing.UP) {
                 return (T) this.handlerTop;
-            else
+            } else {
                 return (T) this.handlerSide;
+            }
+        }
         return super.getCapability(capability, facing);
     }
 
