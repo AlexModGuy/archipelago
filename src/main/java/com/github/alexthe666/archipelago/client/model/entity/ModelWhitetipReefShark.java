@@ -1,7 +1,10 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
+import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelWhitetipReefShark extends AdvancedModelBase {
@@ -23,6 +26,7 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
     public AdvancedModelRenderer DorsalFin2;
     public AdvancedModelRenderer ThatFin;
     public AdvancedModelRenderer TailFin2;
+    private ModelAnimator animator;
 
     public ModelWhitetipReefShark() {
         this.textureWidth = 100;
@@ -115,7 +119,14 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
         this.Body1.render(f5);
+    }
+
+    private void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.animator.update(entity);
+        this.resetToDefaultPose();
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
     }
 
     @Override
