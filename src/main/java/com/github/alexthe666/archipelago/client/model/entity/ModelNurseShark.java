@@ -149,12 +149,11 @@ public class ModelNurseShark extends AdvancedModelBase {
         super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
         float idleSpeed = 0.1F;
         float idleDegree = 0.1F;
-        float walkSpeed = 0.5F;
-        float walkDegree = 0.8F;
+        float walkSpeed = 0.4F;
+        float walkDegree = 1.2F;
         AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1 };
         AdvancedModelRenderer[] fins = new AdvancedModelRenderer[] { LeftPectoralFin, RightPectoralFin, RightPelvicFin, LeftPelvicFin };
         this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 2.5F, limbSwing, limbSwingAmount);
-        this.swing(DorsalFin1, walkSpeed * 1.0F, walkDegree * 1.0F, false, 1.0F, 0.0F, limbSwing, limbSwingAmount);
         this.chainFlap(fins, walkSpeed * 0.5F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
 
         this.chainFlap(fins, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);

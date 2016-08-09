@@ -117,7 +117,7 @@ public class ModelBannerfish extends AdvancedModelBase {
         float idleDegree = 0.1F;
         float walkSpeed = 0.6F;
         float walkDegree = 2F;
-        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Body2, Tail1, Tail2 };
+        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1, Body2 };
         this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
 
         this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 3.0F, age, 1.0F);
@@ -125,8 +125,10 @@ public class ModelBannerfish extends AdvancedModelBase {
         this.swing(this.LeftPectoralFin, idleSpeed * 1.0F, idleDegree * 2.0F, false, 1.0F, 0.2F, age, 1.0F);
         if (!entity.isInWater()) {
             this.Body.rotateAngleZ = (float) Math.toRadians(90);
-            this.bob(this.Body, 0.5F, 1.0F, false, age, 1);
-            this.swing(this.Body, 0.5F, 0.3F, true, 0, 0, age, 1);
+            if (entity.onGround) {
+                this.bob(this.Body, 0.5F, 1.0F, false, age, 1);
+                this.swing(this.Body, 0.5F, 0.3F, true, 0, 0, age, 1);
+            }
         } else {
             this.bob(this.Body, idleSpeed * 1.0F, idleDegree * 5.0F, false, age, 1.0F);
         }

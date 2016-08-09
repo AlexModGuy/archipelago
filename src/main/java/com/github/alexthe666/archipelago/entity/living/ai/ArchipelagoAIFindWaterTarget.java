@@ -3,9 +3,9 @@ package com.github.alexthe666.archipelago.entity.living.ai;
 import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,9 @@ import java.util.Random;
 
 public class ArchipelagoAIFindWaterTarget extends EntityAIBase {
     private EntityAquaticAnimal mob;
-    private Vec3d target;
-    private World theWorld;
 
     public ArchipelagoAIFindWaterTarget(EntityAquaticAnimal mob) {
         this.mob = mob;
-        this.theWorld = mob.worldObj;
         this.setMutexBits(1);
     }
 
@@ -27,26 +24,25 @@ public class ArchipelagoAIFindWaterTarget extends EntityAIBase {
         if (!this.mob.isInWater()) {
             return false;
         }
-        if (this.mob.currentTarget != null && !this.mob.isDirectPathBetweenPoints(this.mob.getPositionVector(), new Vec3d(this.mob.currentTarget))) {
-            this.mob.currentTarget = null;
-        }
-        if (this.mob.currentTarget != null && this.mob.getDistance(this.mob.currentTarget.getX(), this.mob.currentTarget.getY(), this.mob.currentTarget.getZ()) < 10F) {
-            return false;
-        } else {
-            Vec3d vec3 = this.findWaterTarget();
-
-            if (vec3 == null) {
-                return false;
-            } else {
-                this.mob.currentTarget = new BlockPos(vec3);
-                return true;
+        if (this.mob.getRNG().nextFloat() < 0.5F) {
+            Path path = this.mob.getNavigator().getPath();
+            if (!this.mob.getNavigator().noPath() && !this.mob.isDirectPathBetweenPoints(this.mob.getPositionVector(), new Vec3d(path.getFinalPathPoint().xCoord, path.getFinalPathPoint().yCoord, path.getFinalPathPoint().zCoord))) {
+                this.mob.getNavigator().clearPathEntity();
+            }
+            if (this.mob.getNavigator().noPath()) {
+                Vec3d vec3 = this.findWaterTarget();
+                if (vec3 != null) {
+                    this.mob.getNavigator().tryMoveToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord, 1.0);
+                    return true;
+                }
             }
         }
+        return false;
     }
 
     @Override
     public boolean continueExecuting() {
-        return this.mob.currentTarget != null;
+        return false;
     }
 
     public Vec3d findWaterTarget() {
@@ -65,7 +61,6 @@ public class ArchipelagoAIFindWaterTarget extends EntityAIBase {
                 return water.get(this.mob.getRNG().nextInt(water.size()));
             }
         } else {
-            Random random = this.mob.getRNG();
             BlockPos blockpos1;
             if (this.mob.isFreeSwimmer()) {
                 blockpos1 = new BlockPos(this.mob.getAttackTarget());

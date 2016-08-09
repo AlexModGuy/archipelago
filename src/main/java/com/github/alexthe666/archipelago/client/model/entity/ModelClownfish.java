@@ -106,8 +106,10 @@ public class ModelClownfish extends AdvancedModelBase {
         this.walk(this.PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, age, 1);
         if (!entity.isInWater()) {
             this.Body.rotateAngleZ = (float) Math.toRadians(90);
-            this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, age, 1);
-            this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, age, 1);
+            if (entity.onGround) {
+                this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, age, 1);
+                this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, age, 1);
+            }
         } else {
             this.bob(this.Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, age, 1.0F);
         }

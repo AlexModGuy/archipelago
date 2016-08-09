@@ -36,7 +36,7 @@ public class EntitySurgeonfish extends EntityAquaticAnimal {
 
     @Override
     public void onSpawn() {
-        this.setVariant(new Random().nextInt(1));
+        this.setVariant(new Random().nextInt(2));
     }
 
     @Override
