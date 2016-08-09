@@ -2,30 +2,12 @@ package com.github.alexthe666.archipelago;
 
 import com.github.alexthe666.archipelago.block.BlockArchipelagoSapling;
 import com.github.alexthe666.archipelago.block.BlockBlackSandstone;
-import com.github.alexthe666.archipelago.client.model.entity.ModelBannerfish;
-import com.github.alexthe666.archipelago.client.model.entity.ModelBlacktipReefShark;
-import com.github.alexthe666.archipelago.client.model.entity.ModelBrownCrab;
-import com.github.alexthe666.archipelago.client.model.entity.ModelButterflyfish;
-import com.github.alexthe666.archipelago.client.model.entity.ModelClownfish;
-import com.github.alexthe666.archipelago.client.model.entity.ModelCoralGrouper;
-import com.github.alexthe666.archipelago.client.model.entity.ModelNurseShark;
-import com.github.alexthe666.archipelago.client.model.entity.ModelStingray;
-import com.github.alexthe666.archipelago.client.model.entity.ModelSurgeonfish;
-import com.github.alexthe666.archipelago.client.model.entity.ModelWhitetipReefShark;
+import com.github.alexthe666.archipelago.client.model.entity.*;
 import com.github.alexthe666.archipelago.client.particle.TeleportFX;
 import com.github.alexthe666.archipelago.client.render.entity.RenderArchipelagoAnimal;
 import com.github.alexthe666.archipelago.core.ModBlocks;
 import com.github.alexthe666.archipelago.core.ModFluids;
-import com.github.alexthe666.archipelago.entity.living.EntityBannerfish;
-import com.github.alexthe666.archipelago.entity.living.EntityBlacktipReefShark;
-import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
-import com.github.alexthe666.archipelago.entity.living.EntityButterflyfish;
-import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
-import com.github.alexthe666.archipelago.entity.living.EntityCoralGrouper;
-import com.github.alexthe666.archipelago.entity.living.EntityNurseShark;
-import com.github.alexthe666.archipelago.entity.living.EntityStingray;
-import com.github.alexthe666.archipelago.entity.living.EntitySurgeonfish;
-import com.github.alexthe666.archipelago.entity.living.EntityWhitetipReefShark;
+import com.github.alexthe666.archipelago.entity.living.*;
 import com.github.alexthe666.archipelago.enums.TropicParticle;
 import com.github.alexthe666.archipelago.enums.TropicTreeType;
 import com.github.alexthe666.archipelago.event.client.ClientEvents;
@@ -92,7 +74,14 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityWhitetipReefShark.class, new RenderArchipelagoAnimal(new ModelWhitetipReefShark(), 0.4F));
         RenderingRegistry.registerEntityRenderingHandler(EntityBlacktipReefShark.class, new RenderArchipelagoAnimal(new ModelBlacktipReefShark(), 0.4F));
         RenderingRegistry.registerEntityRenderingHandler(EntityCoralGrouper.class, new RenderArchipelagoAnimal(new ModelCoralGrouper(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBottlenoseDolphin.class, new RenderArchipelagoAnimal(new ModelBottlenoseDolphin(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySpottedEagleRay.class, new RenderArchipelagoAnimal(new ModelSpottedEagleRay(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityTigerShark.class, new RenderArchipelagoAnimal(new ModelTigerShark(), 0.4F));
+
+
+
     }
+
 
     @Override
     public void addItemRender(Item item, String name) {

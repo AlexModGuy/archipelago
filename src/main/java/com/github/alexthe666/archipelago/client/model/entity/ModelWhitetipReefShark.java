@@ -1,5 +1,6 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
+import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
@@ -23,6 +24,7 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
     public AdvancedModelRenderer DorsalFin2;
     public AdvancedModelRenderer ThatFin;
     public AdvancedModelRenderer TailFin2;
+    private ModelAnimator animator;
 
     public ModelWhitetipReefShark() {
         this.textureWidth = 100;
@@ -111,6 +113,9 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
         this.Tail1.addChild(this.RightPelvicFin);
         this.Tail1.addChild(this.Tail2);
         this.Tail2.addChild(this.DorsalFin2);
+        this.updateDefaultPose();
+        this.animator = ModelAnimator.create();
+
     }
 
     @Override
@@ -118,17 +123,7 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
         this.Body1.render(f5);
     }
 
-    @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float age, float yaw, float pitch, float scale, Entity entity) {
-        super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
-        float idleSpeed = 0.2F;
-        float idleDegree = 0.1F;
-        float walkSpeed = 1F;
-        float walkDegree = 0.001F;
-        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1 };
-        this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 2.0F, limbSwing, limbSwingAmount);
-        this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 2.0F, age, 1.0F);
-    }
+
 
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
