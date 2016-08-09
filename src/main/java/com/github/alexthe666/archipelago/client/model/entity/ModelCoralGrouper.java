@@ -114,6 +114,7 @@ public class ModelCoralGrouper extends AdvancedModelBase {
         this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 3.0F, age, 1.0F);
         this.swing(this.RightPectoralFin, idleSpeed * 1.0F, idleDegree * 2.0F, false, 0.0F, -0.2F, age, 1.0F);
         this.swing(this.LeftPectoralFin, idleSpeed * 1.0F, idleDegree * 2.0F, false, 1.0F, 0.2F, age, 1.0F);
+        this.walk(this.Jaw, idleSpeed * 1.0F, idleDegree * 2.0F, false, 0F, -0.1F, age, 1.0F);
         if (!entity.isInWater()) {
             this.Body1.rotateAngleZ = (float) Math.toRadians(90);
             if (entity.onGround) {
