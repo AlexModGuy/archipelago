@@ -96,10 +96,6 @@ public class BlockBlackSandstone extends Block {
             return this.name;
         }
 
-        public String getUnlocalizedName() {
-            return this.unlocalizedName;
-        }
-
         static {
             for (BlockBlackSandstone.EnumType blocksandstone$enumtype : values()) {
                 META_LOOKUP[blocksandstone$enumtype.getMetadata()] = blocksandstone$enumtype;

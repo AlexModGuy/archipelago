@@ -68,9 +68,9 @@ public class Archipelago {
             }
         };
         ModItems.init();
+        ModBlocks.init();
         ModWorld.init();
         TropicTreeType.init();
-        ModBlocks.init();
         ModRecipes.init();
         ModEntities.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
