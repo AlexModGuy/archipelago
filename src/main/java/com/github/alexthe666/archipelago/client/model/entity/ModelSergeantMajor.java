@@ -1,7 +1,9 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
+import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 
 public class ModelSergeantMajor extends AdvancedModelBase {
@@ -17,6 +19,7 @@ public class ModelSergeantMajor extends AdvancedModelBase {
     public AdvancedModelRenderer ThatFin;
     public AdvancedModelRenderer DorsalFin;
     public AdvancedModelRenderer Tail2;
+    private ModelAnimator animator;
 
     public ModelSergeantMajor() {
         this.textureWidth = 32;
@@ -72,11 +75,43 @@ public class ModelSergeantMajor extends AdvancedModelBase {
         this.Body.addChild(this.RightPectoralFin);
         this.Body.addChild(this.Body2);
         this.Head.addChild(this.Head2);
+        this.updateDefaultPose();
+        this.animator = ModelAnimator.create();
+    }
+    @Override
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
+        this.Body.render(f5);
+    }
+
+    private void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.animator.update(entity);
+        this.resetToDefaultPose();
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        this.Body.render(f5);
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { this.Tail1, this.Tail2 };
+        float idleSpeed = 0.3F;
+        float idleDegree = 1F;
+        float walkSpeed = 1F;
+        float walkDegree = 2F;
+        this.chainSwing(tail, idleSpeed, idleDegree * 0.3F, -3, f2, 1);
+        this.swing(this.RightPectoralFin, idleSpeed, idleDegree * 0.3F, false, 0, -0.1F, f2, 1);
+        this.swing(this.LeftPectoralFin, idleSpeed, idleDegree * 0.3F, true, 0, -0.1F, f2, 1);
+        this.chainSwing(tail, walkSpeed, walkDegree * 0.3F, -3, f, f1);
+        this.walk(this.PelvicFins, idleSpeed, idleDegree * 0.1F, true, 1, -0.2F, f2, 1);
+        if (!entity.isInWater()) {
+            this.Body.rotateAngleZ = (float) Math.toRadians(90);
+            if (entity.onGround) {
+                this.bob(this.Body, -idleSpeed * 2, idleSpeed * 2F, false, f2, 1);
+                this.swing(this.Body, idleSpeed * 2, idleSpeed * 0.6F, true, 0, 0, f2, 1);
+            }
+        } else {
+            this.bob(this.Body, idleSpeed * 0.25F, idleDegree * 0.5F, false, f2, 1.0F);
+        }
     }
 
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {

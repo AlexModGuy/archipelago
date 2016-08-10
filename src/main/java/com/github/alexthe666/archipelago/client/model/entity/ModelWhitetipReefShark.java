@@ -157,4 +157,3 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
         modelRenderer.rotateAngleZ = z;
     }
 }
-

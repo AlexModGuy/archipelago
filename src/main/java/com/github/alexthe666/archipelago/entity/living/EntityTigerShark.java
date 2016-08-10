@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class EntityTigerShark extends EntityAquaticAnimal {
 
     public EntityTigerShark(World world) {
-        super(world, 3, 1.2F, 1.6F, 1, 1, 18, 24, 0, 0);
+        super(world, 3, 1.0F, 1.5F, 1, 1, 18, 24, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }

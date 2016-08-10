@@ -157,7 +157,6 @@ public class ModelNurseShark extends AdvancedModelBase {
         this.chainFlap(fins, walkSpeed * 0.5F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
 
         this.chainFlap(fins, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
-        this.walk(LowerJaw, idleSpeed * 1.0F, idleDegree * 1.0F, false, 0.0F, 0.1F, age, 1.0F);
 
         if (entity.isInWater()) {
             this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 2.5F, age, 1.0F);
