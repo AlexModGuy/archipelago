@@ -1,7 +1,10 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
+import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelSpottedEagleRay extends AdvancedModelBase {
@@ -22,6 +25,7 @@ public class ModelSpottedEagleRay extends AdvancedModelBase {
     public AdvancedModelRenderer Tail3;
     public AdvancedModelRenderer Fin3;
     public AdvancedModelRenderer Fin4;
+    private ModelAnimator animator;
 
     public ModelSpottedEagleRay() {
         this.textureWidth = 128;
@@ -103,11 +107,42 @@ public class ModelSpottedEagleRay extends AdvancedModelBase {
         this.Body1.addChild(this.Body2);
         this.Body1.addChild(this.Head);
         this.Head.addChild(this.Snout);
+        this.updateDefaultPose();
+        this.animator = ModelAnimator.create();
     }
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
+        GlStateManager.translate(0.0F, 0.2F, 0.0F);
         this.Body1.render(f5);
+    }
+
+    private void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.animator.update(entity);
+        this.resetToDefaultPose();
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float age, float yaw, float pitch, float scale, Entity entity) {
+        super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
+        float idleSpeed = 0.1F;
+        float idleDegree = 0.1F;
+        float walkSpeed = 0.5F;
+        float walkDegree = 1.0F;
+        AdvancedModelRenderer[] fin1 = new AdvancedModelRenderer[] { Fin1, };
+        AdvancedModelRenderer[] fin2 = new AdvancedModelRenderer[] { Fin2, };
+        this.chainFlap(fin1, walkSpeed * 0.2F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
+        this.chainFlap(fin2, walkSpeed * 0.2F,walkDegree * -1.0F, -3.0F, limbSwing, limbSwingAmount);
+
+        this.chainFlap(fin1, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
+        this.chainFlap(fin2, idleSpeed * 1.0F, idleDegree * -1.0F, 0.0F, age, 1.0F);
+
+
+        if (entity.isInWater()) {
+            this.bob(Body1, idleSpeed * 1.0F, idleDegree * 4.0F, false, age, 1.0F);
+        }
     }
 
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
