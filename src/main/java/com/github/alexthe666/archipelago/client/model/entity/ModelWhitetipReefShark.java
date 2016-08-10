@@ -27,7 +27,7 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
     public AdvancedModelRenderer ThatFin;
     public AdvancedModelRenderer TailFin2;
     private ModelAnimator animator;
-    
+
 
 
     public ModelWhitetipReefShark() {
