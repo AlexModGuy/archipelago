@@ -135,11 +135,20 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
         super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
         float idleSpeed = 0.2F;
         float idleDegree = 0.1F;
-        float walkSpeed = 1F;
-        float walkDegree = 0.001F;
+        float walkSpeed = 0.4F;
+        float walkDegree = 1.2F;
         AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1 };
-        this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 2.0F, limbSwing, limbSwingAmount);
-        this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 2.0F, age, 1.0F);
+        AdvancedModelRenderer[] fins = new AdvancedModelRenderer[] { LeftPectoralFin, RightPectoralFin, RightPelvicFin, LeftPelvicFin };
+        this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 2.5F, limbSwing, limbSwingAmount);
+        this.chainFlap(fins, walkSpeed * 0.5F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
+
+        this.chainFlap(fins, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
+        this.walk(LowerJaw, idleSpeed * 1.0F, idleDegree * 1.0F, false, 0.0F, 0.1F, age, 1.0F);
+
+        if (entity.isInWater()) {
+            this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 2.5F, age, 1.0F);
+            this.bob(Body1, idleSpeed * 1.0F, idleDegree * 4.0F, false, age, 1.0F);
+        }
     }
 
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {

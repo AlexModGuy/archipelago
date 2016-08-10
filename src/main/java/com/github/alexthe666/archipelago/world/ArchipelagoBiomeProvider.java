@@ -1,6 +1,7 @@
 package com.github.alexthe666.archipelago.world;
 
 import com.github.alexthe666.archipelago.core.ModWorld;
+import com.github.alexthe666.archipelago.world.layer.GenLayerArchipelago;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.ReportedException;

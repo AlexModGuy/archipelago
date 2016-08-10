@@ -1,12 +1,12 @@
-package com.github.alexthe666.archipelago.world;
+package com.github.alexthe666.archipelago.world.layer;
 
 import com.github.alexthe666.archipelago.core.ModWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class GenLayerShoreArchipelago extends GenLayer {
-    public GenLayerShoreArchipelago(long seed, GenLayer parent) {
+public class GenLayerShore extends GenLayer {
+    public GenLayerShore(long seed, GenLayer parent) {
         super(seed);
         this.parent = parent;
     }
