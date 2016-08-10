@@ -69,8 +69,10 @@ public class ArchipelagoHooks {
     }
 
     public static void endChunk(RenderChunk renderer) {
-        synchronized (SPECIAL_RENDERER_LOCK) {
-            SPECIAL_RENDERERS.remove(renderer.compiledChunk);
+        if (renderer.compiledChunk == CompiledChunk.DUMMY) {
+            synchronized (SPECIAL_RENDERER_LOCK) {
+                SPECIAL_RENDERERS.remove(renderer.compiledChunk);
+            }
         }
     }
 

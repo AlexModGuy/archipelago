@@ -1,7 +1,5 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
-
-import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
@@ -74,14 +72,12 @@ public class ModelSergeantMajor extends AdvancedModelBase {
         this.Body.addChild(this.RightPectoralFin);
         this.Body.addChild(this.Body2);
         this.Head.addChild(this.Head2);
-
     }
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.Body.render(f5);
     }
-
 
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;

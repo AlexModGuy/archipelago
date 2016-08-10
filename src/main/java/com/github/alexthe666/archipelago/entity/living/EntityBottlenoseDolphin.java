@@ -1,9 +1,12 @@
 package com.github.alexthe666.archipelago.entity.living;
 
-
 import com.github.alexthe666.archipelago.entity.base.EntityAquaticAnimal;
 import com.github.alexthe666.archipelago.entity.living.ai.ArchipelagoAIFindWaterTarget;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -34,6 +37,11 @@ public class EntityBottlenoseDolphin extends EntityAquaticAnimal {
     @Override
     public double swimSpeed() {
         return 0.025;
+    }
+
+    @Override
+    public int getMaximumAir() {
+        return 1200;
     }
 
     @Override

@@ -4,7 +4,6 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 
-
 public class ModelBottlenoseDolphin extends AdvancedModelBase {
     public AdvancedModelRenderer Body1;
     public AdvancedModelRenderer Body2;

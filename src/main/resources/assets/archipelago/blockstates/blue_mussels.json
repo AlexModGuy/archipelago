@@ -1,1 +1,20 @@
-{"variants": {"normal": { "model": "archipelago:blank"}}}
+{
+  "variants": {
+    "level=0": { "model": "archipelago:blank" },
+    "level=1": { "model": "archipelago:blank" },
+    "level=2": { "model": "archipelago:blank" },
+    "level=3": { "model": "archipelago:blank" },
+    "level=4": { "model": "archipelago:blank" },
+    "level=5": { "model": "archipelago:blank" },
+    "level=6": { "model": "archipelago:blank" },
+    "level=7": { "model": "archipelago:blank" },
+    "level=8": { "model": "archipelago:blank" },
+    "level=9": { "model": "archipelago:blank" },
+    "level=10": { "model": "archipelago:blank" },
+    "level=11": { "model": "archipelago:blank" },
+    "level=12": { "model": "archipelago:blank" },
+    "level=13": { "model": "archipelago:blank" },
+    "level=14": { "model": "archipelago:blank" },
+    "level=15": { "model": "archipelago:blank" }
+  }
+}

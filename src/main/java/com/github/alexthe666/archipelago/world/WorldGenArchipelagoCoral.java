@@ -16,16 +16,16 @@ public class WorldGenArchipelagoCoral extends WorldGenerator {
 
     @Override
     public boolean generate(World world, Random rand, BlockPos position) {
-        boolean flag = false;
+        boolean placed = false;
         if (world != null && this.plantType != null && this.plantType.block != null) {
             for (int i = 0; i < 64; ++i) {
-                BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-                if (world.isBlockLoaded(blockpos) && this.plantType.canSpawnIn(world.getBiomeGenForCoords(blockpos)) && this.plantType.block.canPlaceBlockAt(world, blockpos)) {
-                    world.setBlockState(blockpos, this.plantType.block.getDefaultState(), 2);
-                    flag = true;
+                BlockPos pos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
+                if (world.isBlockLoaded(pos) && this.plantType.canSpawnIn(world.getBiomeGenForCoords(pos)) && this.plantType.block.canPlaceBlockAt(world, pos)) {
+                    world.setBlockState(pos, this.plantType.block.getDefaultState(), 2);
+                    placed = true;
                 }
             }
         }
-        return flag;
+        return placed;
     }
 }

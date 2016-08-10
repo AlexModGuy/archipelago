@@ -4,14 +4,17 @@ import com.github.alexthe666.archipelago.core.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
+import java.util.function.Supplier;
+
 public enum TropicBiomeSediment {
+    SANDY(() -> Blocks.SAND, () -> Blocks.SAND),
+    GRASSY(() -> Blocks.GRASS, () -> Blocks.DIRT),
+    VOLCANIC(() -> ModBlocks.black_sand, () -> ModBlocks.black_sand);
 
-    SANDY(Blocks.SAND, Blocks.SAND), GRASSY(Blocks.GRASS, Blocks.DIRT), VOLCANIC(ModBlocks.black_sand, ModBlocks.black_sand);
+    public Supplier<Block> topBlock;
+    public Supplier<Block> bottomBlock;
 
-    public Block topBlock;
-    public Block bottomBlock;
-
-    TropicBiomeSediment(Block topBlock, Block bottomBlock) {
+    TropicBiomeSediment(Supplier<Block> topBlock, Supplier<Block> bottomBlock) {
         this.topBlock = topBlock;
         this.bottomBlock = bottomBlock;
     }

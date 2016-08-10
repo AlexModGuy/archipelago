@@ -1,6 +1,5 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
-
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;

@@ -1,5 +1,6 @@
 package com.github.alexthe666.archipelago.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -37,6 +38,35 @@ public class BlockTropicalWater extends BlockFluidClassic {
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
         return NULL_AABB;
+    }
+
+    @Override
+    public boolean displaceIfPossible(World world, BlockPos pos) {
+        if (world.isAirBlock(pos)) {
+            return true;
+        }
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        if (block == this) {
+            return false;
+        }
+        if (this.displacements.containsKey(block)) {
+            if (this.displacements.get(block)) {
+                block.dropBlockAsItem(world, pos, state, 0);
+                return true;
+            }
+            return false;
+        }
+        Material material = state.getMaterial();
+        if (material.blocksMovement() || material == Material.WATER || material == Material.PORTAL) {
+            return false;
+        }
+        int density = getDensity(world, pos);
+        if (density == Integer.MAX_VALUE) {
+            block.dropBlockAsItem(world, pos, state, 0);
+            return true;
+        }
+        return this.density > density;
     }
 
     @Override

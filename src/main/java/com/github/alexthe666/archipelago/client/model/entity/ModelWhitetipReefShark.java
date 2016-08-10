@@ -1,6 +1,5 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
-
 import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
@@ -27,8 +26,6 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
     public AdvancedModelRenderer ThatFin;
     public AdvancedModelRenderer TailFin2;
     private ModelAnimator animator;
-
-
 
     public ModelWhitetipReefShark() {
         this.textureWidth = 100;
@@ -117,6 +114,8 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
         this.Tail1.addChild(this.RightPelvicFin);
         this.Tail1.addChild(this.Tail2);
         this.Tail2.addChild(this.DorsalFin2);
+        this.updateDefaultPose();
+        this.animator = ModelAnimator.create();
     }
 
     @Override

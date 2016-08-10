@@ -9,10 +9,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-/**
- * Created by Codyr on 09/08/2016.
- */
-public class EntitySpottedEagleRay extends EntityAquaticAnimal{
+public class EntitySpottedEagleRay extends EntityAquaticAnimal {
 
     public EntitySpottedEagleRay(World world) {
         super(world, 3, 1.2F, 1.8F, 1, 1, 12, 14, 0, 0);
@@ -25,6 +22,11 @@ public class EntitySpottedEagleRay extends EntityAquaticAnimal{
         this.tasks.addTask(0, new ArchipelagoAIFindWaterTarget(this));
         this.tasks.addTask(1, new EntityAILookIdle(this));
         this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+    }
+
+    @Override
+    public int getMaximumAir() {
+        return 300;
     }
 
     @Override

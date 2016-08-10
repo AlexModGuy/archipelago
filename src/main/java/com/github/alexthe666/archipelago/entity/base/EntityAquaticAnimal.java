@@ -31,6 +31,8 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
 
     public abstract double swimSpeed();
 
+    public abstract int getMaximumAir();
+
     @Override
     public boolean canBreatheUnderwater() {
         return true;
@@ -50,7 +52,7 @@ public abstract class EntityAquaticAnimal extends EntityArchipelagoAnimal {
                     this.attackEntityFrom(DamageSource.drown, 2.0F);
                 }
             } else {
-                this.setAir(300);
+                this.setAir(this.getMaximumAir());
             }
         }
     }

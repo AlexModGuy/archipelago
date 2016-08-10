@@ -23,6 +23,11 @@ public class EntityWhitetipReefShark extends EntityAquaticAnimal {
     }
 
     @Override
+    public int getMaximumAir() {
+        return 500;
+    }
+
+    @Override
     public boolean isFreeSwimmer() {
         return true;
     }

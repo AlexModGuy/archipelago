@@ -33,6 +33,11 @@ public class EntityBannerfish extends EntityAquaticAnimal {
     }
 
     @Override
+    public int getMaximumAir() {
+        return 300;
+    }
+
+    @Override
     public void onSpawn() {
         this.setVariant(0);
     }

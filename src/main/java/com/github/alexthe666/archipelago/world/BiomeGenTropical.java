@@ -28,6 +28,8 @@ public class BiomeGenTropical extends Biome {
     private TropicGrassColor grassColor;
     private TreeGenerator[] treeGenerators;
     private int generationChance = 10;
+    private TropicBiomeSediment sediment;
+    private boolean initializedSediment;
 
     public BiomeGenTropical(String name, int id, float height, float variation, int waterColor, TropicGrassColor grassColor, TropicBiomeSediment biomeSediment, TreeGenerator... treeGenerators) {
         super((new Biome.BiomeProperties(name)).setBaseHeight(height).setHeightVariation(variation).setWaterColor(waterColor));
@@ -35,8 +37,7 @@ public class BiomeGenTropical extends Biome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.grassColor = grassColor;
-        this.topBlock = biomeSediment.topBlock.getDefaultState();
-        this.fillerBlock = biomeSediment.bottomBlock.getDefaultState();
+        this.sediment = biomeSediment;
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
@@ -49,8 +50,7 @@ public class BiomeGenTropical extends Biome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.grassColor = grassColor;
-        this.topBlock = biomeSediment.topBlock.getDefaultState();
-        this.fillerBlock = biomeSediment.bottomBlock.getDefaultState();
+        this.sediment = biomeSediment;
         registerBiome(id, name, this);
         this.theBiomeDecorator.reedsPerChunk = -1;
         this.theBiomeDecorator.grassPerChunk = 3;
@@ -94,6 +94,11 @@ public class BiomeGenTropical extends Biome {
 
     @Override
     public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimer, int chunkZ, int chunkX, double noiseVal) {
+        if (!this.initializedSediment) {
+            this.topBlock = this.sediment.topBlock.get().getDefaultState();
+            this.fillerBlock = this.sediment.bottomBlock.get().getDefaultState();
+            this.initializedSediment = true;
+        }
         int seaLevel = world.getSeaLevel();
         IBlockState topBlock = this.topBlock;
         IBlockState fillerBlock = this.fillerBlock;

@@ -35,6 +35,11 @@ public class EntityBlacktipReefShark extends EntityAquaticAnimal {
     }
 
     @Override
+    public int getMaximumAir() {
+        return 500;
+    }
+
+    @Override
     public void onSpawn() {
         this.setVariant(new Random().nextInt(3));
     }

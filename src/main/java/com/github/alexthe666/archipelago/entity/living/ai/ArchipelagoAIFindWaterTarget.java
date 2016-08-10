@@ -9,7 +9,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ArchipelagoAIFindWaterTarget extends EntityAIBase {
     private EntityAquaticAnimal mob;

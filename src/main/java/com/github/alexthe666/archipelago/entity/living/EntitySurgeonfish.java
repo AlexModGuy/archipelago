@@ -25,6 +25,11 @@ public class EntitySurgeonfish extends EntityAquaticAnimal {
     }
 
     @Override
+    public int getMaximumAir() {
+        return 300;
+    }
+
+    @Override
     public boolean isFreeSwimmer() {
         return true;
     }

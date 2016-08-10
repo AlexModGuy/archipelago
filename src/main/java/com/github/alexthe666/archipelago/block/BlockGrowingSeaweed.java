@@ -9,6 +9,7 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -43,6 +44,8 @@ import java.util.Random;
 
 public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlock {
     public static final PropertyEnum<Part> PART = PropertyEnum.create("part", Part.class);
+    public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
+
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
     private String name;
@@ -53,10 +56,10 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
     private int height;
 
     public BlockGrowingSeaweed(String name, int chance, int height, Biome[] biomes) {
-        super(Material.CORAL);
+        super(Material.WATER);
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(PART, Part.MIDDLE));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(PART, Part.MIDDLE).withProperty(LEVEL, 0));
         this.setUnlocalizedName("archipelago.plant." + name);
         this.setCreativeTab(Archipelago.tab);
         this.setLightOpacity(0);
@@ -105,10 +108,9 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
     }
 
     public boolean canGrow(World world, BlockPos pos) {
-        if (world.isAirBlock(pos.up())) {
+        if (world.isAirBlock(pos.up()) || world.isAirBlock(pos.up(2))) {
             return false;
         }
-
         if (world.getBlockState(pos).getMaterial() != Material.WATER) {
             return false;
         }
@@ -123,7 +125,6 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         IBlockState blockstate = world.getBlockState(pos);
-        IBlockState blockstate1 = world.getBlockState(pos.down());
         if (rand.nextInt(3) == 0) {
             if (this.canGrow(world, pos) && world.getBlockState(pos.up()).getBlock() != this) {
                 world.setBlockState(pos.up(), blockstate.withProperty(PART, Part.UPPER), 2);
@@ -206,7 +207,7 @@ public class BlockGrowingSeaweed extends BlockBush implements SpecialRenderedBlo
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, PART);
+        return new BlockStateContainer(this, PART, LEVEL);
     }
 
     @Override

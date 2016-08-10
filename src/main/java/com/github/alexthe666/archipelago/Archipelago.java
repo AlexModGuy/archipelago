@@ -68,8 +68,8 @@ public class Archipelago {
             }
         };
         ModItems.init();
-        ModBlocks.init();
         ModWorld.init();
+        ModBlocks.init();
         TropicTreeType.init();
         ModRecipes.init();
         ModEntities.init();

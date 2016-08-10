@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -37,6 +39,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
+    public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 15);
+
     @SideOnly(Side.CLIENT)
     private static final Minecraft MC = Minecraft.getMinecraft();
     private String name;
@@ -48,7 +52,7 @@ public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
     public static final Method SET_FLAG;
 
     public BlockShortCoral(String name, int chance, Biome[] biomes) {
-        super(Material.CORAL);
+        super(Material.WATER);
         this.name = name;
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
@@ -56,6 +60,7 @@ public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
         this.setCreativeTab(Archipelago.tab);
         this.setLightOpacity(0);
         this.useNeighborBrightness = true;
+        this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, 0));
         GameRegistry.registerBlock(this, name);
         Archipelago.PROXY.addItemRender(Item.getItemFromBlock(this), name);
         PlantEntry entry = new PlantEntry(this, chance, false);
@@ -63,6 +68,16 @@ public class BlockShortCoral extends BlockBush implements SpecialRenderedBlock {
             entry.addBiome(Biome.getIdForBiome(biome));
         }
         WorldGeneratorArchipelago.coralsEntries.add(entry);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, LEVEL);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return 0;
     }
 
     @Override

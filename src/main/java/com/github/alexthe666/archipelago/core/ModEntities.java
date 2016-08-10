@@ -1,7 +1,20 @@
 package com.github.alexthe666.archipelago.core;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.entity.living.*;
+import com.github.alexthe666.archipelago.entity.living.EntityBannerfish;
+import com.github.alexthe666.archipelago.entity.living.EntityBlacktipReefShark;
+import com.github.alexthe666.archipelago.entity.living.EntityBottlenoseDolphin;
+import com.github.alexthe666.archipelago.entity.living.EntityBrownCrab;
+import com.github.alexthe666.archipelago.entity.living.EntityButterflyfish;
+import com.github.alexthe666.archipelago.entity.living.EntityClownfish;
+import com.github.alexthe666.archipelago.entity.living.EntityCoralGrouper;
+import com.github.alexthe666.archipelago.entity.living.EntityNurseShark;
+import com.github.alexthe666.archipelago.entity.living.EntitySergeantMajor;
+import com.github.alexthe666.archipelago.entity.living.EntitySpottedEagleRay;
+import com.github.alexthe666.archipelago.entity.living.EntityStingray;
+import com.github.alexthe666.archipelago.entity.living.EntitySurgeonfish;
+import com.github.alexthe666.archipelago.entity.living.EntityTigerShark;
+import com.github.alexthe666.archipelago.entity.living.EntityWhitetipReefShark;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities {
