@@ -77,6 +77,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityBottlenoseDolphin.class, new RenderArchipelagoAnimal(new ModelBottlenoseDolphin(), 0.4F));
         RenderingRegistry.registerEntityRenderingHandler(EntitySpottedEagleRay.class, new RenderArchipelagoAnimal(new ModelSpottedEagleRay(), 0.4F));
         RenderingRegistry.registerEntityRenderingHandler(EntityTigerShark.class, new RenderArchipelagoAnimal(new ModelTigerShark(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySergeantMajor.class, new RenderArchipelagoAnimal(new ModelSergeantMajor(), 0.4F));
 
 
 

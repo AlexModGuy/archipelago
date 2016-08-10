@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class EntityWhitetipReefShark extends EntityAquaticAnimal {
 
     public EntityWhitetipReefShark(World world) {
-        super(world, 3, 0.6F, 1F, 1, 1, 2, 4, 0, 0);
+        super(world, 3, 0.6F, 0.8F, 1, 1, 12, 14, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }

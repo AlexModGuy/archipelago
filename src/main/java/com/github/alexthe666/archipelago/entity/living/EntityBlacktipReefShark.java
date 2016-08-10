@@ -12,7 +12,7 @@ import java.util.Random;
 public class EntityBlacktipReefShark extends EntityAquaticAnimal {
 
     public EntityBlacktipReefShark(World world) {
-        super(world, 3, 0.5F, 0.7F, 1, 1, 2, 4, 0, 0);
+        super(world, 3, 0.4F, 0.6F, 1, 1, 12, 14, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }
@@ -36,7 +36,7 @@ public class EntityBlacktipReefShark extends EntityAquaticAnimal {
 
     @Override
     public void onSpawn() {
-        this.setVariant(new Random().nextInt(2));
+        this.setVariant(new Random().nextInt(3));
     }
 
     @Override

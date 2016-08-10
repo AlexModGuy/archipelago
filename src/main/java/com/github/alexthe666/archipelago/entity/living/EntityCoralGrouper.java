@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class EntityCoralGrouper extends EntityAquaticAnimal {
 
     public EntityCoralGrouper(World world) {
-        super(world, 3, 0.5F, 0.7F, 1, 1, 2, 4, 0, 0);
+        super(world, 3, 0.5F, 0.7F, 1, 1, 3, 5, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }

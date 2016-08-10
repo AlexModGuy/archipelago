@@ -19,6 +19,7 @@ public class ModEntities {
         registerSpawnable(EntityBottlenoseDolphin.class, "bottlenose_dolphin", 10, 0X7E8186, 0X9BA0A3);
         registerSpawnable(EntitySpottedEagleRay.class, "spotted_eagle_ray", 11, 0X202152, 0XDEDEDE);
         registerSpawnable(EntityTigerShark.class, "tiger_shark", 12, 0X49443F, 0X9C9690);
+        registerSpawnable(EntitySergeantMajor.class, "sergeant_major", 13, 0XB4C0C1, 0XB4C02A);
     }
 
     public static void registerSpawnable(Class entityClass, String name, int id, int mainColor, int subColor) {

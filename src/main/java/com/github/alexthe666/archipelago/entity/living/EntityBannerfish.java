@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class EntityBannerfish extends EntityAquaticAnimal {
 
     public EntityBannerfish(World world) {
-        super(world, 3, 0.4F, 0.7F, 1, 1, 2, 4, 0, 0);
+        super(world, 3, 0.3F, 0.6F, 1, 1, 2, 4, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }

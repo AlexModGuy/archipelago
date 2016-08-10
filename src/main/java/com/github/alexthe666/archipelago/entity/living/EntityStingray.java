@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class EntityStingray extends EntityAquaticAnimal {
 
     public EntityStingray(World world) {
-        super(world, 3, 0.5F, 1.5F, 1, 1, 2, 4, 0, 0);
+        super(world, 3, 0.7F, 1.3F, 1, 1, 12, 14, 0, 0);
         this.setSize(0.7F, 0.5F);
         this.suffocates = true;
     }

@@ -1,10 +1,10 @@
 package com.github.alexthe666.archipelago.client.model.entity;
 
+
 import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelWhitetipReefShark extends AdvancedModelBase {
@@ -27,6 +27,8 @@ public class ModelWhitetipReefShark extends AdvancedModelBase {
     public AdvancedModelRenderer ThatFin;
     public AdvancedModelRenderer TailFin2;
     private ModelAnimator animator;
+    
+
 
     public ModelWhitetipReefShark() {
         this.textureWidth = 100;
