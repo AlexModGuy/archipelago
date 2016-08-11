@@ -137,7 +137,7 @@ public class ModelTigerShark extends AdvancedModelBase {
         super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
         float idleSpeed = 0.1F;
         float idleDegree = 0.1F;
-        float walkSpeed = 0.5F;
+        float walkSpeed = 0.25F;
         float walkDegree = 1.0F;
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { Tail2, Tail1 };
         AdvancedModelRenderer[] fins = new AdvancedModelRenderer[] { LeftPectoralFin, RightPectoralFin, RightPelvicFin, LeftPelvicFin };

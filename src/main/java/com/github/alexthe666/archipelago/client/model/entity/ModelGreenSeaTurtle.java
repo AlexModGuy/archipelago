@@ -7,7 +7,6 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-
 public class ModelGreenSeaTurtle extends AdvancedModelBase {
     public AdvancedModelRenderer Body;
     public AdvancedModelRenderer neck;
@@ -166,15 +165,17 @@ public class ModelGreenSeaTurtle extends AdvancedModelBase {
         float idleSpeed = 0.1F;
         float idleDegree = 0.1F;
         float walkSpeed = 0.5F;
+
         float walkDegree = 1.0F;
-        AdvancedModelRenderer[] LeftArm = new AdvancedModelRenderer[] { leftLowerArm, };
-        AdvancedModelRenderer[] RightArm = new AdvancedModelRenderer[] { rightLowerArm, };
-        this.chainWave(LeftArm, walkSpeed * 1F, walkDegree * 2F, 3.0F, limbSwing, limbSwingAmount);
-        this.chainWave(RightArm, walkSpeed * 1F,walkDegree * 2F, -3.0F, limbSwing, limbSwingAmount);
 
-        this.chainSwing(LeftArm, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
-        this.chainSwing(RightArm, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
+        this.walk(leftLowerArm, walkSpeed * 1F, walkDegree * 2F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
+        this.walk(rightLowerArm, walkSpeed * 1F, walkDegree * 2F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
 
+        this.walk(leftthigh, walkSpeed * 1F, walkDegree * 1.0F, false, 2.0F, 0.0F, limbSwing, limbSwingAmount);
+        this.walk(rightthigh, walkSpeed * 1F, walkDegree * 1.0F, false, 2.0F, 0.0F, limbSwing, limbSwingAmount);
+
+        this.swing(leftLowerArm, idleSpeed * 0.5F, idleDegree * 0.5F, true, 0.0F, 0.0F, age, 1.0F);
+        this.swing(rightLowerArm, idleSpeed * 0.5F, idleDegree * 0.5F, false, 0.0F, 0.0F, age, 1.0F);
 
         if (entity.isInWater()) {
             this.bob(Body, idleSpeed * 1.0F, idleDegree * 4.0F, false, age, 1.0F);

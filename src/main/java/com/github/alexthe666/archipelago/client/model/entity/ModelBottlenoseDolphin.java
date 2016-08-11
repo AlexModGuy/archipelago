@@ -103,16 +103,17 @@ public class ModelBottlenoseDolphin extends AdvancedModelBase {
         float idleSpeed = 0.1F;
         float idleDegree = 0.1F;
         float walkSpeed = 0.5F;
-        float walkDegree = 1.0F;
+        float walkDegree = 0.8F;
         AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { Tail2, Tail1 };
-        AdvancedModelRenderer[] fins = new AdvancedModelRenderer[] { LeftPectoralFin, RightPectoralFin,  };
-        AdvancedModelRenderer[] head = new AdvancedModelRenderer[] { Body2, };
-        this.chainWave(tail, walkSpeed * 1.0F, walkDegree * 1F, 2F, limbSwing, limbSwingAmount);
+        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Body1, Body2 };
+        AdvancedModelRenderer[] fins = new AdvancedModelRenderer[] { LeftPectoralFin, RightPectoralFin, };
+        this.chainWave(tail, walkSpeed * 1.0F, walkDegree * 1.5F, 2F, limbSwing, limbSwingAmount);
+        this.chainWave(body, walkSpeed * 1.0F, walkDegree * -0.5F, 1.0F, limbSwing, limbSwingAmount);
         this.chainFlap(fins, walkSpeed * 0.5F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
-        this.chainWave(head, walkSpeed * 1.0F,walkDegree * 0.5F, 1F, limbSwing, limbSwingAmount);
+
+        this.bob(Body1, walkSpeed * 1.0F, walkDegree * 6.0F, false, limbSwing, limbSwingAmount);
 
         this.chainFlap(fins, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
-
 
         if (entity.isInWater()) {
             this.chainSwing(tail, idleSpeed * 1.0F, idleDegree * 1.0F, 2.5F, age, 1.0F);

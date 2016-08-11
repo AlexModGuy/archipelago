@@ -47,10 +47,10 @@ public class ModWorld {
     public static BiomeGenTropical tropicLakes;
 
     public static void init() {
-        tropicOcean = new BiomeGenTropical("Tropic Ocean", ModConfig.tropicOceanId, -1.9F, 0.1F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY).setGenerationChance(5);
+        tropicOcean = new BiomeGenTropical("Tropic Ocean", ModConfig.tropicOceanId, -1.4F, 0.1F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY).setGenerationChance(5);
         tropicShallows = new BiomeGenTropical("Tropic Shallows", ModConfig.tropicShallowsId, -0.5F, -0.05F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicRiver = new BiomeGenTropical("Tropic River", ModConfig.tropicRiverId, -0.5F, -0.005F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
-        tropicReef = new BiomeGenTropical("Tropic Reef", ModConfig.tropicReefId, -1.5F, 0.7F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
+        tropicReef = new BiomeGenTropical("Tropic Reef", ModConfig.tropicReefId, -0.8F, 0.4F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicSeaGrassBed = new BiomeGenTropical("Tropic Sea Grass Bed", ModConfig.tropicSeaGrassBedId, -0.8F, -0.025F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicBlueHoles = new BiomeGenTropical("Tropic Blue Holes", ModConfig.tropicBlueHolesId, -0.5F, -0.015F, 0x479AFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         tropicTrench = new BiomeGenTropical("Tropic Trench", ModConfig.tropicTrenchId, -1.9F, -0.05F, 0x479AFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY).setGenerationChance(3);
