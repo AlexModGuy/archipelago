@@ -134,11 +134,12 @@ public class ModelSpottedEagleRay extends AdvancedModelBase {
         AdvancedModelRenderer[] fin1 = new AdvancedModelRenderer[] { Fin1, };
         AdvancedModelRenderer[] fin2 = new AdvancedModelRenderer[] { Fin2, };
         this.chainFlap(fin1, walkSpeed * 0.2F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
-        this.chainFlap(fin2, walkSpeed * 0.2F,walkDegree * -1.0F, -3.0F, limbSwing, limbSwingAmount);
+        this.chainFlap(fin2, walkSpeed * 0.2F, walkDegree * -1.0F, -3.0F, limbSwing, limbSwingAmount);
+
+        this.bob(Body1, walkSpeed * 0.25F, walkDegree * 6.0F, false, limbSwing, limbSwingAmount);
 
         this.chainFlap(fin1, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
         this.chainFlap(fin2, idleSpeed * 1.0F, idleDegree * -1.0F, 0.0F, age, 1.0F);
-
 
         if (entity.isInWater()) {
             this.bob(Body1, idleSpeed * 1.0F, idleDegree * 4.0F, false, age, 1.0F);

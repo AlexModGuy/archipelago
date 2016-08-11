@@ -127,7 +127,7 @@ public class BiomeGenTropical extends Biome {
                         }
                         depth = noise;
                         if (y < seaLevel - 1 && this == ModWorld.tropicReef) {
-                            topBlock = rand.nextInt(4) == 0 ? Blocks.SAND.getDefaultState() : ModBlocks.coral_rock.getStateFromMeta(rand.nextInt(9));
+                            topBlock = rand.nextInt(4) == 0 ? Blocks.SAND.getDefaultState() : ModBlocks.coral_rock.getDefaultState();
                             chunkPrimer.setBlockState(x, y, z, topBlock);
                         } else if (y <= seaLevel - 1) {
                             topBlock = Blocks.SAND.getDefaultState();
