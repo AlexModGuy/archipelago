@@ -64,7 +64,7 @@ public class ModWorld {
         volcano = new BiomeGenTropical("Volcano", ModConfig.volcanoId, 0.1F, 0.05F, 0x46FFFF, TropicGrassColor.BURNT, TropicBiomeSediment.VOLCANIC).setGenerationChance(4);
         tropicBeach = new BiomeGenTropical("Tropic Beach", ModConfig.tropicBeachId, 0.1F, 0.05F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.SANDY);
         blackSandBeach = new BiomeGenTropical("Black Sand Beach", ModConfig.blackSandBeachId, 0.1F, 0.05F, 0x46FFFF, TropicGrassColor.BURNT, TropicBiomeSediment.SANDY);
-        mangroveSwamp = new BiomeGenTropical("Mangrove Swamp", ModConfig.mangroveSwampId, -0.2F, 0.1F, 0x46FFFF, TropicGrassColor.SWAMP, TropicBiomeSediment.GRASSY, new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenCoconutPalm(), 10), new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenMangrove(), 10)).setTreesPerChunk(1).setGenerationChance(7);
+        mangroveSwamp = new BiomeGenTropical("Mangrove Swamp", ModConfig.mangroveSwampId, -0.05F, 0.1F, 0x46FFFF, TropicGrassColor.SWAMP, TropicBiomeSediment.GRASSY, new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenCoconutPalm(), 10), new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenMangrove(), 10)).setTreesPerChunk(1).setGenerationChance(7);
         tropicLakes = new BiomeGenTropical("Tropic Lakes", ModConfig.tropicLakes, -0.35F, 0.2F, 0x46FFFF, TropicGrassColor.CLASSIC_TROPICAL, TropicBiomeSediment.GRASSY, new BiomeGenTropical.TreeGenerator((rand) -> new WorldGenCoconutPalm(), 10)).setTreesPerChunk(1);
 
         BiomeManager.oceanBiomes.add(tropicOcean);

@@ -1,7 +1,7 @@
 package com.github.alexthe666.archipelago.world;
 
 import com.github.alexthe666.archipelago.Archipelago;
-import com.github.alexthe666.archipelago.client.render.world.ArchipelagoCloudRenderer;
+import com.github.alexthe666.archipelago.client.render.world.ArchipelagoBlankCloudRenderer;
 import com.github.alexthe666.archipelago.client.render.world.ArchipelagoSkyRenderer;
 import com.github.alexthe666.archipelago.core.ModConfig;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,9 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WorldProviderArchipelago extends WorldProvider {
     @SideOnly(Side.CLIENT)
-    IRenderHandler newSkyRenderer = new ArchipelagoSkyRenderer();
+    IRenderHandler skyRenderer = new ArchipelagoSkyRenderer();
     @SideOnly(Side.CLIENT)
-    IRenderHandler newCloudRenderer = new ArchipelagoCloudRenderer();
+    IRenderHandler cloudRenderer = new ArchipelagoBlankCloudRenderer();
 
     @Override
     public void createBiomeProvider() {
@@ -51,13 +51,13 @@ public class WorldProviderArchipelago extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public net.minecraftforge.client.IRenderHandler getSkyRenderer() {
-        return this.newSkyRenderer;
+        return this.skyRenderer;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public net.minecraftforge.client.IRenderHandler getCloudRenderer() {
-        return this.newCloudRenderer;
+        return this.cloudRenderer;
     }
 
     @Override
