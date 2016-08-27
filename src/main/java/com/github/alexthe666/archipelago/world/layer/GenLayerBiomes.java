@@ -7,7 +7,7 @@ import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayerBiomes extends GenLayer {
-    public static BiomeGenTropical[] islandBiomes = { ModWorld.tropicGrassland, ModWorld.tropicLakes, ModWorld.tropicShrubland, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland, ModWorld.mangroveSwamp };
+    public static BiomeGenTropical[] islandBiomes = { ModWorld.tropicGrassland, ModWorld.tropicShrubland, ModWorld.tropicJungle, ModWorld.dryPeaks, ModWorld.dryScrubland, ModWorld.mangroveSwamp };
     public static BiomeGenTropical[] oceanBiomes = { ModWorld.tropicOcean, ModWorld.tropicSeaGrassBed, ModWorld.tropicBlueHoles, ModWorld.tropicTrench, ModWorld.tropicKelpForest };
 
     public GenLayerBiomes(long seed, GenLayer parent) {

@@ -17,6 +17,7 @@ public abstract class GenLayerArchipelago extends GenLayer {
         biomesIndex = new GenLayerFuzzyZoom(1001L, biomesIndex);
         biomesIndex = new GenLayerBiomes(10L, biomesIndex);
         biomesIndex = new GenLayerFuzzyZoom(2000L, biomesIndex);
+        biomesIndex = new GenLayerLakes(30L, biomesIndex);
         biomesIndex = new GenLayerSmallIslands(50L, biomesIndex);
         biomesIndex = new GenLayerFuzzyZoom(1002L, biomesIndex);
         biomesIndex = new GenLayerShallows(40L, biomesIndex);
