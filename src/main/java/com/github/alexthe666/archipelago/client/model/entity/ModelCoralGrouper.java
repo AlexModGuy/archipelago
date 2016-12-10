@@ -108,7 +108,7 @@ public class ModelCoralGrouper extends AdvancedModelBase {
         float idleDegree = 0.1F;
         float walkSpeed = 0.3F;
         float walkDegree = 2F;
-        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1, Body2 };
+        AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1, Body2, Body1 };
         this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 2.0F, limbSwing, limbSwingAmount);
 
         this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 1.0F, 3.0F, age, 1.0F);

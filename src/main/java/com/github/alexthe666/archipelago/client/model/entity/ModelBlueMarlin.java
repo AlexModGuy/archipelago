@@ -4,16 +4,10 @@ import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-/**
- * Created by Codyr on 19/10/2016.
- */
-
-    /**
-     * blue marlin - goji
-     * Created using Tabula 5.1.0
-     */
     public class ModelBlueMarlin extends AdvancedModelBase {
         public AdvancedModelRenderer Body1;
         public AdvancedModelRenderer Body2;
@@ -134,17 +128,47 @@ import net.minecraft.entity.Entity;
             this.Head.addChild(this.Bill1);
             this.Head.addChild(this.shape17);
             this.animator = ModelAnimator.create();
+            this.updateDefaultPose();
 
         }
 
         @Override
         public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+            this.animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
+            GlStateManager.translate(0.0F, 0.25F, 0.0F);
             this.Body1.render(f5);
         }
 
-        /**
-         * This is a helper function from Tabula to set the rotation of model parts
-         */
+        private void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+            this.animator.update(entity);
+            this.resetToDefaultPose();
+            this.setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
+        }
+
+        @Override
+        public void setRotationAngles(float limbSwing, float limbSwingAmount, float age, float yaw, float pitch, float scale, Entity entity) {
+            super.setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity);
+            float idleSpeed = 0.1F;
+            float idleDegree = 0.1F;
+            float walkSpeed = 0.2F;
+            float walkDegree = 2F;
+            AdvancedModelRenderer[] body = new AdvancedModelRenderer[] { Tail2, Tail1, Body2 };
+            this.chainSwing(body, walkSpeed * 1.0F, walkDegree * 1.0F, 2.0F, limbSwing, limbSwingAmount);
+
+            this.chainSwing(body, idleSpeed * 1.0F, idleDegree * 0.5F, 3.0F, age, 1.0F);
+            this.swing(this.Leftfin, idleSpeed * 1.0F, idleDegree * 2.0F, false, 0.0F, -0.2F, age, 1.0F);
+            this.swing(this.Rightfin, idleSpeed * 1.0F, idleDegree * 2.0F, false, 1.0F, 0.2F, age, 1.0F);
+            if (!entity.isInWater()) {
+                this.Body1.rotateAngleZ = (float) Math.toRadians(90);
+                if (entity.onGround) {
+                    this.bob(this.Body1, 0.5F, 1.0F, false, age, 1);
+                    this.swing(this.Body1, 0.5F, 0.3F, true, 0, 0, age, 1);
+                }
+            } else {
+                this.bob(this.Body1, idleSpeed * 1.0F, idleDegree * 5.0F, false, age, 1.0F);
+            }
+        }
+
         public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
             modelRenderer.rotateAngleX = x;
             modelRenderer.rotateAngleY = y;

@@ -8,15 +8,11 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-/**
- * Created by Codyr on 19/10/2016.
- */
-
 public class EntityBlueMarlin extends EntityAquaticAnimal {
 
     public EntityBlueMarlin(World world) {
-        super(world, 3, 0.4F, 0.6F, 1, 1, 12, 14, 0, 0);
-        this.setSize(0.7F, 0.5F);
+        super(world, 3, 0.6F, 0.9F, 1, 1, 12, 14, 0, 0);
+        this.setSize(1.2F, 0.75F);
         this.suffocates = true;
     }
 
