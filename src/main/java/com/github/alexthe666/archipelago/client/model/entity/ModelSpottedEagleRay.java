@@ -52,7 +52,7 @@ public class ModelSpottedEagleRay extends AdvancedModelBase {
         this.Tail2.setRotationPoint(0.0F, 0.0F, 11.0F);
         this.Tail2.addBox(-0.5F, -0.5F, 0.0F, 1, 1, 12, 0.0F);
         this.Fin2 = new AdvancedModelRenderer(this, 72, 30);
-        this.Fin2.setRotationPoint(-0.6F, 0.0F, -5.4F);
+        this.Fin2.setRotationPoint(-0.6F, 0.1F, -5.4F);
         this.Fin2.addBox(-15.0F, -0.5F, -6.0F, 15, 1, 12, 0.0F);
         this.setRotateAngle(Fin2, 0.0F, 0.39392081217512015F, 0.0F);
         this.Fin5 = new AdvancedModelRenderer(this, 28, 66);
@@ -60,7 +60,7 @@ public class ModelSpottedEagleRay extends AdvancedModelBase {
         this.Fin5.addBox(0.0F, -0.5F, -1.5F, 3, 1, 3, 0.0F);
         this.setRotateAngle(Fin5, 0.0F, -0.7285004297824331F, 0.0F);
         this.Fin1 = new AdvancedModelRenderer(this, 72, 7);
-        this.Fin1.setRotationPoint(0.6F, 0.0F, -5.4F);
+        this.Fin1.setRotationPoint(0.6F, 0.1F, -5.4F);
         this.Fin1.addBox(0.0F, -0.5F, -6.0F, 15, 1, 12, 0.0F);
         this.setRotateAngle(Fin1, 0.0F, -0.39392081217512015F, -0.0F);
         this.Part2 = new AdvancedModelRenderer(this, 40, 26);
@@ -135,7 +135,9 @@ public class ModelSpottedEagleRay extends AdvancedModelBase {
         AdvancedModelRenderer[] fin2 = new AdvancedModelRenderer[] { Fin2, };
         this.chainFlap(fin1, walkSpeed * 0.2F, walkDegree * 1.0F, 3.0F, limbSwing, limbSwingAmount);
         this.chainFlap(fin2, walkSpeed * 0.2F, walkDegree * -1.0F, -3.0F, limbSwing, limbSwingAmount);
-
+        AdvancedModelRenderer[] tail = new AdvancedModelRenderer[] { Tail3, Tail2, Tail1 };
+        this.chainSwing(tail, walkSpeed * 0.5F, walkDegree * 1.0F, 2.0F, limbSwing, limbSwingAmount);
+        this.chainSwing(tail, idleSpeed * 1.0F, idleDegree * 1.0F, 3.0F, age, 1.0F);
         this.bob(Body1, walkSpeed * 0.25F, walkDegree * 6.0F, false, limbSwing, limbSwingAmount);
 
         this.chainFlap(fin1, idleSpeed * 1.0F, idleDegree * 1.0F, 0.0F, age, 1.0F);
