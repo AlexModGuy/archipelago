@@ -39,6 +39,7 @@ public class ItemSunstoneStaff extends Item {
             itemStackIn.setItem(ModItems.sunstone_staff_broken);
             ArchipelagoEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(playerIn, ArchipelagoEntityProperties.class);
             properties.teleportTime = 1;
+            playerIn.swingArm(hand);
             worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.NEUTRAL, 1F, 1F);
             return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
         }

@@ -32,7 +32,6 @@ public class BlockArchipelagoLeaves extends BlockLeaves {
     public BlockArchipelagoLeaves(TropicTreeType tree) {
         super();
         this.tree = tree;
-        this.setCreativeTab(Archipelago.tab);
         this.setUnlocalizedName("archipelago." + tree.name().toLowerCase() + "_leaves");
         this.setCreativeTab(Archipelago.tab);
         GameRegistry.registerBlock(this, tree.name().toLowerCase() + "_leaves");
